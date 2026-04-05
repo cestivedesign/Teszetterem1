@@ -77,6 +77,8 @@
     }
 </script>
 <style>
+    html, body { overflow-x: hidden; max-width: 100vw; }
+    * { box-sizing: border-box; }
     body { font-family: 'Manrope', sans-serif; }
     .font-serif { font-family: 'Noto Serif', serif; }
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
@@ -199,7 +201,7 @@
 <div id="scroll-progress"></div>
 
 <!-- Toast container -->
-<div id="toast-container" class="fixed bottom-6 right-6 z-[100] space-y-2"></div>
+<div id="toast-container" class="fixed bottom-6 right-4 md:right-6 z-[100] space-y-2 max-w-[calc(100vw-2rem)]"></div>
 
 <!-- Top Info Bar -->
 <div class="hidden md:flex justify-between items-center px-12 py-2 bg-primary text-on-primary text-[11px] tracking-widest uppercase font-medium">
@@ -282,7 +284,7 @@
 <!-- Cart Sidebar -->
 <div id="cart-sidebar" class="fixed inset-0 z-[70] hidden">
     <div class="absolute inset-0 bg-black/50" onclick="toggleCart()"></div>
-    <div class="absolute right-0 top-0 h-full w-80 md:w-96 bg-surface shadow-2xl flex flex-col">
+    <div class="absolute right-0 top-0 h-full w-[85vw] max-w-80 md:max-w-96 md:w-96 bg-surface shadow-2xl flex flex-col">
         <div class="flex justify-between items-center p-6 border-b border-outline-variant/20">
             <h3 class="text-xl font-headline text-primary">Kosár</h3>
             <button onclick="toggleCart()" class="p-2 hover:bg-surface-container-low rounded-full">
@@ -309,7 +311,7 @@
         <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent"></div>
     </div>
     <div class="relative z-10 space-y-6">
-        <h2 class="hero-fade font-headline text-4xl leading-tight text-white font-bold italic">Autentikus ízek, modern köntösben</h2>
+        <h2 class="hero-fade font-headline text-3xl md:text-4xl leading-tight text-white font-bold italic">Autentikus ízek, modern köntösben</h2>
         <p class="hero-fade text-white/90 text-lg max-w-sm">Fedezze fel Budapest legrejtettebb gasztronómiai kertjét, ahol a hagyomány és az innováció találkozik.</p>
         <div class="hero-fade flex flex-col gap-3 pt-4">
             <a href="#booking" class="btn-press ripple bg-tertiary-container text-on-tertiary-container font-bold py-4 rounded-xl shadow-lg text-center">Asztal foglalása</a>
@@ -319,7 +321,7 @@
 </header>
 
 <!-- Hero Section - DESKTOP -->
-<header class="hidden md:flex relative min-h-[870px] items-center overflow-hidden px-12">
+<header class="hidden md:flex relative min-h-[870px] items-center overflow-hidden px-6 md:px-12">
     <div class="grid lg:grid-cols-2 gap-16 items-center w-full max-w-7xl mx-auto py-20">
         <div class="z-10">
             <span class="text-tertiary font-bold tracking-[0.2em] text-sm uppercase mb-6 block">★ Budapest legjobb modern magyar étterme 2025</span>
@@ -363,7 +365,7 @@
     <div class="px-6 md:px-12 max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
             <div>
-                <h2 class="font-headline text-4xl text-primary mb-4 italic">Szezonális Étlapunk</h2>
+                <h2 class="font-headline text-2xl md:text-4xl text-primary mb-4 italic">Szezonális Étlapunk</h2>
                 <p class="text-on-surface-variant max-w-md">Válogasson séfünk legfrissebb kreációiból, melyekhez csak a legkiválóbb helyi alapanyagokat használjuk.</p>
             </div>
             <button onclick="showToast('Az étlap PDF letöltése megkezdődött!')" class="flex items-center gap-2 text-primary font-bold border-b border-primary pb-1 hover:text-secondary hover:border-secondary transition-all">
@@ -389,7 +391,7 @@
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Hungarian goulash soup in a modern ceramic bowl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDepfOmF_AyBMjzevQ0QM9aH56lmk6crOTd-biCUppTSfxSxFJShPawc7ICksSVQlWxQYfVnCSB3ZUggkK49xtRj6QKTp41jiWaLMgk2jIflfMlrMzLyNxSfjQUpvOlekh2Th-w1dS0iWRNtUne0oIjAF_ZIuw9LEYw4IQROM7he4DsCHbFPJ56plLhRPa7yWm-S6xqR2iPhsILQKa4wWY0qOvrevgE0JIKKqsdZsKrK9lFwfc9S7ZWAAbcmuCYbCdXAROhnb457iQ"/>
                     <span class="absolute top-4 left-4 bg-tertiary text-on-tertiary text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Szezonális</span>
                 </div>
-                <div class="p-8 flex flex-col flex-grow">
+                <div class="p-5 md:p-8 flex flex-col flex-grow">
                     <div class="flex justify-between items-start mb-2">
                         <h3 class="text-xl font-headline text-primary group-hover:text-secondary transition-colors">Marhapörkölt 'Kertem' módra</h3>
                         <span class="font-bold text-primary whitespace-nowrap ml-4">5,400 Ft</span>
@@ -411,7 +413,7 @@
                 <div class="relative overflow-hidden aspect-[4/3]">
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Pan-seared trout fillet with lemon butter sauce" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZ7FNvcha5pA5hO6EwtsZ-dk1mFuLJYtSnprcbK5EtgCXxCevB7dfUBxHtobGD07dkdFm0jeOynncEyIJKA56Zq38rKRUOjZThwXWAnUIfz5_9-4AGNxjop0bTvtuy4w1nasUsXzkRvg_rxwNcpicAEF5D0Msgan4lmLRfm-TzLfkQCzdL1FAyH7OItk_YB8VPJ7T8FR9fhmOYQuaeVKINLojDHcyFfKXfONUXJrZm5LlZcA9kywGGBIhAv684mkeeUsQjXISzgdk" onerror="this.src='https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&h=600&fit=crop';this.onerror=null"/>
                 </div>
-                <div class="p-8 flex flex-col flex-grow">
+                <div class="p-5 md:p-8 flex flex-col flex-grow">
                     <div class="flex justify-between items-start mb-2">
                         <h3 class="text-xl font-headline text-primary group-hover:text-secondary transition-colors">Sült Pisztráng</h3>
                         <span class="font-bold text-primary whitespace-nowrap ml-4">4,800 Ft</span>
@@ -433,7 +435,7 @@
                 <div class="relative overflow-hidden aspect-[4/3]">
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Garden salad with roasted beets, goat cheese, and walnuts" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc4qq31dpRO6N-7fJcy2TXP_jI2hDI3o4_8cE3kcXk8fhccQihtnEBD1WCgeJYRRUz86iD6rReWv0BddsUPaXe6KHQ8rjYOibzUSkpZLWEPVc5uwKHsQwOgs2iM5WqHZW989rLFC-Yf5819ETtNenu0lwPvcCN9AJNr9Bu6FbfGNtJiMm0J7ak3uh0VrahvabSetBtKV0g9g372v9FpmP1f0YPfVRJTZylPrqRr-nkBTdwU3xaeNNhh_AvAedewJyKplSEDoGsMVc"/>
                 </div>
-                <div class="p-8 flex flex-col flex-grow">
+                <div class="p-5 md:p-8 flex flex-col flex-grow">
                     <div class="flex justify-between items-start mb-2">
                         <h3 class="text-xl font-headline text-primary group-hover:text-secondary transition-colors">Tavaszi Kert Saláta</h3>
                         <span class="font-bold text-primary whitespace-nowrap ml-4">3,200 Ft</span>
@@ -456,7 +458,7 @@
                 <div class="relative overflow-hidden aspect-[4/3]">
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Chimney cake dessert with vanilla cream and forest berries" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ18lu_yOspANmZsRSTAs2kuGoxTugNAFeH_smo7acoUf45vQyUH185_rh8XDTOs5msQIzXOnrikUycSj1FdimxCbJ5pFKS__5J2SV4VLZqiCOay9vlWov30X6oUOyQZ-lHMwbGk-BRuK1c_ZFARzBipROhZ5y-ZJN52Ro0cQP0_jlSufdhg_KjVtzzJxpsOIoXi7XZis5nwjFN3GDCdyRN1eyQVYK0UIyQelHoztMJvRGz6DP2IfB_N8UJlQrVS1KtV11ROCkFOU"/>
                 </div>
-                <div class="p-8 flex flex-col flex-grow">
+                <div class="p-5 md:p-8 flex flex-col flex-grow">
                     <div class="flex justify-between items-start mb-2">
                         <h3 class="text-xl font-headline text-primary group-hover:text-secondary transition-colors">Kürtőskalács Puding</h3>
                         <span class="font-bold text-primary whitespace-nowrap ml-4">2,600 Ft</span>
@@ -475,7 +477,7 @@
                 <div class="relative overflow-hidden aspect-[4/3]">
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Marinated lamb skewers with grilled vegetables" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyIyFHCKHehjQoDVIqsXbQ98HrIF8VTAoTQ-FXUmbgMs1h7f_AwnIUhXu_OzYOBUBxSf2JDG7OtzkM0B8DfQm-p56bLTvBkohovuejCWr9neMj5LmhJzRiVOoRo4A-g9W-8z4F3z9LrYZc3A2ayhN8n3VoSmMPyl4uLcPPMAEeaBYnaESeeLL9sUYW3NwM4gs3VKRxM13AIUMlV71hgzTt0OpaxI4Z1rjf9o_AOcCWjGD6ajKhX-mSYb88X_tIbQJxHtez3kEqdFc"/>
                 </div>
-                <div class="p-8 flex flex-col flex-grow">
+                <div class="p-5 md:p-8 flex flex-col flex-grow">
                     <div class="flex justify-between items-start mb-2">
                         <h3 class="text-xl font-headline text-primary group-hover:text-secondary transition-colors">Grillezett Bárányfalatok</h3>
                         <span class="font-bold text-primary whitespace-nowrap ml-4">6,900 Ft</span>
@@ -497,7 +499,7 @@
                 <div class="relative overflow-hidden aspect-[4/3]">
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Roasted cauliflower steaks with almond cream" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCziR2h4Lbpf3rVwnByHiGBsKkIaDSuPDzcFH2YIMU7aXiImV1wZFLMIzI__G3UfktF--8TT3evgGqc9y_g8w7d_NEh4wpqsT0JYJMxTMTblIIrqV2r9vikoRHpJmZYX53xlLXMw8NNpGG5exmyilPRxpfmt_It54nFVNdvE4XmtaWjQxLkUoxLP99lzPIW4frrxaf5E1dTLwa5wf93jLaQt9KhkWR1nfDshPTENd0AYgC0yw5atfc2C1mY9vF2dDtgq18gbCxEnmQ"/>
                 </div>
-                <div class="p-8 flex flex-col flex-grow">
+                <div class="p-5 md:p-8 flex flex-col flex-grow">
                     <div class="flex justify-between items-start mb-2">
                         <h3 class="text-xl font-headline text-primary group-hover:text-secondary transition-colors">Sült Karfiol Steak</h3>
                         <span class="font-bold text-primary whitespace-nowrap ml-4">3,800 Ft</span>
@@ -522,7 +524,7 @@
 <section class="py-24 px-6 md:px-12" id="booking">
     <div class="max-w-7xl mx-auto bg-surface-container-high rounded-3xl overflow-hidden grid lg:grid-cols-2 shadow-sm">
         <div class="p-8 md:p-12 lg:p-16">
-            <h2 class="font-headline text-4xl text-primary mb-2 italic">Asztalfoglalás</h2>
+            <h2 class="font-headline text-2xl md:text-4xl text-primary mb-2 italic">Asztalfoglalás</h2>
             <p class="text-on-surface-variant mb-10">Biztosítsa helyét pár kattintással éttermünkben.</p>
             <form id="booking-form" class="space-y-6" onsubmit="return handleBooking(event)">
                 <div class="grid md:grid-cols-2 gap-6">
@@ -552,7 +554,7 @@
                 </div>
                 <div class="space-y-2">
                     <label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Időpont *</label>
-                    <div class="grid grid-cols-4 md:grid-cols-6 gap-3" id="time-slots">
+                    <div class="grid grid-cols-3 md:grid-cols-6 gap-3" id="time-slots">
                         <button class="time-slot tab-pop bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="17:00">17:00</button>
                         <button class="time-slot bg-primary text-on-primary py-2 rounded-lg text-sm" type="button" data-time="18:00">18:00</button>
                         <button class="time-slot tab-pop bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="19:00">19:00</button>
@@ -569,7 +571,7 @@
                 <button type="submit" class="btn-press ripple w-full bg-primary text-on-primary py-4 rounded-xl font-bold text-lg hover:shadow-lg mt-4">Foglalás megerősítése</button>
             </form>
         </div>
-        <div class="bg-primary p-8 md:p-12 lg:p-16 flex flex-col justify-center relative overflow-hidden">
+        <div class="bg-primary p-6 md:p-12 lg:p-16 flex flex-col justify-center relative overflow-hidden">
             <div class="z-10 text-on-primary">
                 <h3 class="text-2xl font-headline mb-8 italic">Miért érdemes nálunk foglalni?</h3>
                 <ul class="space-y-6">
@@ -606,23 +608,23 @@
     <div class="px-6 md:px-12 max-w-7xl mx-auto">
         <div class="grid lg:grid-cols-3 gap-12 items-start">
             <div class="lg:col-span-2 space-y-8">
-                <div class="flex items-center gap-4 mb-8">
-                    <div class="flex items-center gap-2" id="step-1-indicator">
-                        <span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-xs">1</span>
-                        <span class="text-xs font-bold uppercase tracking-widest text-primary">Kosár</span>
+                <div class="flex items-center gap-2 md:gap-4 mb-8 flex-wrap">
+                    <div class="flex items-center gap-1 md:gap-2" id="step-1-indicator">
+                        <span class="w-7 h-7 md:w-8 md:h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-xs">1</span>
+                        <span class="text-[10px] md:text-xs font-bold uppercase tracking-wider md:tracking-widest text-primary">Kosár</span>
                     </div>
-                    <div class="h-[1px] w-12 bg-outline-variant"></div>
-                    <div class="flex items-center gap-2 opacity-40" id="step-2-indicator">
-                        <span class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-xs">2</span>
-                        <span class="text-xs font-bold uppercase tracking-widest">Szállítás</span>
+                    <div class="h-[1px] w-6 md:w-12 bg-outline-variant"></div>
+                    <div class="flex items-center gap-1 md:gap-2 opacity-40" id="step-2-indicator">
+                        <span class="w-7 h-7 md:w-8 md:h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-xs">2</span>
+                        <span class="text-[10px] md:text-xs font-bold uppercase tracking-wider md:tracking-widest">Szállítás</span>
                     </div>
-                    <div class="h-[1px] w-12 bg-outline-variant"></div>
-                    <div class="flex items-center gap-2 opacity-40" id="step-3-indicator">
-                        <span class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-xs">3</span>
-                        <span class="text-xs font-bold uppercase tracking-widest">Fizetés</span>
+                    <div class="h-[1px] w-6 md:w-12 bg-outline-variant"></div>
+                    <div class="flex items-center gap-1 md:gap-2 opacity-40" id="step-3-indicator">
+                        <span class="w-7 h-7 md:w-8 md:h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-xs">3</span>
+                        <span class="text-[10px] md:text-xs font-bold uppercase tracking-wider md:tracking-widest">Fizetés</span>
                     </div>
                 </div>
-                <h2 class="font-headline text-4xl text-primary italic">Rendelés Összesítése</h2>
+                <h2 class="font-headline text-2xl md:text-4xl text-primary italic">Rendelés Összesítése</h2>
                 <div id="order-items" class="space-y-4">
                     <p id="order-empty" class="text-center text-on-surface-variant py-8">Adjon hozzá termékeket a menüből a rendeléshez.</p>
                 </div>
@@ -631,7 +633,7 @@
                     <p class="text-sm">Várható szállítási idő: <span class="font-bold text-primary">35-45 perc</span></p>
                 </div>
             </div>
-            <div class="bg-surface-container-highest p-10 rounded-3xl sticky top-28">
+            <div class="bg-surface-container-highest p-6 md:p-10 rounded-3xl sticky top-28">
                 <h3 class="text-xl font-headline mb-8 text-primary">Fizetendő</h3>
                 <div class="space-y-4 mb-8">
                     <div class="flex justify-between text-on-surface-variant">
@@ -677,16 +679,16 @@
 <section class="py-24 bg-surface-container-low" id="catering">
     <div class="px-6 md:px-12 max-w-7xl mx-auto">
         <div class="text-center mb-20">
-            <h2 class="font-headline text-5xl text-primary mb-6 italic">Exkluzív Catering</h2>
+            <h2 class="font-headline text-3xl md:text-5xl text-primary mb-6 italic">Exkluzív Catering</h2>
             <p class="text-on-surface-variant max-w-2xl mx-auto">Legyen szó céges rendezvényről vagy családi összejövetelről, mi házhoz visszük a Kertem élményt.</p>
         </div>
-        <div class="grid md:grid-cols-3 gap-8">
+        <div class="grid md:grid-cols-3 gap-8 overflow-hidden md:overflow-visible">
             <!-- Plan 1 -->
-            <div class="bg-surface-container-lowest p-10 rounded-2xl flex flex-col hover:translate-y-[-8px] transition-all duration-300">
+            <div class="bg-surface-container-lowest p-6 md:p-10 rounded-2xl flex flex-col hover:translate-y-[-8px] transition-all duration-300">
                 <h3 class="text-xl font-headline text-primary mb-2">Basic</h3>
                 <p class="text-on-surface-variant text-sm mb-8">Kisebb baráti összejövetelekhez.</p>
                 <div class="mb-8">
-                    <span class="text-4xl font-headline text-primary">8,900 Ft</span>
+                    <span class="text-3xl md:text-4xl font-headline text-primary">8,900 Ft</span>
                     <span class="text-on-surface-variant">/fő</span>
                 </div>
                 <ul class="space-y-4 mb-10 flex-grow">
@@ -697,12 +699,12 @@
                 <button onclick="handleCatering('Basic')" class="w-full border-2 border-primary text-primary py-3 rounded-xl font-bold hover:bg-primary hover:text-on-primary transition-all">Ajánlatkérés</button>
             </div>
             <!-- Plan 2 -->
-            <div class="bg-primary p-10 rounded-2xl flex flex-col relative overflow-hidden scale-105 shadow-xl">
+            <div class="bg-primary p-6 md:p-10 rounded-2xl flex flex-col relative overflow-hidden md:scale-105 shadow-xl">
                 <div class="absolute top-4 right-[-30px] bg-tertiary text-on-tertiary px-10 py-1 rotate-45 text-[10px] font-bold uppercase tracking-widest">Legnépszerűbb</div>
                 <h3 class="text-xl font-headline text-on-primary mb-2">Business</h3>
                 <p class="text-on-primary-container text-sm mb-8">Céges ebédek és partnertalik kedvence.</p>
                 <div class="mb-8">
-                    <span class="text-4xl font-headline text-on-primary">14,900 Ft</span>
+                    <span class="text-3xl md:text-4xl font-headline text-on-primary">14,900 Ft</span>
                     <span class="text-on-primary-container">/fő</span>
                 </div>
                 <ul class="space-y-4 mb-10 flex-grow">
@@ -714,11 +716,11 @@
                 <button onclick="handleCatering('Business')" class="w-full bg-tertiary-container text-on-tertiary-container py-3 rounded-xl font-bold hover:brightness-105 transition-all">Ajánlatkérés</button>
             </div>
             <!-- Plan 3 -->
-            <div class="bg-surface-container-lowest p-10 rounded-2xl flex flex-col hover:translate-y-[-8px] transition-all duration-300">
+            <div class="bg-surface-container-lowest p-6 md:p-10 rounded-2xl flex flex-col hover:translate-y-[-8px] transition-all duration-300">
                 <h3 class="text-xl font-headline text-primary mb-2">Premium</h3>
                 <p class="text-on-surface-variant text-sm mb-8">Exkluzív gálavacsorákhoz.</p>
                 <div class="mb-8">
-                    <span class="text-4xl font-headline text-primary">24,900 Ft</span>
+                    <span class="text-3xl md:text-4xl font-headline text-primary">24,900 Ft</span>
                     <span class="text-on-surface-variant">/fő</span>
                 </div>
                 <ul class="space-y-4 mb-10 flex-grow">
@@ -736,9 +738,9 @@
 <!-- Gallery Section -->
 <section class="py-24" id="gallery">
     <div class="px-6 md:px-12 max-w-7xl mx-auto">
-        <div class="flex justify-between items-center mb-16">
-            <h2 class="font-headline text-4xl text-primary italic">Pillanatok a Kertben</h2>
-            <a class="flex items-center gap-2 font-bold text-on-surface-variant hover:text-primary transition-all" href="#" onclick="showToast('Instagram oldal megnyitása...'); return false;">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-4">
+            <h2 class="font-headline text-2xl md:text-4xl text-primary italic">Pillanatok a Kertben</h2>
+            <a class="flex items-center gap-2 font-bold text-on-surface-variant hover:text-primary transition-all text-sm md:text-base" href="#" onclick="showToast('Instagram oldal megnyitása...'); return false;">
                 @kertem_etterem <span class="material-symbols-outlined">open_in_new</span>
             </a>
         </div>
@@ -788,9 +790,9 @@
 <!-- Reviews -->
 <section class="py-24 bg-surface-container">
     <div class="px-6 md:px-12 max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row gap-20 items-center">
+        <div class="flex flex-col md:flex-row gap-10 md:gap-20 items-center">
             <div class="md:w-1/3">
-                <h2 class="font-headline text-4xl text-primary mb-8 italic">Vendégeink véleménye</h2>
+                <h2 class="font-headline text-2xl md:text-4xl text-primary mb-8 italic">Vendégeink véleménye</h2>
                 <div class="space-y-6">
                     <div class="flex items-center gap-4">
                         <span class="text-4xl font-headline">4.9</span>
@@ -821,7 +823,7 @@
                 </div>
             </div>
             <div class="md:w-2/3 grid md:grid-cols-2 gap-6">
-                <div class="bg-surface-container-lowest p-8 rounded-2xl shadow-sm">
+                <div class="bg-surface-container-lowest p-6 md:p-8 rounded-2xl shadow-sm">
                     <div class="flex gap-1 text-tertiary mb-4">
                         <span class="material-symbols-outlined text-[18px] filled">star</span>
                         <span class="material-symbols-outlined text-[18px] filled">star</span>
@@ -838,7 +840,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-surface-container-lowest p-8 rounded-2xl shadow-sm">
+                <div class="bg-surface-container-lowest p-6 md:p-8 rounded-2xl shadow-sm">
                     <div class="flex gap-1 text-tertiary mb-4">
                         <span class="material-symbols-outlined text-[18px] filled">star</span>
                         <span class="material-symbols-outlined text-[18px] filled">star</span>
@@ -863,7 +865,7 @@
 <!-- Blog Section -->
 <section class="py-24" id="blog">
     <div class="px-6 md:px-12 max-w-7xl mx-auto">
-        <h2 class="font-headline text-4xl text-primary mb-16 italic">Magazin</h2>
+        <h2 class="font-headline text-2xl md:text-4xl text-primary mb-16 italic">Magazin</h2>
         <div class="grid md:grid-cols-3 gap-8">
             <article class="group cursor-pointer" onclick="showToast('Blog cikk megnyitása...')">
                 <div class="rounded-2xl overflow-hidden aspect-[16/10] mb-6">
@@ -899,7 +901,7 @@
 <!-- Newsletter -->
 <section class="py-24 bg-primary-container text-on-primary">
     <div class="px-6 md:px-12 max-w-4xl mx-auto text-center">
-        <h2 class="font-headline text-4xl mb-6 italic">Legyen Ön is a Kertem belső körének tagja</h2>
+        <h2 class="font-headline text-2xl md:text-4xl mb-6 italic">Legyen Ön is a Kertem belső körének tagja</h2>
         <p class="text-on-primary-container mb-12">Iratkozzon fel hírlevelünkre, és értesüljön elsőként különleges vacsoraestjeinkről és szezonális ajánlatainkról.</p>
         <form id="newsletter-form" class="flex flex-col md:flex-row gap-4 max-w-lg mx-auto" onsubmit="return handleNewsletter(event)">
             <input required id="newsletter-email" class="flex-grow bg-surface/10 border-none rounded-xl py-4 px-6 text-on-primary focus:ring-2 focus:ring-tertiary-fixed placeholder:text-on-primary-container" placeholder="Az Ön email címe" type="email"/>
@@ -913,7 +915,7 @@
 <section class="py-24 px-6 md:px-12" id="contact">
     <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16">
         <div>
-            <h2 class="font-headline text-4xl text-primary mb-12 italic">Kapcsolat</h2>
+            <h2 class="font-headline text-2xl md:text-4xl text-primary mb-12 italic">Kapcsolat</h2>
             <div class="space-y-12">
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
@@ -947,7 +949,7 @@
                 </div>
             </div>
         </div>
-        <div class="rounded-3xl overflow-hidden h-[400px] lg:h-auto shadow-sm">
+        <div class="rounded-3xl overflow-hidden h-[300px] md:h-[400px] lg:h-auto shadow-sm">
             <iframe allowfullscreen="" height="100%" loading="lazy" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2695.533284055!2d19.060134!3d47.498428!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4741dc4192b0c34b%3A0x64e030a599b4566c!2sBudapest%2C%20Kazinczy%20u.%2014%2C%201075!5e0!3m2!1sen!2shu!4v1710123456789!5m2!1sen!2shu" style="border:0;" width="100%"></iframe>
         </div>
     </div>
@@ -1028,7 +1030,7 @@
 <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-[90] bg-inverse-surface text-inverse-on-surface p-4 md:p-6 shadow-2xl">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-4 justify-between">
         <p class="text-sm">Ez a weboldal cookie-kat használ a jobb felhasználói élmény érdekében. <a href="#" class="underline" onclick="showToast('Cookie szabályzat'); return false;">Cookie szabályzat</a></p>
-        <div class="flex gap-3">
+        <div class="flex flex-wrap gap-3">
             <button onclick="acceptCookies()" class="bg-tertiary-container text-on-tertiary-container px-6 py-2 rounded-lg font-bold text-sm hover:brightness-105 transition-all">Elfogadom</button>
             <button onclick="declineCookies()" class="border border-inverse-on-surface/30 px-6 py-2 rounded-lg font-bold text-sm hover:bg-inverse-on-surface/10 transition-all">Elutasítom</button>
         </div>
