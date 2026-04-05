@@ -91,9 +91,112 @@
     .mobile-menu { transition: transform 0.3s ease, opacity 0.3s ease; }
     .mobile-menu.hidden { transform: translateX(100%); opacity: 0; }
     .mobile-menu.open { transform: translateX(0); opacity: 1; }
+
+    /* ===== INTERACTION ANIMATIONS ===== */
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1); }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1); }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+    .reveal-scale { opacity: 0; transform: scale(0.9); transition: opacity 0.6s cubic-bezier(.22,1,.36,1), transform 0.6s cubic-bezier(.22,1,.36,1); }
+    .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+    /* Stagger children */
+    .stagger > * { opacity: 0; transform: translateY(20px); transition: opacity 0.5s cubic-bezier(.22,1,.36,1), transform 0.5s cubic-bezier(.22,1,.36,1); }
+    .stagger.visible > *:nth-child(1) { transition-delay: 0s; }
+    .stagger.visible > *:nth-child(2) { transition-delay: 0.08s; }
+    .stagger.visible > *:nth-child(3) { transition-delay: 0.16s; }
+    .stagger.visible > *:nth-child(4) { transition-delay: 0.24s; }
+    .stagger.visible > *:nth-child(5) { transition-delay: 0.32s; }
+    .stagger.visible > *:nth-child(6) { transition-delay: 0.40s; }
+    .stagger.visible > * { opacity: 1; transform: translateY(0); }
+
+    /* Button press */
+    .btn-press { transition: transform 0.15s cubic-bezier(.22,1,.36,1), box-shadow 0.15s ease; }
+    .btn-press:active { transform: scale(0.95); }
+    .btn-press:hover { box-shadow: 0 8px 25px -5px rgba(6,27,14,0.15); }
+
+    /* Card hover lift */
+    .card-lift { transition: transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s ease; }
+    .card-lift:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -15px rgba(6,27,14,0.12); }
+    @media (max-width: 767px) { .card-lift:active { transform: scale(0.97); } .card-lift:hover { transform: none; box-shadow: none; } }
+
+    /* Ripple effect */
+    .ripple { position: relative; overflow: hidden; }
+    .ripple::after { content: ''; position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; background-image: radial-gradient(circle, rgba(6,27,14,0.08) 10%, transparent 10.01%); background-repeat: no-repeat; background-position: 50%; transform: scale(10, 10); opacity: 0; transition: transform .4s, opacity .8s; }
+    .ripple:active::after { transform: scale(0, 0); opacity: 1; transition: 0s; }
+
+    /* Image zoom on card hover */
+    .img-zoom { overflow: hidden; }
+    .img-zoom img { transition: transform 0.6s cubic-bezier(.22,1,.36,1); }
+    .img-zoom:hover img { transform: scale(1.08); }
+
+    /* Nav link underline animation */
+    .nav-animated { position: relative; }
+    .nav-animated::after { content: ''; position: absolute; bottom: -2px; left: 50%; width: 0; height: 2px; background: #cba72f; transition: width 0.3s cubic-bezier(.22,1,.36,1), left 0.3s cubic-bezier(.22,1,.36,1); }
+    .nav-animated:hover::after, .nav-animated.active::after { width: 100%; left: 0; }
+
+    /* Floating badge pulse */
+    .badge-pulse { animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+    /* Hero text fade-up */
+    .hero-fade { opacity: 0; transform: translateY(30px); animation: heroFade 1s cubic-bezier(.22,1,.36,1) forwards; }
+    .hero-fade:nth-child(2) { animation-delay: 0.15s; }
+    .hero-fade:nth-child(3) { animation-delay: 0.3s; }
+    .hero-fade:nth-child(4) { animation-delay: 0.45s; }
+    @keyframes heroFade { to { opacity: 1; transform: translateY(0); } }
+
+    /* Tab switch */
+    .tab-pop { transition: all 0.25s cubic-bezier(.22,1,.36,1); }
+    .tab-pop:active { transform: scale(0.93); }
+
+    /* Cart sidebar slide */
+    .cart-slide-in { animation: slideFromRight 0.35s cubic-bezier(.22,1,.36,1); }
+    @keyframes slideFromRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+    /* Form focus glow */
+    input:focus, select:focus, textarea:focus { transition: box-shadow 0.3s ease; box-shadow: 0 0 0 3px rgba(6,27,14,0.08); }
+
+    /* Counter number bump */
+    .num-bump { animation: bump 0.3s cubic-bezier(.22,1,.36,1); }
+    @keyframes bump { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+
+    /* Lightbox fade */
+    .lightbox-fade { animation: lbFade 0.3s ease; }
+    @keyframes lbFade { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+    /* Bottom nav tap */
+    .btm-nav-item { transition: transform 0.15s ease; }
+    .btm-nav-item:active { transform: scale(0.85); }
+
+    /* Parallax subtle */
+    .parallax-slow { will-change: transform; }
+
+    /* Skeleton shimmer for loading states */
+    .shimmer { background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.1) 50%, transparent 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+    @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+    /* Smooth page section transitions */
+    section { transition: opacity 0.3s ease; }
+
+    /* Pricing card hover scale (desktop only) */
+    @media (min-width: 768px) {
+        .pricing-hover { transition: transform 0.4s cubic-bezier(.22,1,.36,1), box-shadow 0.4s ease; }
+        .pricing-hover:hover { transform: translateY(-12px) scale(1.02); box-shadow: 0 30px 60px -20px rgba(6,27,14,0.15); }
+    }
+
+    /* Scroll progress indicator */
+    #scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, #735c00, #cba72f); z-index: 9999; transition: width 0.1s linear; width: 0%; }
 </style>
 </head>
 <body class="bg-background text-on-surface">
+
+<!-- Scroll progress indicator -->
+<div id="scroll-progress"></div>
 
 <!-- Toast container -->
 <div id="toast-container" class="fixed bottom-6 right-6 z-[100] space-y-2"></div>
@@ -206,11 +309,11 @@
         <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent"></div>
     </div>
     <div class="relative z-10 space-y-6">
-        <h2 class="font-headline text-4xl leading-tight text-white font-bold italic">Autentikus ízek, modern köntösben</h2>
-        <p class="text-white/90 text-lg max-w-sm">Fedezze fel Budapest legrejtettebb gasztronómiai kertjét, ahol a hagyomány és az innováció találkozik.</p>
-        <div class="flex flex-col gap-3 pt-4">
-            <a href="#booking" class="bg-tertiary-container text-on-tertiary-container font-bold py-4 rounded-xl shadow-lg active:scale-95 transition-all text-center">Asztal foglalása</a>
-            <a href="#menu" class="bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold py-4 rounded-xl active:scale-95 transition-all text-center">Étlap megtekintése</a>
+        <h2 class="hero-fade font-headline text-4xl leading-tight text-white font-bold italic">Autentikus ízek, modern köntösben</h2>
+        <p class="hero-fade text-white/90 text-lg max-w-sm">Fedezze fel Budapest legrejtettebb gasztronómiai kertjét, ahol a hagyomány és az innováció találkozik.</p>
+        <div class="hero-fade flex flex-col gap-3 pt-4">
+            <a href="#booking" class="btn-press ripple bg-tertiary-container text-on-tertiary-container font-bold py-4 rounded-xl shadow-lg text-center">Asztal foglalása</a>
+            <a href="#menu" class="btn-press ripple bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold py-4 rounded-xl text-center">Étlap megtekintése</a>
         </div>
     </div>
 </header>
@@ -225,8 +328,8 @@
                 Fedezze fel a magyar gasztronómia új korszakát Budapest szívében. Friss alapanyagok a helyi kertekből, újragondolt hagyományok.
             </p>
             <div class="flex flex-wrap gap-4 mb-16">
-                <a href="#booking" class="bg-tertiary-container text-on-tertiary-container px-8 py-4 rounded-lg font-bold text-lg hover:brightness-95 transition-all shadow-sm">Asztal foglalása</a>
-                <a href="#menu" class="border-2 border-primary text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-primary hover:text-on-primary transition-all">Étlap megtekintése</a>
+                <a href="#booking" class="btn-press ripple bg-tertiary-container text-on-tertiary-container px-8 py-4 rounded-lg font-bold text-lg hover:brightness-95 shadow-sm">Asztal foglalása</a>
+                <a href="#menu" class="btn-press ripple border-2 border-primary text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-primary hover:text-on-primary">Étlap megtekintése</a>
             </div>
             <div class="grid grid-cols-3 gap-8 pt-8 border-t border-outline-variant/20">
                 <div>
@@ -450,12 +553,12 @@
                 <div class="space-y-2">
                     <label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Időpont *</label>
                     <div class="grid grid-cols-4 md:grid-cols-6 gap-3" id="time-slots">
-                        <button class="time-slot bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="17:00">17:00</button>
+                        <button class="time-slot tab-pop bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="17:00">17:00</button>
                         <button class="time-slot bg-primary text-on-primary py-2 rounded-lg text-sm" type="button" data-time="18:00">18:00</button>
-                        <button class="time-slot bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="19:00">19:00</button>
-                        <button class="time-slot bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="20:00">20:00</button>
-                        <button class="time-slot bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="21:00">21:00</button>
-                        <button class="time-slot bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="22:00">22:00</button>
+                        <button class="time-slot tab-pop bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="19:00">19:00</button>
+                        <button class="time-slot tab-pop bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="20:00">20:00</button>
+                        <button class="time-slot tab-pop bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="21:00">21:00</button>
+                        <button class="time-slot tab-pop bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="22:00">22:00</button>
                     </div>
                     <input type="hidden" id="booking-time" value="18:00"/>
                 </div>
@@ -463,7 +566,7 @@
                     <label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Megjegyzés (opcionális)</label>
                     <textarea id="booking-notes" class="w-full bg-surface-container-lowest border-none rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary/40 h-24" placeholder="Allergia, különleges kérés..."></textarea>
                 </div>
-                <button type="submit" class="w-full bg-primary text-on-primary py-4 rounded-xl font-bold text-lg hover:shadow-lg transition-all mt-4">Foglalás megerősítése</button>
+                <button type="submit" class="btn-press ripple w-full bg-primary text-on-primary py-4 rounded-xl font-bold text-lg hover:shadow-lg mt-4">Foglalás megerősítése</button>
             </form>
         </div>
         <div class="bg-primary p-8 md:p-12 lg:p-16 flex flex-col justify-center relative overflow-hidden">
@@ -550,16 +653,16 @@
                 </div>
                 <div class="space-y-3 mb-8">
                     <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-4">Fizetési mód</p>
-                    <button onclick="selectPayment('card', this)" class="payment-btn w-full flex items-center justify-between p-3 rounded-xl bg-surface-container-lowest border border-primary/20">
+                    <button onclick="selectPayment('card', this)" class="payment-btn ripple w-full flex items-center justify-between p-3 rounded-xl bg-surface-container-lowest border border-primary/20">
                         <span class="flex items-center gap-3 font-medium"><span class="material-symbols-outlined">credit_card</span> Bankkártya</span>
                         <span class="material-symbols-outlined text-primary filled">radio_button_checked</span>
                     </button>
-                    <button onclick="selectPayment('cash', this)" class="payment-btn w-full flex items-center justify-between p-3 rounded-xl bg-surface-container-lowest/50 text-on-surface-variant">
+                    <button onclick="selectPayment('cash', this)" class="payment-btn ripple w-full flex items-center justify-between p-3 rounded-xl bg-surface-container-lowest/50 text-on-surface-variant">
                         <span class="flex items-center gap-3 font-medium"><span class="material-symbols-outlined">payments</span> Utánvét</span>
                         <span class="material-symbols-outlined">radio_button_unchecked</span>
                     </button>
                 </div>
-                <button onclick="handleOrder()" class="w-full bg-primary text-on-primary py-4 rounded-xl font-bold text-lg hover:opacity-90 transition-all">Rendelés Leadása</button>
+                <button onclick="handleOrder()" class="btn-press ripple w-full bg-primary text-on-primary py-4 rounded-xl font-bold text-lg hover:opacity-90">Rendelés Leadása</button>
                 <div class="flex justify-center gap-4 mt-6 opacity-40">
                     <span class="material-symbols-outlined">contactless</span>
                     <span class="material-symbols-outlined">credit_card</span>
@@ -800,7 +903,7 @@
         <p class="text-on-primary-container mb-12">Iratkozzon fel hírlevelünkre, és értesüljön elsőként különleges vacsoraestjeinkről és szezonális ajánlatainkról.</p>
         <form id="newsletter-form" class="flex flex-col md:flex-row gap-4 max-w-lg mx-auto" onsubmit="return handleNewsletter(event)">
             <input required id="newsletter-email" class="flex-grow bg-surface/10 border-none rounded-xl py-4 px-6 text-on-primary focus:ring-2 focus:ring-tertiary-fixed placeholder:text-on-primary-container" placeholder="Az Ön email címe" type="email"/>
-            <button type="submit" class="bg-tertiary-container text-on-tertiary-container px-8 py-4 rounded-xl font-bold hover:brightness-105 transition-all">Feliratkozás</button>
+            <button type="submit" class="btn-press ripple bg-tertiary-container text-on-tertiary-container px-8 py-4 rounded-xl font-bold hover:brightness-105">Feliratkozás</button>
         </form>
         <p class="mt-6 text-[10px] text-on-primary-container/60">A feliratkozással elfogadja az Adatkezelési tájékoztatónkat (GDPR).</p>
     </div>
@@ -1319,6 +1422,122 @@ window.addEventListener('scroll', () => {
 
 // Initialize order UI
 updateOrderUI();
+
+// ==================== SCROLL ANIMATIONS ====================
+
+// Scroll progress bar
+window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    document.getElementById('scroll-progress').style.width = progress + '%';
+});
+
+// Reveal on scroll (IntersectionObserver)
+function initRevealAnimations() {
+    // Add reveal classes to sections
+    document.querySelectorAll('section').forEach((s, i) => {
+        if (!s.classList.contains('reveal')) s.classList.add('reveal');
+    });
+
+    // Add card-lift to menu cards
+    document.querySelectorAll('.menu-card').forEach(c => c.classList.add('card-lift'));
+
+    // Add stagger to grids
+    document.querySelectorAll('#menu-grid').forEach(g => g.classList.add('stagger'));
+
+    // Add btn-press to all standalone buttons
+    document.querySelectorAll('button[type="submit"], .add-to-cart-btn, a[href="#booking"]:not(.hero-fade a)').forEach(b => {
+        if (!b.classList.contains('btn-press')) b.classList.add('btn-press');
+    });
+
+    // Add tab-pop to menu tabs
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.add('tab-pop'));
+
+    // Add pricing-hover to catering cards
+    document.querySelectorAll('#catering .bg-surface-container-lowest, #catering .bg-primary').forEach(c => c.classList.add('pricing-hover'));
+
+    // Add img-zoom to gallery items
+    document.querySelectorAll('#gallery .rounded-2xl').forEach(g => g.classList.add('img-zoom'));
+
+    // Add badge-pulse to cart count
+    const cartBadge = document.getElementById('cart-count');
+    if (cartBadge) cartBadge.classList.add('badge-pulse');
+
+    // Add btm-nav-item to bottom nav links
+    document.querySelectorAll('.mobile-main-nav').forEach(n => n.classList.add('btm-nav-item'));
+
+    // Observe all reveal elements
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// Cart count bump animation
+const origUpdateCartUI = updateCartUI;
+updateCartUI = function() {
+    origUpdateCartUI();
+    const countEl = document.getElementById('cart-count');
+    if (countEl && !countEl.classList.contains('hidden')) {
+        countEl.classList.add('num-bump');
+        setTimeout(() => countEl.classList.remove('num-bump'), 300);
+    }
+};
+
+// Lightbox animation enhancement
+const origOpenLightbox = openLightbox;
+openLightbox = function(imgEl) {
+    origOpenLightbox(imgEl);
+    const lbImg = document.getElementById('lightbox-img');
+    if (lbImg) lbImg.classList.add('lightbox-fade');
+};
+const origCloseLightbox = closeLightbox;
+closeLightbox = function() {
+    const lbImg = document.getElementById('lightbox-img');
+    if (lbImg) lbImg.classList.remove('lightbox-fade');
+    origCloseLightbox();
+};
+
+// Cart sidebar slide animation
+const origToggleCart = toggleCart;
+toggleCart = function() {
+    const sidebar = document.getElementById('cart-sidebar');
+    const wasHidden = sidebar.classList.contains('hidden');
+    origToggleCart();
+    if (wasHidden) {
+        const panel = sidebar.querySelector('.absolute.right-0');
+        if (panel) panel.classList.add('cart-slide-in');
+        setTimeout(() => { if (panel) panel.classList.remove('cart-slide-in'); }, 400);
+    }
+};
+
+// Smooth hover sound-like feedback for buttons (subtle scale)
+document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+    btn.addEventListener('mouseenter', () => btn.style.transform = 'scale(1.05)');
+    btn.addEventListener('mouseleave', () => btn.style.transform = 'scale(1)');
+});
+
+// Parallax on hero images (desktop)
+if (window.innerWidth > 768) {
+    window.addEventListener('scroll', () => {
+        const hero = document.querySelector('header.hidden.md\\:flex .rounded-2xl img');
+        if (hero) {
+            const scroll = window.scrollY;
+            hero.style.transform = `scale(1.05) translateY(${scroll * 0.05}px)`;
+        }
+    });
+}
+
+// Init on DOM ready
+initRevealAnimations();
 </script>
 
 </body>
