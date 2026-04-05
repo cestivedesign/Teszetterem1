@@ -133,17 +133,22 @@
         </div>
     </div>
     <nav class="flex-1 space-y-1 overflow-y-auto px-4">
+        <!-- ÁTTEKINTÉS -->
+        <div class="pt-2 pb-2 px-4">
+            <p class="text-[10px] uppercase tracking-widest text-outline">Áttekintés</p>
+        </div>
         <a onclick="showPage('dashboard')" class="sidebar-link active bg-primary text-on-primary rounded-lg px-4 py-3 shadow-sm flex items-center gap-3 transition-transform active:scale-95 cursor-pointer" data-page="dashboard">
             <span class="material-symbols-outlined filled">dashboard</span>
             <span>Dashboard</span>
         </a>
+
+        <!-- RENDELÉS KEZELÉS -->
+        <div class="pt-4 pb-2 px-4">
+            <p class="text-[10px] uppercase tracking-widest text-outline">Rendelés kezelés</p>
+        </div>
         <a onclick="showPage('bookings')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="bookings">
             <span class="material-symbols-outlined">calendar_today</span>
             <span>Foglalások</span>
-        </a>
-        <a onclick="showPage('menu-mgmt')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="menu-mgmt">
-            <span class="material-symbols-outlined">restaurant_menu</span>
-            <span>Étlap kezelés</span>
         </a>
         <a onclick="showPage('orders')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="orders">
             <span class="material-symbols-outlined">receipt_long</span>
@@ -153,13 +158,15 @@
             <span class="material-symbols-outlined">group</span>
             <span>Vendégek</span>
         </a>
-        <a onclick="showPage('finance')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="finance">
-            <span class="material-symbols-outlined">payments</span>
-            <span>Pénzügyek</span>
-        </a>
+
+        <!-- HONLAP KEZELÉS -->
         <div class="pt-4 pb-2 px-4">
-            <p class="text-[10px] uppercase tracking-widest text-outline">Content</p>
+            <p class="text-[10px] uppercase tracking-widest text-outline">Honlap kezelés</p>
         </div>
+        <a onclick="showPage('menu-mgmt')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="menu-mgmt">
+            <span class="material-symbols-outlined">restaurant_menu</span>
+            <span>Étlap kezelés</span>
+        </a>
         <a onclick="showPage('gallery')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="gallery">
             <span class="material-symbols-outlined">gallery_thumbnail</span>
             <span>Galéria</span>
@@ -167,6 +174,19 @@
         <a onclick="showPage('blog')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="blog">
             <span class="material-symbols-outlined">article</span>
             <span>Blog kezelés</span>
+        </a>
+
+        <!-- STATISZTIKÁK -->
+        <div class="pt-4 pb-2 px-4">
+            <p class="text-[10px] uppercase tracking-widest text-outline">Statisztikák</p>
+        </div>
+        <a onclick="showPage('finance')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="finance">
+            <span class="material-symbols-outlined">payments</span>
+            <span>Pénzügyek</span>
+        </a>
+        <a onclick="showPage('analytics')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="analytics">
+            <span class="material-symbols-outlined">trending_up</span>
+            <span>Analitika</span>
         </a>
     </nav>
     <div class="mt-auto px-4 space-y-1">
@@ -649,6 +669,182 @@
         <div class="bg-primary-container rounded-xl p-6 border border-white/5 flex flex-col md:flex-row gap-6 items-start"><div class="w-full md:w-32 h-24 rounded-lg overflow-hidden flex-shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeUz5OCSUTf1IWHDDPL_DeI3wR6n7uddXR2W2kC5H0lDrEZqu3jheeA_QByLlWFJtOqTjT9h_hoBBO2NZJ0bkxdR47_XMLdlFjlEHISC9SqJvo7k6FIX0YsUSPSdxndGkhfY1_o1IMM6YDuNXkyqM8jdqrLd2K6Ors18dfYqfPAyFKVK59ud5-jBB2zpmX_HUmU2gJhFGgkmAsAn1ToshwR_Uy2NKnZSm9B4RAnmHUpu8R5s84dSn_N6Drp42RpCChV-817Tb2NkY" alt=""/></div><div class="flex-grow"><h4 class="font-bold text-on-primary-fixed">A helyi termelők nyomában</h4><p class="text-xs text-outline mb-3">Alapanyagok | 5 perc olvasás | Publikálva: Apr 1.</p><div class="flex gap-3"><button onclick="showToast('Cikk szerkesztése megnyitva')" class="text-xs text-tertiary-fixed-dim hover:underline font-bold cursor-pointer">Szerkesztés</button><button onclick="showToast('Cikk elrejtve')" class="text-xs text-outline hover:text-error font-bold cursor-pointer">Elrejtés</button></div></div><span class="text-[10px] font-bold uppercase tracking-widest bg-tertiary/20 text-tertiary-fixed-dim px-3 py-1 rounded-full whitespace-nowrap">Publikálva</span></div>
         <div class="bg-primary-container rounded-xl p-6 border border-white/5 flex flex-col md:flex-row gap-6 items-start"><div class="w-full md:w-32 h-24 rounded-lg overflow-hidden flex-shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlMHEUnQW0o7HFUJHA5zlKtWP1QFlbUVCs643t1WauA5By8ruoaFuFEKkBF0I8BYnM--6o60dinEVsOyoDPG7NcZ2PP640P33NqAStw_MYQB9BJswUPodGvBitfEgLtrjY8WIpEY3KwjLJ9tKD_AcvinVi-EojYHMzYFAd5DFNeo5rOozq4KTMGukj4QSJai1W1sF5BstwMA1RNIdnJJ3_UXh5vjr66vBz3YW6_J1NrD993b8pdLsuWKRfMtckSwNpmee6GrVp36o" alt=""/></div><div class="flex-grow"><h4 class="font-bold text-on-primary-fixed">Melyik bor illik a pörkölthöz?</h4><p class="text-xs text-outline mb-3">Bor & Gasztro | 8 perc olvasás | Publikálva: Már 15.</p><div class="flex gap-3"><button onclick="showToast('Cikk szerkesztése megnyitva')" class="text-xs text-tertiary-fixed-dim hover:underline font-bold cursor-pointer">Szerkesztés</button><button onclick="showToast('Cikk elrejtve')" class="text-xs text-outline hover:text-error font-bold cursor-pointer">Elrejtés</button></div></div><span class="text-[10px] font-bold uppercase tracking-widest bg-tertiary/20 text-tertiary-fixed-dim px-3 py-1 rounded-full whitespace-nowrap">Publikálva</span></div>
         <div class="bg-primary-container rounded-xl p-6 border border-white/5 flex flex-col md:flex-row gap-6 items-start"><div class="w-full md:w-32 h-24 rounded-lg overflow-hidden flex-shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-8Kxs_EFbFbDjz-T69ADtm1--dxS7jO02iWbizTlQCQpCqj_IR2OXhhu9GOBVYp-26rlTggO3-KWn09ndesh7SXOTNMhPqzzfFwqHuX17pbqR2Jz_5GznX8DvY6u7QGjHkGsTImaO05n6ZSSHj8bdOHb_TN_CrO0GUBLykSGWoA3YFQbMTMU5EDu4ZjWxAPtSqN_9IjXtfn0JkSVRyhR-SR2vfJ0DnthlVjlPLfFKx-vrDKxow0nNYwk3xl1eOlqzkAh8Ig1FPe0" alt=""/></div><div class="flex-grow"><h4 class="font-bold text-on-primary-fixed">Tavaszi megújulás a tányéron</h4><p class="text-xs text-outline mb-3">Életmód | 6 perc olvasás | Piszkozat</p><div class="flex gap-3"><button onclick="showToast('Cikk szerkesztése megnyitva')" class="text-xs text-tertiary-fixed-dim hover:underline font-bold cursor-pointer">Szerkesztés</button><button onclick="showToast('Cikk publikálva!')" class="text-xs text-tertiary-fixed-dim hover:underline font-bold cursor-pointer">Publikálás</button></div></div><span class="text-[10px] font-bold uppercase tracking-widest bg-primary text-on-primary-container px-3 py-1 rounded-full whitespace-nowrap">Piszkozat</span></div>
+    </div>
+</div>
+
+<!-- ========== PAGE: ANALYTICS ========== -->
+<div id="page-analytics" class="page hidden">
+    <header class="mb-8"><h1 class="text-3xl font-serif text-on-primary-fixed">Analitika</h1><p class="text-outline text-sm">Vendégforgalom, népszerű ételek és trendek</p></header>
+
+    <!-- Top metrics -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div class="bg-primary-container p-5 rounded-xl border border-white/5">
+            <p class="text-outline text-xs font-medium mb-1">Havi látogatók</p>
+            <p class="text-2xl font-serif text-on-primary-fixed">3,240</p>
+            <span class="text-tertiary-fixed-dim text-xs font-bold">+14% előző hónaphoz</span>
+        </div>
+        <div class="bg-primary-container p-5 rounded-xl border border-white/5">
+            <p class="text-outline text-xs font-medium mb-1">Visszatérési arány</p>
+            <p class="text-2xl font-serif text-on-primary-fixed">42%</p>
+            <span class="text-tertiary-fixed-dim text-xs font-bold">+3% előző hónaphoz</span>
+        </div>
+        <div class="bg-primary-container p-5 rounded-xl border border-white/5">
+            <p class="text-outline text-xs font-medium mb-1">Átl. kosárérték</p>
+            <p class="text-2xl font-serif text-on-primary-fixed">8,900 Ft</p>
+            <span class="text-tertiary-fixed-dim text-xs font-bold">+7% előző hónaphoz</span>
+        </div>
+        <div class="bg-primary-container p-5 rounded-xl border border-white/5">
+            <p class="text-outline text-xs font-medium mb-1">Hírlevél feliratkozók</p>
+            <p class="text-2xl font-serif text-on-primary-fixed">312</p>
+            <span class="text-tertiary-fixed-dim text-xs font-bold">+18 ez a hónap</span>
+        </div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8 mb-8">
+        <!-- Popular dishes -->
+        <div class="bg-primary-container rounded-2xl p-6 border border-white/5">
+            <h3 class="text-lg font-serif text-on-primary-fixed mb-6">Legnépszerűbb ételek</h3>
+            <div class="space-y-4">
+                <div class="flex items-center gap-4">
+                    <span class="text-tertiary-fixed-dim font-bold text-lg w-6 text-center">1</span>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-on-primary-fixed text-sm">Marhapörkölt 'Kertem'</span>
+                            <span class="text-on-primary-container text-xs">342 rendelés</span>
+                        </div>
+                        <div class="w-full bg-primary h-2 rounded-full"><div class="bg-tertiary h-full rounded-full" style="width:95%"></div></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-tertiary-fixed-dim font-bold text-lg w-6 text-center">2</span>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-on-primary-fixed text-sm">Grillezett Bárányfalatok</span>
+                            <span class="text-on-primary-container text-xs">278 rendelés</span>
+                        </div>
+                        <div class="w-full bg-primary h-2 rounded-full"><div class="bg-tertiary h-full rounded-full" style="width:78%"></div></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-tertiary-fixed-dim font-bold text-lg w-6 text-center">3</span>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-on-primary-fixed text-sm">Sült Pisztráng</span>
+                            <span class="text-on-primary-container text-xs">215 rendelés</span>
+                        </div>
+                        <div class="w-full bg-primary h-2 rounded-full"><div class="bg-tertiary h-full rounded-full" style="width:62%"></div></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-tertiary-fixed-dim font-bold text-lg w-6 text-center">4</span>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-on-primary-fixed text-sm">Tavaszi Kert Saláta</span>
+                            <span class="text-on-primary-container text-xs">189 rendelés</span>
+                        </div>
+                        <div class="w-full bg-primary h-2 rounded-full"><div class="bg-tertiary h-full rounded-full" style="width:53%"></div></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-tertiary-fixed-dim font-bold text-lg w-6 text-center">5</span>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-on-primary-fixed text-sm">Kürtőskalács Puding</span>
+                            <span class="text-on-primary-container text-xs">156 rendelés</span>
+                        </div>
+                        <div class="w-full bg-primary h-2 rounded-full"><div class="bg-tertiary h-full rounded-full" style="width:44%"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Peak hours -->
+        <div class="bg-primary-container rounded-2xl p-6 border border-white/5">
+            <h3 class="text-lg font-serif text-on-primary-fixed mb-6">Csúcsidők (foglalások)</h3>
+            <div class="h-52 flex items-end justify-between gap-2">
+                <div class="flex-1 flex flex-col items-center gap-1">
+                    <div class="w-full bg-primary/40 rounded-t-lg hover:bg-tertiary/20 transition-colors" style="height:15%"></div>
+                    <span class="text-[9px] text-outline">11h</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center gap-1">
+                    <div class="w-full bg-primary/40 rounded-t-lg hover:bg-tertiary/20 transition-colors" style="height:35%"></div>
+                    <span class="text-[9px] text-outline">12h</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center gap-1">
+                    <div class="w-full bg-tertiary/50 rounded-t-lg hover:bg-tertiary/70 transition-colors" style="height:55%"></div>
+                    <span class="text-[9px] text-outline">13h</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center gap-1">
+                    <div class="w-full bg-primary/40 rounded-t-lg hover:bg-tertiary/20 transition-colors" style="height:20%"></div>
+                    <span class="text-[9px] text-outline">14h</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center gap-1">
+                    <div class="w-full bg-primary/40 rounded-t-lg hover:bg-tertiary/20 transition-colors" style="height:10%"></div>
+                    <span class="text-[9px] text-outline">15h</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center gap-1">
+                    <div class="w-full bg-primary/40 rounded-t-lg hover:bg-tertiary/20 transition-colors" style="height:15%"></div>
+                    <span class="text-[9px] text-outline">16h</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center gap-1">
+                    <div class="w-full bg-primary/40 rounded-t-lg hover:bg-tertiary/20 transition-colors" style="height:30%"></div>
+                    <span class="text-[9px] text-outline">17h</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center gap-1">
+                    <div class="w-full bg-tertiary/60 rounded-t-lg hover:bg-tertiary/80 transition-colors" style="height:70%"></div>
+                    <span class="text-[9px] text-outline">18h</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center gap-1">
+                    <div class="w-full bg-tertiary rounded-t-lg shadow-[0_0_15px_rgba(115,92,0,0.3)]" style="height:95%"></div>
+                    <span class="text-[9px] text-outline font-bold">19h</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center gap-1">
+                    <div class="w-full bg-tertiary/70 rounded-t-lg hover:bg-tertiary/80 transition-colors" style="height:80%"></div>
+                    <span class="text-[9px] text-outline">20h</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center gap-1">
+                    <div class="w-full bg-tertiary/40 rounded-t-lg hover:bg-tertiary/60 transition-colors" style="height:45%"></div>
+                    <span class="text-[9px] text-outline">21h</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center gap-1">
+                    <div class="w-full bg-primary/40 rounded-t-lg hover:bg-tertiary/20 transition-colors" style="height:15%"></div>
+                    <span class="text-[9px] text-outline">22h</span>
+                </div>
+            </div>
+            <p class="text-xs text-on-primary-container mt-4">Csúcsidő: <span class="font-bold text-tertiary-fixed-dim">19:00</span> — átlagosan 42 vendég/nap</p>
+        </div>
+    </div>
+
+    <!-- Revenue sources + Ratings -->
+    <div class="grid lg:grid-cols-3 gap-8">
+        <div class="bg-primary-container rounded-2xl p-6 border border-white/5">
+            <h3 class="text-lg font-serif text-on-primary-fixed mb-4">Bevétel forrás</h3>
+            <div class="space-y-4">
+                <div class="flex justify-between items-center"><span class="text-on-primary-container text-sm">Helyszíni fogyasztás</span><span class="font-bold text-on-primary-fixed">62%</span></div>
+                <div class="w-full bg-primary h-2 rounded-full"><div class="bg-tertiary h-full rounded-full" style="width:62%"></div></div>
+                <div class="flex justify-between items-center"><span class="text-on-primary-container text-sm">Online rendelés</span><span class="font-bold text-on-primary-fixed">24%</span></div>
+                <div class="w-full bg-primary h-2 rounded-full"><div class="bg-tertiary-fixed-dim h-full rounded-full" style="width:24%"></div></div>
+                <div class="flex justify-between items-center"><span class="text-on-primary-container text-sm">Catering</span><span class="font-bold text-on-primary-fixed">14%</span></div>
+                <div class="w-full bg-primary h-2 rounded-full"><div class="bg-secondary h-full rounded-full" style="width:14%"></div></div>
+            </div>
+        </div>
+        <div class="bg-primary-container rounded-2xl p-6 border border-white/5">
+            <h3 class="text-lg font-serif text-on-primary-fixed mb-4">Online értékelések</h3>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between"><span class="text-on-primary-container text-sm">Google</span><div class="flex items-center gap-2"><span class="text-tertiary-fixed-dim material-symbols-outlined text-[16px] filled">star</span><span class="font-bold text-on-primary-fixed">4.9</span><span class="text-outline text-xs">(428)</span></div></div>
+                <div class="flex items-center justify-between"><span class="text-on-primary-container text-sm">TripAdvisor</span><div class="flex items-center gap-2"><span class="text-tertiary-fixed-dim material-symbols-outlined text-[16px] filled">star</span><span class="font-bold text-on-primary-fixed">4.8</span><span class="text-outline text-xs">(312)</span></div></div>
+                <div class="flex items-center justify-between"><span class="text-on-primary-container text-sm">Facebook</span><div class="flex items-center gap-2"><span class="text-tertiary-fixed-dim material-symbols-outlined text-[16px] filled">star</span><span class="font-bold text-on-primary-fixed">4.7</span><span class="text-outline text-xs">(189)</span></div></div>
+            </div>
+        </div>
+        <div class="bg-primary-container rounded-2xl p-6 border border-white/5">
+            <h3 class="text-lg font-serif text-on-primary-fixed mb-4">Honlap statisztika</h3>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between"><span class="text-on-primary-container text-sm">Havi oldallátogatás</span><span class="font-bold text-on-primary-fixed">12,400</span></div>
+                <div class="flex items-center justify-between"><span class="text-on-primary-container text-sm">Konverzió (foglalás)</span><span class="font-bold text-on-primary-fixed">8.2%</span></div>
+                <div class="flex items-center justify-between"><span class="text-on-primary-container text-sm">Konverzió (rendelés)</span><span class="font-bold text-on-primary-fixed">5.4%</span></div>
+                <div class="flex items-center justify-between"><span class="text-on-primary-container text-sm">Átl. oldalon töltött idő</span><span class="font-bold text-on-primary-fixed">3:42</span></div>
+            </div>
+        </div>
     </div>
 </div>
 
