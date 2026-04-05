@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="hu">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kertem Étterem & Bár | Autentikus modern magyar konyha</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "tertiary-fixed-dim": "#e9c349",
+                    "surface-tint": "#4d6453",
+                    "on-tertiary-container": "#4e3d00",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed-dim": "#f4bb92",
+                    "on-secondary-container": "#794e2e",
+                    "on-primary-container": "#819986",
+                    "surface-dim": "#dcdad2",
+                    "inverse-surface": "#31312b",
+                    "primary-fixed": "#d0e9d4",
+                    "surface-bright": "#fcf9f1",
+                    "on-tertiary-fixed-variant": "#574500",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed-variant": "#364c3c",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#0b2013",
+                    "on-surface-variant": "#434843",
+                    "on-surface": "#1c1c17",
+                    "surface-container-low": "#f6f3eb",
+                    "tertiary": "#735c00",
+                    "surface-container-high": "#ebe8e0",
+                    "on-secondary-fixed-variant": "#653d1e",
+                    "on-secondary-fixed": "#301400",
+                    "on-error-container": "#93000a",
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "outline-variant": "#c3c8c1",
+                    "surface": "#fcf9f1",
+                    "primary-fixed-dim": "#b4cdb8",
+                    "surface-container": "#f1eee6",
+                    "primary-container": "#1b3022",
+                    "on-error": "#ffffff",
+                    "background": "#fcf9f1",
+                    "on-background": "#1c1c17",
+                    "tertiary-fixed": "#ffe088",
+                    "primary": "#061b0e",
+                    "secondary": "#805533",
+                    "inverse-on-surface": "#f3f1e9",
+                    "outline": "#737973",
+                    "on-tertiary-fixed": "#241a00",
+                    "surface-variant": "#e5e2db",
+                    "surface-container-highest": "#e5e2db",
+                    "tertiary-container": "#cba72f",
+                    "secondary-container": "#fdc39a",
+                    "inverse-primary": "#b4cdb8",
+                    "secondary-fixed": "#ffdcc5"
+                },
+                "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+                "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+                }
+            },
+        },
+    }
+</script>
+<style>
+    body { font-family: 'Manrope', sans-serif; }
+    .font-serif { font-family: 'Noto Serif', serif; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    .glass-nav { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .tonal-lift { background-color: #fcf9f1; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .toast { animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s; }
+    @keyframes slideIn { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+    .mobile-menu { transition: transform 0.3s ease, opacity 0.3s ease; }
+    .mobile-menu.hidden { transform: translateX(100%); opacity: 0; }
+    .mobile-menu.open { transform: translateX(0); opacity: 1; }
+</style>
+</head>
+<body class="bg-background text-on-surface">
+
+<!-- Toast container -->
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] space-y-2"></div>
+
+<!-- Top Info Bar -->
+<div class="hidden md:flex justify-between items-center px-12 py-2 bg-primary text-on-primary text-[11px] tracking-widest uppercase font-medium">
+    <div class="flex gap-8">
+        <a href="tel:+3612345678" class="flex items-center gap-2 hover:text-tertiary-fixed transition-colors"><span class="material-symbols-outlined text-[14px]">call</span> +36 1 234 5678</a>
+        <a href="#contact" class="flex items-center gap-2 hover:text-tertiary-fixed transition-colors"><span class="material-symbols-outlined text-[14px]">location_on</span> Budapest, Kazinczy u. 14.</a>
+        <span class="flex items-center gap-2"><span class="material-symbols-outlined text-[14px]">schedule</span> H-V: 11:00–23:00</span>
+    </div>
+    <div class="flex gap-4" id="lang-switcher">
+        <button class="hover:text-tertiary-fixed transition-colors lang-btn active font-bold" data-lang="hu">HU</button>
+        <span class="text-on-primary/30">|</span>
+        <button class="hover:text-tertiary-fixed transition-colors lang-btn" data-lang="en">EN</button>
+        <span class="text-on-primary/30">|</span>
+        <button class="hover:text-tertiary-fixed transition-colors lang-btn" data-lang="de">DE</button>
+    </div>
+</div>
+
+<!-- Announcement Bar -->
+<div id="announcement-bar" class="bg-tertiary text-on-tertiary py-3 px-4 text-center text-sm font-semibold tracking-wide relative">
+    Húsvéti akció: 20% kedvezmény minden catering rendelésre!
+    <a class="underline ml-2 hover:opacity-80 transition-opacity" href="#catering">Részletek itt →</a>
+    <button onclick="document.getElementById('announcement-bar').style.display='none'" class="absolute right-4 top-1/2 -translate-y-1/2 hover:opacity-70">
+        <span class="material-symbols-outlined text-[18px]">close</span>
+    </button>
+</div>
+
+<!-- Navigation -->
+<nav class="sticky top-0 z-50 bg-surface/80 backdrop-blur-md flex justify-between items-center w-full px-6 md:px-12 py-4 max-w-full">
+    <div class="flex items-center gap-12">
+        <a class="text-2xl font-serif italic text-primary" href="#">Kertem</a>
+        <div class="hidden lg:flex items-center gap-8 text-label-md" id="nav-links">
+            <a class="nav-link text-primary font-bold border-b-2 border-tertiary pb-1" href="#menu">Menu</a>
+            <a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="#booking">Booking</a>
+            <a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="#order">Order</a>
+            <a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="#catering">Catering</a>
+            <a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="#gallery">Gallery</a>
+            <a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="#blog">Blog</a>
+            <a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="#contact">Contact</a>
+        </div>
+    </div>
+    <div class="flex items-center gap-4 md:gap-6">
+        <button id="cart-btn" class="relative p-2 hover:bg-surface-container-low rounded-full transition-all" onclick="toggleCart()">
+            <span class="material-symbols-outlined">shopping_cart</span>
+            <span id="cart-count" class="absolute top-0 right-0 bg-tertiary text-on-tertiary text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full hidden">0</span>
+        </button>
+        <a class="hidden md:inline-block bg-primary text-on-primary px-6 py-2.5 rounded-md font-bold text-sm tracking-wide hover:opacity-90 transition-all active:scale-95" href="#booking">Asztalfoglalás</a>
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-btn" class="lg:hidden p-2 hover:bg-surface-container-low rounded-full transition-all" onclick="toggleMobileMenu()">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+    </div>
+</nav>
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-black/50" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-menu absolute right-0 top-0 h-full w-72 bg-surface shadow-2xl p-8 flex flex-col gap-6">
+        <div class="flex justify-between items-center mb-4">
+            <span class="text-xl font-serif italic text-primary">Kertem</span>
+            <button onclick="toggleMobileMenu()" class="p-2 hover:bg-surface-container-low rounded-full">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <a class="text-lg font-medium text-primary hover:text-secondary transition-colors py-2 border-b border-outline-variant/20" href="#menu" onclick="toggleMobileMenu()">Menu</a>
+        <a class="text-lg font-medium text-primary hover:text-secondary transition-colors py-2 border-b border-outline-variant/20" href="#booking" onclick="toggleMobileMenu()">Booking</a>
+        <a class="text-lg font-medium text-primary hover:text-secondary transition-colors py-2 border-b border-outline-variant/20" href="#order" onclick="toggleMobileMenu()">Order</a>
+        <a class="text-lg font-medium text-primary hover:text-secondary transition-colors py-2 border-b border-outline-variant/20" href="#catering" onclick="toggleMobileMenu()">Catering</a>
+        <a class="text-lg font-medium text-primary hover:text-secondary transition-colors py-2 border-b border-outline-variant/20" href="#gallery" onclick="toggleMobileMenu()">Gallery</a>
+        <a class="text-lg font-medium text-primary hover:text-secondary transition-colors py-2 border-b border-outline-variant/20" href="#blog" onclick="toggleMobileMenu()">Blog</a>
+        <a class="text-lg font-medium text-primary hover:text-secondary transition-colors py-2 border-b border-outline-variant/20" href="#contact" onclick="toggleMobileMenu()">Contact</a>
+        <a class="mt-auto bg-primary text-on-primary px-6 py-3 rounded-md font-bold text-center hover:opacity-90 transition-all" href="#booking" onclick="toggleMobileMenu()">Asztalfoglalás</a>
+        <div class="flex gap-4 justify-center">
+            <button class="lang-btn-mobile px-3 py-1 rounded font-bold text-sm" data-lang="hu" onclick="switchLang('hu')">HU</button>
+            <button class="lang-btn-mobile px-3 py-1 rounded text-sm text-on-surface-variant" data-lang="en" onclick="switchLang('en')">EN</button>
+            <button class="lang-btn-mobile px-3 py-1 rounded text-sm text-on-surface-variant" data-lang="de" onclick="switchLang('de')">DE</button>
+        </div>
+    </div>
+</div>
+
+<!-- Cart Sidebar -->
+<div id="cart-sidebar" class="fixed inset-0 z-[70] hidden">
+    <div class="absolute inset-0 bg-black/50" onclick="toggleCart()"></div>
+    <div class="absolute right-0 top-0 h-full w-80 md:w-96 bg-surface shadow-2xl flex flex-col">
+        <div class="flex justify-between items-center p-6 border-b border-outline-variant/20">
+            <h3 class="text-xl font-headline text-primary">Kosár</h3>
+            <button onclick="toggleCart()" class="p-2 hover:bg-surface-container-low rounded-full">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div id="cart-items" class="flex-grow overflow-y-auto p-6 space-y-4">
+            <p id="cart-empty" class="text-center text-on-surface-variant py-12">A kosár üres</p>
+        </div>
+        <div id="cart-footer" class="p-6 border-t border-outline-variant/20 hidden">
+            <div class="flex justify-between items-center mb-4">
+                <span class="font-bold">Összesen:</span>
+                <span id="cart-total" class="text-xl font-headline text-primary">0 Ft</span>
+            </div>
+            <a href="#order" onclick="toggleCart()" class="block w-full bg-primary text-on-primary py-3 rounded-xl font-bold text-center hover:opacity-90 transition-all">Megrendelés</a>
+        </div>
+    </div>
+</div>
+
+<!-- Hero Section -->
+<header class="relative min-h-[870px] flex items-center overflow-hidden px-6 md:px-12">
+    <div class="grid lg:grid-cols-2 gap-16 items-center w-full max-w-7xl mx-auto py-20">
+        <div class="z-10">
+            <span class="text-tertiary font-bold tracking-[0.2em] text-sm uppercase mb-6 block">★ Budapest legjobb modern magyar étterme 2025</span>
+            <h1 class="font-headline text-4xl md:text-5xl lg:text-6xl text-primary leading-[1.1] mb-8 lg:pr-12">Autentikus ízek, <br/><span class="italic text-secondary">modern köntösben</span></h1>
+            <p class="text-lg text-on-surface-variant mb-10 max-w-md leading-relaxed">
+                Fedezze fel a magyar gasztronómia új korszakát Budapest szívében. Friss alapanyagok a helyi kertekből, újragondolt hagyományok.
+            </p>
+            <div class="flex flex-wrap gap-4 mb-16">
+                <a href="#booking" class="bg-tertiary-container text-on-tertiary-container px-8 py-4 rounded-lg font-bold text-lg hover:brightness-95 transition-all shadow-sm">Asztal foglalása</a>
+                <a href="#menu" class="border-2 border-primary text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-primary hover:text-on-primary transition-all">Étlap megtekintése</a>
+            </div>
+            <div class="grid grid-cols-3 gap-8 pt-8 border-t border-outline-variant/20">
+                <div>
+                    <span class="block text-3xl font-headline text-primary">4.9</span>
+                    <span class="text-xs uppercase tracking-widest text-on-surface-variant font-semibold">Google Értékelés</span>
+                </div>
+                <div>
+                    <span class="block text-3xl font-headline text-primary">12k+</span>
+                    <span class="text-xs uppercase tracking-widest text-on-surface-variant font-semibold">Elégedett Vendég</span>
+                </div>
+                <div>
+                    <span class="block text-3xl font-headline text-primary">85+</span>
+                    <span class="text-xs uppercase tracking-widest text-on-surface-variant font-semibold">Különleges Fogás</span>
+                </div>
+            </div>
+        </div>
+        <div class="relative hidden md:block">
+            <div class="rounded-2xl overflow-hidden aspect-[4/5] shadow-2xl relative z-20">
+                <img class="w-full h-full object-cover" alt="Modern fine dining plate featuring slow-cooked beef with root vegetables and herb garnish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBB0KQ7H0ljlXFrOZPlx23BAt2Ob7Br59qxwSZTiMKyLjSnsNlJRIQ9iJ_kiNTsvenM_JFgj2CZCtr1M8dgmNmBepjmxadRdkMWQGAMxa0iZVkJ7gY5DLtHhJR9xiLVaH56vZWUFvDt49IhprvC7NpqaG-qS-9N-kHfXmT4LoklCKLEfT1Hi5fNxtInYmFPbXGfHspvZsxgPR7avJn3iuYAHdMNS_3k1pidP7vKf-VcRsDWov-DpNQWs37gAKTrCbL4mwk6b8ye7B8"/>
+            </div>
+            <div class="absolute -bottom-10 -left-10 w-64 h-64 rounded-2xl overflow-hidden border-[12px] border-background shadow-xl z-30 hidden xl:block">
+                <img class="w-full h-full object-cover" alt="Chef plating a Hungarian dessert with edible gold leaf" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB67CuZHsGasdAbxU76GRBQquyfc7x8QlpfjK8oV84MaFAkPE0u8BBoEpkGXF5t7_hqvsjZPvH7elfN02MTmDacxCvgXSIb8a_jcBZRcS1E1kJAjlEg_9cB15cM7nC_G7kNTzgH9Mu4VOyR9PRxVqujARpmuEtbZX28dlExS8rPYymRHRPoYvB_CTNz9X7_RSLLXMDcE05zPqxgLoF1l_iPZVqqlZn-TQdq2x6-jzrL_vWtTgebVsO4h7WpxWDKcMRUn6jTyANLjPw"/>
+            </div>
+            <div class="absolute -top-10 -right-10 w-48 h-48 bg-secondary-fixed rounded-full blur-3xl opacity-30 -z-10"></div>
+        </div>
+    </div>
+</header>
+
+<!-- Menu Section -->
+<section class="py-24 bg-surface-container-low" id="menu">
+    <div class="px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+            <div>
+                <h2 class="font-headline text-4xl text-primary mb-4 italic">Szezonális Étlapunk</h2>
+                <p class="text-on-surface-variant max-w-md">Válogasson séfünk legfrissebb kreációiból, melyekhez csak a legkiválóbb helyi alapanyagokat használjuk.</p>
+            </div>
+            <button onclick="showToast('Az étlap PDF letöltése megkezdődött!')" class="flex items-center gap-2 text-primary font-bold border-b border-primary pb-1 hover:text-secondary hover:border-secondary transition-all">
+                <span class="material-symbols-outlined text-[20px]">picture_as_pdf</span> Étlap Letöltése (PDF)
+            </button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex gap-4 overflow-x-auto pb-6 no-scrollbar mb-12" id="menu-tabs">
+            <button class="menu-tab bg-primary text-on-primary px-8 py-3 rounded-full font-bold whitespace-nowrap" data-category="all">Összes</button>
+            <button class="menu-tab bg-surface-container-highest text-on-surface-variant px-8 py-3 rounded-full font-bold whitespace-nowrap hover:bg-surface-variant transition-all" data-category="appetizer">Előételek</button>
+            <button class="menu-tab bg-surface-container-highest text-on-surface-variant px-8 py-3 rounded-full font-bold whitespace-nowrap hover:bg-surface-variant transition-all" data-category="soup">Levesek</button>
+            <button class="menu-tab bg-surface-container-highest text-on-surface-variant px-8 py-3 rounded-full font-bold whitespace-nowrap hover:bg-surface-variant transition-all" data-category="main">Főételek</button>
+            <button class="menu-tab bg-surface-container-highest text-on-surface-variant px-8 py-3 rounded-full font-bold whitespace-nowrap hover:bg-surface-variant transition-all" data-category="dessert">Desszertek</button>
+            <button class="menu-tab bg-surface-container-highest text-on-surface-variant px-8 py-3 rounded-full font-bold whitespace-nowrap hover:bg-surface-variant transition-all" data-category="drink">Italok</button>
+        </div>
+
+        <!-- Food Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="menu-grid">
+            <!-- Card 1 -->
+            <div class="menu-card bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="main" data-name="Marhapörkölt 'Kertem' módra" data-price="5400">
+                <div class="relative overflow-hidden aspect-[4/3]">
+                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Hungarian goulash soup in a modern ceramic bowl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDepfOmF_AyBMjzevQ0QM9aH56lmk6crOTd-biCUppTSfxSxFJShPawc7ICksSVQlWxQYfVnCSB3ZUggkK49xtRj6QKTp41jiWaLMgk2jIflfMlrMzLyNxSfjQUpvOlekh2Th-w1dS0iWRNtUne0oIjAF_ZIuw9LEYw4IQROM7he4DsCHbFPJ56plLhRPa7yWm-S6xqR2iPhsILQKa4wWY0qOvrevgE0JIKKqsdZsKrK9lFwfc9S7ZWAAbcmuCYbCdXAROhnb457iQ"/>
+                    <span class="absolute top-4 left-4 bg-tertiary text-on-tertiary text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Szezonális</span>
+                </div>
+                <div class="p-8 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-headline text-primary group-hover:text-secondary transition-colors">Marhapörkölt 'Kertem' módra</h3>
+                        <span class="font-bold text-primary whitespace-nowrap ml-4">5,400 Ft</span>
+                    </div>
+                    <p class="text-sm text-on-surface-variant mb-6 leading-relaxed flex-grow">Lassan főtt marhalábszár, kézzel szaggatott galuskával és füstölt paprikás savanyított zöldségekkel.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex gap-2">
+                            <span class="bg-secondary-fixed-dim/30 text-on-secondary-fixed-variant text-[10px] px-2 py-0.5 rounded font-bold">GF</span>
+                        </div>
+                        <button onclick="addToCart('Marhapörkölt Kertem módra', 5400, this)" class="text-primary hover:text-tertiary transition-colors flex items-center gap-1 font-bold text-sm add-to-cart-btn">
+                            <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span> Kosárba
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="menu-card bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="main" data-name="Sült Pisztráng" data-price="4800">
+                <div class="relative overflow-hidden aspect-[4/3]">
+                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Pan-seared trout fillet with lemon butter sauce" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZ7FNvcha5pA5hO6EwtsZ-dk1mFuLJYtSnprcbK5EtgCXxCevB7dfUBxHtobGD07dkdFm0jeOynncEyIJKA56Zq38rKRUOjZThwXWAnUIfz5_9-4AGNxjop0bTvtuy4w1nasUsXzkRvg_rxwNcpicAEF5D0Msgan4lmLRfm-TzLfkQCzdL1FAyH7OItk_YB8VPJ7T8FR9fhmOYQuaeVKINLojDHcyFfKXfONUXJrZm5LlZcA9kywGGBIhAv684mkeeUsQjXISzgdk"/>
+                </div>
+                <div class="p-8 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-headline text-primary group-hover:text-secondary transition-colors">Sült Pisztráng</h3>
+                        <span class="font-bold text-primary whitespace-nowrap ml-4">4,800 Ft</span>
+                    </div>
+                    <p class="text-sm text-on-surface-variant mb-6 leading-relaxed flex-grow">Lillafüredi pisztráng filé, citromos vajmártással és grillezett tavaszi spárgával.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex gap-2">
+                            <span class="bg-secondary-fixed-dim/30 text-on-secondary-fixed-variant text-[10px] px-2 py-0.5 rounded font-bold">GF</span>
+                        </div>
+                        <button onclick="addToCart('Sült Pisztráng', 4800, this)" class="text-primary hover:text-tertiary transition-colors flex items-center gap-1 font-bold text-sm add-to-cart-btn">
+                            <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span> Kosárba
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="menu-card bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="appetizer" data-name="Tavaszi Kert Saláta" data-price="3200">
+                <div class="relative overflow-hidden aspect-[4/3]">
+                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Garden salad with roasted beets, goat cheese, and walnuts" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc4qq31dpRO6N-7fJcy2TXP_jI2hDI3o4_8cE3kcXk8fhccQihtnEBD1WCgeJYRRUz86iD6rReWv0BddsUPaXe6KHQ8rjYOibzUSkpZLWEPVc5uwKHsQwOgs2iM5WqHZW989rLFC-Yf5819ETtNenu0lwPvcCN9AJNr9Bu6FbfGNtJiMm0J7ak3uh0VrahvabSetBtKV0g9g372v9FpmP1f0YPfVRJTZylPrqRr-nkBTdwU3xaeNNhh_AvAedewJyKplSEDoGsMVc"/>
+                </div>
+                <div class="p-8 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-headline text-primary group-hover:text-secondary transition-colors">Tavaszi Kert Saláta</h3>
+                        <span class="font-bold text-primary whitespace-nowrap ml-4">3,200 Ft</span>
+                    </div>
+                    <p class="text-sm text-on-surface-variant mb-6 leading-relaxed flex-grow">Friss kerti zöldek, sült cékla, kecskesajt és pirított dió, mézes vinaigrette-tel.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex gap-2">
+                            <span class="bg-secondary-fixed-dim/30 text-on-secondary-fixed-variant text-[10px] px-2 py-0.5 rounded font-bold">Vegan</span>
+                            <span class="bg-secondary-fixed-dim/30 text-on-secondary-fixed-variant text-[10px] px-2 py-0.5 rounded font-bold">GF</span>
+                        </div>
+                        <button onclick="addToCart('Tavaszi Kert Saláta', 3200, this)" class="text-primary hover:text-tertiary transition-colors flex items-center gap-1 font-bold text-sm add-to-cart-btn">
+                            <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span> Kosárba
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="menu-card bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="dessert" data-name="Kürtőskalács Puding" data-price="2600">
+                <div class="relative overflow-hidden aspect-[4/3]">
+                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Chimney cake dessert with vanilla cream and forest berries" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ18lu_yOspANmZsRSTAs2kuGoxTugNAFeH_smo7acoUf45vQyUH185_rh8XDTOs5msQIzXOnrikUycSj1FdimxCbJ5pFKS__5J2SV4VLZqiCOay9vlWov30X6oUOyQZ-lHMwbGk-BRuK1c_ZFARzBipROhZ5y-ZJN52Ro0cQP0_jlSufdhg_KjVtzzJxpsOIoXi7XZis5nwjFN3GDCdyRN1eyQVYK0UIyQelHoztMJvRGz6DP2IfB_N8UJlQrVS1KtV11ROCkFOU"/>
+                </div>
+                <div class="p-8 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-headline text-primary group-hover:text-secondary transition-colors">Kürtőskalács Puding</h3>
+                        <span class="font-bold text-primary whitespace-nowrap ml-4">2,600 Ft</span>
+                    </div>
+                    <p class="text-sm text-on-surface-variant mb-6 leading-relaxed flex-grow">Hagyományos kürtőskalács darabok, vanília sodóval és erdei gyümölcsökkel.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <button onclick="addToCart('Kürtőskalács Puding', 2600, this)" class="text-primary hover:text-tertiary transition-colors flex items-center gap-1 font-bold text-sm add-to-cart-btn ml-auto">
+                            <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span> Kosárba
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="menu-card bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="main" data-name="Grillezett Bárányfalatok" data-price="6900">
+                <div class="relative overflow-hidden aspect-[4/3]">
+                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Marinated lamb skewers with grilled vegetables" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyIyFHCKHehjQoDVIqsXbQ98HrIF8VTAoTQ-FXUmbgMs1h7f_AwnIUhXu_OzYOBUBxSf2JDG7OtzkM0B8DfQm-p56bLTvBkohovuejCWr9neMj5LmhJzRiVOoRo4A-g9W-8z4F3z9LrYZc3A2ayhN8n3VoSmMPyl4uLcPPMAEeaBYnaESeeLL9sUYW3NwM4gs3VKRxM13AIUMlV71hgzTt0OpaxI4Z1rjf9o_AOcCWjGD6ajKhX-mSYb88X_tIbQJxHtez3kEqdFc"/>
+                </div>
+                <div class="p-8 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-headline text-primary group-hover:text-secondary transition-colors">Grillezett Bárányfalatok</h3>
+                        <span class="font-bold text-primary whitespace-nowrap ml-4">6,900 Ft</span>
+                    </div>
+                    <p class="text-sm text-on-surface-variant mb-6 leading-relaxed flex-grow">Pácolt báránygerinc, sült gyökérzöldségekkel és mentás joghurttal.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex gap-2">
+                            <span class="bg-secondary-fixed-dim/30 text-on-secondary-fixed-variant text-[10px] px-2 py-0.5 rounded font-bold">GF</span>
+                        </div>
+                        <button onclick="addToCart('Grillezett Bárányfalatok', 6900, this)" class="text-primary hover:text-tertiary transition-colors flex items-center gap-1 font-bold text-sm add-to-cart-btn">
+                            <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span> Kosárba
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="menu-card bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="main" data-name="Sült Karfiol Steak" data-price="3800">
+                <div class="relative overflow-hidden aspect-[4/3]">
+                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Roasted cauliflower steaks with almond cream" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCziR2h4Lbpf3rVwnByHiGBsKkIaDSuPDzcFH2YIMU7aXiImV1wZFLMIzI__G3UfktF--8TT3evgGqc9y_g8w7d_NEh4wpqsT0JYJMxTMTblIIrqV2r9vikoRHpJmZYX53xlLXMw8NNpGG5exmyilPRxpfmt_It54nFVNdvE4XmtaWjQxLkUoxLP99lzPIW4frrxaf5E1dTLwa5wf93jLaQt9KhkWR1nfDshPTENd0AYgC0yw5atfc2C1mY9vF2dDtgq18gbCxEnmQ"/>
+                </div>
+                <div class="p-8 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-headline text-primary group-hover:text-secondary transition-colors">Sült Karfiol Steak</h3>
+                        <span class="font-bold text-primary whitespace-nowrap ml-4">3,800 Ft</span>
+                    </div>
+                    <p class="text-sm text-on-surface-variant mb-6 leading-relaxed flex-grow">Fűszeres egészben sült karfiol, mandulakrémmel és gránátalmával.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex gap-2">
+                            <span class="bg-secondary-fixed-dim/30 text-on-secondary-fixed-variant text-[10px] px-2 py-0.5 rounded font-bold">Vegan</span>
+                            <span class="bg-secondary-fixed-dim/30 text-on-secondary-fixed-variant text-[10px] px-2 py-0.5 rounded font-bold">GF</span>
+                        </div>
+                        <button onclick="addToCart('Sült Karfiol Steak', 3800, this)" class="text-primary hover:text-tertiary transition-colors flex items-center gap-1 font-bold text-sm add-to-cart-btn">
+                            <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span> Kosárba
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Booking Section -->
+<section class="py-24 px-6 md:px-12" id="booking">
+    <div class="max-w-7xl mx-auto bg-surface-container-high rounded-3xl overflow-hidden grid lg:grid-cols-2 shadow-sm">
+        <div class="p-8 md:p-12 lg:p-16">
+            <h2 class="font-headline text-4xl text-primary mb-2 italic">Asztalfoglalás</h2>
+            <p class="text-on-surface-variant mb-10">Biztosítsa helyét pár kattintással éttermünkben.</p>
+            <form id="booking-form" class="space-y-6" onsubmit="return handleBooking(event)">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Teljes név *</label>
+                        <input required class="w-full bg-surface-container-lowest border-none rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary/40 placeholder:text-on-surface-variant/40" placeholder="Kovács János" type="text" id="booking-name"/>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Telefonszám *</label>
+                        <input required class="w-full bg-surface-container-lowest border-none rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary/40 placeholder:text-on-surface-variant/40" placeholder="+36 30 123 4567" type="tel" id="booking-phone"/>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Vendégek száma</label>
+                        <select id="booking-guests" class="w-full bg-surface-container-lowest border-none rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary/40">
+                            <option>2 fő</option>
+                            <option>3 fő</option>
+                            <option>4 fő</option>
+                            <option>5+ fő</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Dátum *</label>
+                        <input required class="w-full bg-surface-container-lowest border-none rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary/40" type="date" id="booking-date"/>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Időpont *</label>
+                    <div class="grid grid-cols-4 md:grid-cols-6 gap-3" id="time-slots">
+                        <button class="time-slot bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="17:00">17:00</button>
+                        <button class="time-slot bg-primary text-on-primary py-2 rounded-lg text-sm" type="button" data-time="18:00">18:00</button>
+                        <button class="time-slot bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="19:00">19:00</button>
+                        <button class="time-slot bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="20:00">20:00</button>
+                        <button class="time-slot bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="21:00">21:00</button>
+                        <button class="time-slot bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all" type="button" data-time="22:00">22:00</button>
+                    </div>
+                    <input type="hidden" id="booking-time" value="18:00"/>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Megjegyzés (opcionális)</label>
+                    <textarea id="booking-notes" class="w-full bg-surface-container-lowest border-none rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary/40 h-24" placeholder="Allergia, különleges kérés..."></textarea>
+                </div>
+                <button type="submit" class="w-full bg-primary text-on-primary py-4 rounded-xl font-bold text-lg hover:shadow-lg transition-all mt-4">Foglalás megerősítése</button>
+            </form>
+        </div>
+        <div class="bg-primary p-8 md:p-12 lg:p-16 flex flex-col justify-center relative overflow-hidden">
+            <div class="z-10 text-on-primary">
+                <h3 class="text-2xl font-headline mb-8 italic">Miért érdemes nálunk foglalni?</h3>
+                <ul class="space-y-6">
+                    <li class="flex items-start gap-4">
+                        <span class="material-symbols-outlined text-tertiary-fixed">verified</span>
+                        <div>
+                            <h4 class="font-bold">Azonnali visszaigazolás</h4>
+                            <p class="text-on-primary-container text-sm">A foglalás után azonnal SMS és email értesítőt küldünk.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="material-symbols-outlined text-tertiary-fixed">notifications_active</span>
+                        <div>
+                            <h4 class="font-bold">Emlékeztető üzenet</h4>
+                            <p class="text-on-primary-container text-sm">Az érkezés előtt 2 órával díjmentes emlékeztetőt küldünk.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="material-symbols-outlined text-tertiary-fixed">star</span>
+                        <div>
+                            <h4 class="font-bold">Kiemelt asztalkezelés</h4>
+                            <p class="text-on-primary-container text-sm">Online foglalás esetén a legszebb kilátással rendelkező asztalokat biztosítjuk.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="absolute -bottom-20 -right-20 w-80 h-80 bg-tertiary-container/10 rounded-full blur-3xl"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Online Order Preview -->
+<section class="py-24 bg-surface" id="order">
+    <div class="px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-3 gap-12 items-start">
+            <div class="lg:col-span-2 space-y-8">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="flex items-center gap-2" id="step-1-indicator">
+                        <span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-xs">1</span>
+                        <span class="text-xs font-bold uppercase tracking-widest text-primary">Kosár</span>
+                    </div>
+                    <div class="h-[1px] w-12 bg-outline-variant"></div>
+                    <div class="flex items-center gap-2 opacity-40" id="step-2-indicator">
+                        <span class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-xs">2</span>
+                        <span class="text-xs font-bold uppercase tracking-widest">Szállítás</span>
+                    </div>
+                    <div class="h-[1px] w-12 bg-outline-variant"></div>
+                    <div class="flex items-center gap-2 opacity-40" id="step-3-indicator">
+                        <span class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-xs">3</span>
+                        <span class="text-xs font-bold uppercase tracking-widest">Fizetés</span>
+                    </div>
+                </div>
+                <h2 class="font-headline text-4xl text-primary italic">Rendelés Összesítése</h2>
+                <div id="order-items" class="space-y-4">
+                    <p id="order-empty" class="text-center text-on-surface-variant py-8">Adjon hozzá termékeket a menüből a rendeléshez.</p>
+                </div>
+                <div id="delivery-info" class="flex items-center gap-4 pt-4 hidden">
+                    <span class="material-symbols-outlined text-secondary">local_shipping</span>
+                    <p class="text-sm">Várható szállítási idő: <span class="font-bold text-primary">35-45 perc</span></p>
+                </div>
+            </div>
+            <div class="bg-surface-container-highest p-10 rounded-3xl sticky top-28">
+                <h3 class="text-xl font-headline mb-8 text-primary">Fizetendő</h3>
+                <div class="space-y-4 mb-8">
+                    <div class="flex justify-between text-on-surface-variant">
+                        <span>Részösszeg</span>
+                        <span id="order-subtotal">0 Ft</span>
+                    </div>
+                    <div class="flex justify-between text-on-surface-variant">
+                        <span>Kiszállítás</span>
+                        <span id="order-delivery">990 Ft</span>
+                    </div>
+                    <div class="flex justify-between text-secondary font-bold" id="order-discount-row">
+                        <span>Húsvéti kedvezmény (20%)</span>
+                        <span id="order-discount">0 Ft</span>
+                    </div>
+                    <div class="border-t border-outline-variant/30 pt-4 flex justify-between items-center">
+                        <span class="text-lg font-bold">Összesen</span>
+                        <span id="order-total" class="text-2xl font-headline text-primary">990 Ft</span>
+                    </div>
+                </div>
+                <div class="space-y-3 mb-8">
+                    <p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-4">Fizetési mód</p>
+                    <button onclick="selectPayment('card', this)" class="payment-btn w-full flex items-center justify-between p-3 rounded-xl bg-surface-container-lowest border border-primary/20">
+                        <span class="flex items-center gap-3 font-medium"><span class="material-symbols-outlined">credit_card</span> Bankkártya</span>
+                        <span class="material-symbols-outlined text-primary filled">radio_button_checked</span>
+                    </button>
+                    <button onclick="selectPayment('cash', this)" class="payment-btn w-full flex items-center justify-between p-3 rounded-xl bg-surface-container-lowest/50 text-on-surface-variant">
+                        <span class="flex items-center gap-3 font-medium"><span class="material-symbols-outlined">payments</span> Utánvét</span>
+                        <span class="material-symbols-outlined">radio_button_unchecked</span>
+                    </button>
+                </div>
+                <button onclick="handleOrder()" class="w-full bg-primary text-on-primary py-4 rounded-xl font-bold text-lg hover:opacity-90 transition-all">Rendelés Leadása</button>
+                <div class="flex justify-center gap-4 mt-6 opacity-40">
+                    <span class="material-symbols-outlined">contactless</span>
+                    <span class="material-symbols-outlined">credit_card</span>
+                    <span class="material-symbols-outlined">account_balance_wallet</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Catering & Pricing -->
+<section class="py-24 bg-surface-container-low" id="catering">
+    <div class="px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="text-center mb-20">
+            <h2 class="font-headline text-5xl text-primary mb-6 italic">Exkluzív Catering</h2>
+            <p class="text-on-surface-variant max-w-2xl mx-auto">Legyen szó céges rendezvényről vagy családi összejövetelről, mi házhoz visszük a Kertem élményt.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Plan 1 -->
+            <div class="bg-surface-container-lowest p-10 rounded-2xl flex flex-col hover:translate-y-[-8px] transition-all duration-300">
+                <h3 class="text-xl font-headline text-primary mb-2">Basic</h3>
+                <p class="text-on-surface-variant text-sm mb-8">Kisebb baráti összejövetelekhez.</p>
+                <div class="mb-8">
+                    <span class="text-4xl font-headline text-primary">8,900 Ft</span>
+                    <span class="text-on-surface-variant">/fő</span>
+                </div>
+                <ul class="space-y-4 mb-10 flex-grow">
+                    <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> 3 választható előétel</li>
+                    <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> 2 főétel válogatás</li>
+                    <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Kézműves kenyerek</li>
+                </ul>
+                <button onclick="handleCatering('Basic')" class="w-full border-2 border-primary text-primary py-3 rounded-xl font-bold hover:bg-primary hover:text-on-primary transition-all">Ajánlatkérés</button>
+            </div>
+            <!-- Plan 2 -->
+            <div class="bg-primary p-10 rounded-2xl flex flex-col relative overflow-hidden scale-105 shadow-xl">
+                <div class="absolute top-4 right-[-30px] bg-tertiary text-on-tertiary px-10 py-1 rotate-45 text-[10px] font-bold uppercase tracking-widest">Legnépszerűbb</div>
+                <h3 class="text-xl font-headline text-on-primary mb-2">Business</h3>
+                <p class="text-on-primary-container text-sm mb-8">Céges ebédek és partnertalik kedvence.</p>
+                <div class="mb-8">
+                    <span class="text-4xl font-headline text-on-primary">14,900 Ft</span>
+                    <span class="text-on-primary-container">/fő</span>
+                </div>
+                <ul class="space-y-4 mb-10 flex-grow">
+                    <li class="flex items-center gap-3 text-sm text-on-primary"><span class="material-symbols-outlined text-tertiary-fixed text-lg">check_circle</span> 5 prémium előétel</li>
+                    <li class="flex items-center gap-3 text-sm text-on-primary"><span class="material-symbols-outlined text-tertiary-fixed text-lg">check_circle</span> 4 főétel & köretek</li>
+                    <li class="flex items-center gap-3 text-sm text-on-primary"><span class="material-symbols-outlined text-tertiary-fixed text-lg">check_circle</span> Desszert válogatás</li>
+                    <li class="flex items-center gap-3 text-sm text-on-primary"><span class="material-symbols-outlined text-tertiary-fixed text-lg">check_circle</span> Ásványvíz bekészítés</li>
+                </ul>
+                <button onclick="handleCatering('Business')" class="w-full bg-tertiary-container text-on-tertiary-container py-3 rounded-xl font-bold hover:brightness-105 transition-all">Ajánlatkérés</button>
+            </div>
+            <!-- Plan 3 -->
+            <div class="bg-surface-container-lowest p-10 rounded-2xl flex flex-col hover:translate-y-[-8px] transition-all duration-300">
+                <h3 class="text-xl font-headline text-primary mb-2">Premium</h3>
+                <p class="text-on-surface-variant text-sm mb-8">Exkluzív gálavacsorákhoz.</p>
+                <div class="mb-8">
+                    <span class="text-4xl font-headline text-primary">24,900 Ft</span>
+                    <span class="text-on-surface-variant">/fő</span>
+                </div>
+                <ul class="space-y-4 mb-10 flex-grow">
+                    <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Teljes séf menü</li>
+                    <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Saját felszolgáló</li>
+                    <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Prémium borpárosítás</li>
+                    <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Dekoráció & eszközök</li>
+                </ul>
+                <button onclick="handleCatering('Premium')" class="w-full border-2 border-primary text-primary py-3 rounded-xl font-bold hover:bg-primary hover:text-on-primary transition-all">Ajánlatkérés</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="py-24" id="gallery">
+    <div class="px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="flex justify-between items-center mb-16">
+            <h2 class="font-headline text-4xl text-primary italic">Pillanatok a Kertben</h2>
+            <a class="flex items-center gap-2 font-bold text-on-surface-variant hover:text-primary transition-all" href="#" onclick="showToast('Instagram oldal megnyitása...'); return false;">
+                @kertem_etterem <span class="material-symbols-outlined">open_in_new</span>
+            </a>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:auto-rows-[250px]">
+            <div class="md:col-span-2 md:row-span-2 rounded-2xl overflow-hidden group relative cursor-pointer" onclick="openLightbox(this.querySelector('img'))">
+                <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Restaurant garden terrace at dusk with fairy lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIPQlZkYybAxQD3wgFzOVByTppvaazeMUiB-vcmSbKdqL9k-Z9hentQJV-yhq1-NHSxVCqX5xAPBNYoB0dzrgaAQSJY-9DTknp4pCruj_wv1mWcimLx0T_BEsbYhxBuSZRvEctSgjeyRoVn65V_jl4nHYw8SzPQTq5QmnNBTgWYHtVMFH9BUR7on88yeRJyjGCaNKXJJOqRqU-2a_LyjfCK2jcilJoWO5DuwHS184ZzvDZplg2Furgo6nbbGDpdCc7WUhsEY9B7qY"/>
+                <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white text-4xl">zoom_in</span>
+                </div>
+            </div>
+            <div class="rounded-2xl overflow-hidden group relative cursor-pointer" onclick="openLightbox(this.querySelector('img'))">
+                <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Vibrant cocktail with botanical garnishes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtUPFpHWD3Tji5v2Tw8TJrThhjcLZDAh92DrJFfilOLFHIekdQbbPWxmOMxgnkpT7XTM_N1lRK6MAlHQ2yMraMe2TMOwSdO0rqj59fDzClUPnP3A-kMTFAQ6-V-uxDxyJKSXzeBXVbp3JMD6VeCagP6sd3WG9FjsgDmDtVmJnK4-ael51y0OGNa_o6HaOi_beLIAAf0O0zehYsQ5t1sBdc-z9ukGy4_rrdO9Tb0P0vZ_Ow1_Z_HZwhr_jKiBYCqZEhiQDS38xmzQc"/>
+                <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                </div>
+            </div>
+            <div class="rounded-2xl overflow-hidden group relative cursor-pointer" onclick="openLightbox(this.querySelector('img'))">
+                <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Restaurant interior with oak textures and plants" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKjffi92bZWNZoo1jVzhFZ0ZqUTnBFpzptexuAm7s19PGqCUgc0HQrxpWvrrxZEhkFfXktphorsg0ZiqW4Y537n4oMEfIdaFwNoT6FQ7S87l0fOVKz-M4T3bmsfCBUmFSzM5Z1kx0-6vBed_RNKCNQ9r2Pvc0cvXvBj_GKGL9jJGVrGjrzB2p88d_UBtlN-_lLT2KMlR4LZgszXCk6VUT7nFG2efvQ-uKPJOTnrshnfWHSunBGpcsIykfViQWETBohp_dNEBGD9Xk"/>
+                <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                </div>
+            </div>
+            <div class="md:row-span-2 rounded-2xl overflow-hidden group relative cursor-pointer" onclick="openLightbox(this.querySelector('img'))">
+                <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Gourmet meat dish with artistic sauce plating" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAS4-9alpRjotUdsSMWQeqg2snr7f4dYl0OKa7ByKAeMntr-NRw8vI9pCGnOJWo0r_PpAatDK-2CZ3ITs4vc2n1Czwuw5Rj9N4s3CtdCDi71Rvw7hHpgSKvpv-xxTbmzFu9DC8phqcNWC0UC2GTZ3SJgRGvYk8oJ9g26heXv_AjKgbhVRQFFoUIImuV3hVXJZms9395aqvx0vwK3QsBoW1j91RqYmPxDkz9bJR2Y3lpRX83VvzLcwPvo_4EXYSZu1amAundZbu9Bpc"/>
+                <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white text-4xl">zoom_in</span>
+                </div>
+            </div>
+            <div class="rounded-2xl overflow-hidden group relative cursor-pointer" onclick="openLightbox(this.querySelector('img'))">
+                <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Chef holding a basket of fresh vegetables" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgoi1_id5CNA0BPqZ2CSR9GopwK5p4rpY_dtzKZ-0hV1kllyqDVg5Sq6Qp6FEBse4Ru9yi5bDiYAwqLp0lVJjIKDDuDDOKPFlzdiWrP7W8OZR0JO4y9NwOWg0Xy45b-h9yzoSgPZn96rcvHTCvGDtCQv1AwKjNweDzhIawYf0JWsLRN-Al8v4RlJ4RZ8cl-JirjugzAskq3px4k5_1c_DlrJVAsrvTaa_fiqQoGm95j7b0v_xNzliBMQkglKFh-B9x36yNXklV-hA"/>
+                <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox" class="fixed inset-0 z-[80] bg-black/90 hidden items-center justify-center cursor-pointer" onclick="closeLightbox()">
+    <button class="absolute top-6 right-6 text-white hover:text-tertiary-fixed transition-colors">
+        <span class="material-symbols-outlined text-4xl">close</span>
+    </button>
+    <img id="lightbox-img" class="max-w-[90vw] max-h-[90vh] object-contain rounded-lg" src="" alt=""/>
+</div>
+
+<!-- Reviews -->
+<section class="py-24 bg-surface-container">
+    <div class="px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row gap-20 items-center">
+            <div class="md:w-1/3">
+                <h2 class="font-headline text-4xl text-primary mb-8 italic">Vendégeink véleménye</h2>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-4">
+                        <span class="text-4xl font-headline">4.9</span>
+                        <div>
+                            <div class="flex text-tertiary">
+                                <span class="material-symbols-outlined filled">star</span>
+                                <span class="material-symbols-outlined filled">star</span>
+                                <span class="material-symbols-outlined filled">star</span>
+                                <span class="material-symbols-outlined filled">star</span>
+                                <span class="material-symbols-outlined filled">star</span>
+                            </div>
+                            <span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Google Business</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="text-4xl font-headline">4.8</span>
+                        <div>
+                            <div class="flex text-tertiary">
+                                <span class="material-symbols-outlined filled">star</span>
+                                <span class="material-symbols-outlined filled">star</span>
+                                <span class="material-symbols-outlined filled">star</span>
+                                <span class="material-symbols-outlined filled">star</span>
+                                <span class="material-symbols-outlined filled">star_half</span>
+                            </div>
+                            <span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">TripAdvisor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="md:w-2/3 grid md:grid-cols-2 gap-6">
+                <div class="bg-surface-container-lowest p-8 rounded-2xl shadow-sm">
+                    <div class="flex gap-1 text-tertiary mb-4">
+                        <span class="material-symbols-outlined text-[18px] filled">star</span>
+                        <span class="material-symbols-outlined text-[18px] filled">star</span>
+                        <span class="material-symbols-outlined text-[18px] filled">star</span>
+                        <span class="material-symbols-outlined text-[18px] filled">star</span>
+                        <span class="material-symbols-outlined text-[18px] filled">star</span>
+                    </div>
+                    <p class="text-on-surface-variant italic mb-8">"Fantasztikus atmoszféra és még jobb ízek. A marhapörköltet nem szabad kihagyni, a kiszolgálás pedig párját ritkítóan kedves."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center font-bold text-on-secondary-fixed">N.L.</div>
+                        <div>
+                            <h4 class="font-bold text-sm">Nagy László</h4>
+                            <span class="text-xs text-on-surface-variant">Helyi idegenvezető</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-surface-container-lowest p-8 rounded-2xl shadow-sm">
+                    <div class="flex gap-1 text-tertiary mb-4">
+                        <span class="material-symbols-outlined text-[18px] filled">star</span>
+                        <span class="material-symbols-outlined text-[18px] filled">star</span>
+                        <span class="material-symbols-outlined text-[18px] filled">star</span>
+                        <span class="material-symbols-outlined text-[18px] filled">star</span>
+                        <span class="material-symbols-outlined text-[18px] filled">star</span>
+                    </div>
+                    <p class="text-on-surface-variant italic mb-8">"A modern magyar konyha csúcsa Budapesten. A kerthelyiség olyan, mint egy kis oázis a belváros közepén. Imádtuk minden percét!"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-bold text-on-primary-fixed">K.A.</div>
+                        <div>
+                            <h4 class="font-bold text-sm">Kovács Anna</h4>
+                            <span class="text-xs text-on-surface-variant">Gasztróblogger</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Section -->
+<section class="py-24" id="blog">
+    <div class="px-6 md:px-12 max-w-7xl mx-auto">
+        <h2 class="font-headline text-4xl text-primary mb-16 italic">Magazin</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <article class="group cursor-pointer" onclick="showToast('Blog cikk megnyitása...')">
+                <div class="rounded-2xl overflow-hidden aspect-[16/10] mb-6">
+                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Local organic farm with baskets of vegetables" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeUz5OCSUTf1IWHDDPL_DeI3wR6n7uddXR2W2kC5H0lDrEZqu3jheeA_QByLlWFJtOqTjT9h_hoBBO2NZJ0bkxdR47_XMLdlFjlEHISC9SqJvo7k6FIX0YsUSPSdxndGkhfY1_o1IMM6YDuNXkyqM8jdqrLd2K6Ors18dfYqfPAyFKVK59ud5-jBB2zpmX_HUmU2gJhFGgkmAsAn1ToshwR_Uy2NKnZSm9B4RAnmHUpu8R5s84dSn_N6Drp42RpCChV-817Tb2NkY"/>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-secondary mb-3 block">Alapanyagok</span>
+                <h3 class="text-xl font-headline text-primary mb-4 group-hover:text-tertiary transition-colors">A helyi termelők nyomában</h3>
+                <p class="text-sm text-on-surface-variant mb-6">Betekintés abba, honnan érkeznek a legfrissebb zöldségek és húsok asztalunkra.</p>
+                <span class="text-xs text-on-surface-variant/60">5 perc olvasás</span>
+            </article>
+            <article class="group cursor-pointer" onclick="showToast('Blog cikk megnyitása...')">
+                <div class="rounded-2xl overflow-hidden aspect-[16/10] mb-6">
+                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Hungarian wine bottles on an oak barrel" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlMHEUnQW0o7HFUJHA5zlKtWP1QFlbUVCs643t1WauA5By8ruoaFuFEKkBF0I8BYnM--6o60dinEVsOyoDPG7NcZ2PP640P33NqAStw_MYQB9BJswUPodGvBitfEgLtrjY8WIpEY3KwjLJ9tKD_AcvinVi-EojYHMzYFAd5DFNeo5rOozq4KTMGukj4QSJai1W1sF5BstwMA1RNIdnJJ3_UXh5vjr66vBz3YW6_J1NrD993b8pdLsuWKRfMtckSwNpmee6GrVp36o"/>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-secondary mb-3 block">Bor & Gasztro</span>
+                <h3 class="text-xl font-headline text-primary mb-4 group-hover:text-tertiary transition-colors">Melyik bor illik a pörkölthöz?</h3>
+                <p class="text-sm text-on-surface-variant mb-6">Sommelier-nk tanácsai a tökéletes bor-étel párosításhoz a tavaszi szezonban.</p>
+                <span class="text-xs text-on-surface-variant/60">8 perc olvasás</span>
+            </article>
+            <article class="group cursor-pointer" onclick="showToast('Blog cikk megnyitása...')">
+                <div class="rounded-2xl overflow-hidden aspect-[16/10] mb-6">
+                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Chefs working in a modern kitchen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-8Kxs_EFbFbDjz-T69ADtm1--dxS7jO02iWbizTlQCQpCqj_IR2OXhhu9GOBVYp-26rlTggO3-KWn09ndesh7SXOTNMhPqzzfFwqHuX17pbqR2Jz_5GznX8DvY6u7QGjHkGsTImaO05n6ZSSHj8bdOHb_TN_CrO0GUBLykSGWoA3YFQbMTMU5EDu4ZjWxAPtSqN_9IjXtfn0JkSVRyhR-SR2vfJ0DnthlVjlPLfFKx-vrDKxow0nNYwk3xl1eOlqzkAh8Ig1FPe0"/>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-secondary mb-3 block">Életmód</span>
+                <h3 class="text-xl font-headline text-primary mb-4 group-hover:text-tertiary transition-colors">Tavaszi megújulás a tányéron</h3>
+                <p class="text-sm text-on-surface-variant mb-6">Hogyan hat a tavaszi étrend a szervezetünkre? Séfünk tippjei otthonra is.</p>
+                <span class="text-xs text-on-surface-variant/60">6 perc olvasás</span>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter -->
+<section class="py-24 bg-primary-container text-on-primary">
+    <div class="px-6 md:px-12 max-w-4xl mx-auto text-center">
+        <h2 class="font-headline text-4xl mb-6 italic">Legyen Ön is a Kertem belső körének tagja</h2>
+        <p class="text-on-primary-container mb-12">Iratkozzon fel hírlevelünkre, és értesüljön elsőként különleges vacsoraestjeinkről és szezonális ajánlatainkról.</p>
+        <form id="newsletter-form" class="flex flex-col md:flex-row gap-4 max-w-lg mx-auto" onsubmit="return handleNewsletter(event)">
+            <input required id="newsletter-email" class="flex-grow bg-surface/10 border-none rounded-xl py-4 px-6 text-on-primary focus:ring-2 focus:ring-tertiary-fixed placeholder:text-on-primary-container" placeholder="Az Ön email címe" type="email"/>
+            <button type="submit" class="bg-tertiary-container text-on-tertiary-container px-8 py-4 rounded-xl font-bold hover:brightness-105 transition-all">Feliratkozás</button>
+        </form>
+        <p class="mt-6 text-[10px] text-on-primary-container/60">A feliratkozással elfogadja az Adatkezelési tájékoztatónkat (GDPR).</p>
+    </div>
+</section>
+
+<!-- Contact & Map -->
+<section class="py-24 px-6 md:px-12" id="contact">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16">
+        <div>
+            <h2 class="font-headline text-4xl text-primary mb-12 italic">Kapcsolat</h2>
+            <div class="space-y-12">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-secondary mb-4">Címünk</h4>
+                        <p class="text-on-surface font-medium">Budapest, Kazinczy u. 14.<br/>1075 Magyarország</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-secondary mb-4">Elérhetőség</h4>
+                        <p class="text-on-surface font-medium"><a href="tel:+3612345678" class="hover:text-secondary transition-colors">+36 1 234 5678</a><br/><a href="mailto:hello@kertem-etterem.hu" class="hover:text-secondary transition-colors">hello@kertem-etterem.hu</a></p>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-secondary mb-4">Nyitvatartás</h4>
+                    <table class="w-full text-sm text-on-surface-variant">
+                        <tbody>
+                            <tr class="border-b border-outline-variant/30"><td class="py-2">Hétfő - Csütörtök</td><td class="py-2 text-right">11:00 – 23:00</td></tr>
+                            <tr class="border-b border-outline-variant/30"><td class="py-2">Péntek - Szombat</td><td class="py-2 text-right">11:00 – 00:00</td></tr>
+                            <tr class="border-b border-outline-variant/30"><td class="py-2">Vasárnap</td><td class="py-2 text-right">11:00 – 22:00</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Contact form -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-secondary mb-4">Üzenet küldése</h4>
+                    <form id="contact-form" class="space-y-4" onsubmit="return handleContact(event)">
+                        <input required class="w-full bg-surface-container-low border-none rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary/40 placeholder:text-on-surface-variant/40" placeholder="Név" type="text"/>
+                        <input required class="w-full bg-surface-container-low border-none rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary/40 placeholder:text-on-surface-variant/40" placeholder="Email cím" type="email"/>
+                        <textarea required class="w-full bg-surface-container-low border-none rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary/40 h-24" placeholder="Üzenet..."></textarea>
+                        <button type="submit" class="bg-primary text-on-primary px-8 py-3 rounded-xl font-bold hover:opacity-90 transition-all">Küldés</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="rounded-3xl overflow-hidden h-[400px] lg:h-auto shadow-sm">
+            <iframe allowfullscreen="" height="100%" loading="lazy" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2695.533284055!2d19.060134!3d47.498428!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4741dc4192b0c34b%3A0x64e030a599b4566c!2sBudapest%2C%20Kazinczy%20u.%2014%2C%201075!5e0!3m2!1sen!2shu!4v1710123456789!5m2!1sen!2shu" style="border:0;" width="100%"></iframe>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-primary text-on-primary pt-20 pb-8">
+    <div class="px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-4 gap-12 mb-16">
+            <div>
+                <h3 class="text-2xl font-serif italic mb-6">Kertem</h3>
+                <p class="text-on-primary-container text-sm leading-relaxed">Autentikus magyar ízek, modern köntösben. Budapest szívében, 2018 óta.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-xs uppercase tracking-widest mb-6 text-tertiary-fixed">Navigáció</h4>
+                <ul class="space-y-3 text-sm text-on-primary-container">
+                    <li><a class="hover:text-on-primary transition-colors" href="#menu">Étlap</a></li>
+                    <li><a class="hover:text-on-primary transition-colors" href="#booking">Foglalás</a></li>
+                    <li><a class="hover:text-on-primary transition-colors" href="#order">Rendelés</a></li>
+                    <li><a class="hover:text-on-primary transition-colors" href="#catering">Catering</a></li>
+                    <li><a class="hover:text-on-primary transition-colors" href="#gallery">Galéria</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-xs uppercase tracking-widest mb-6 text-tertiary-fixed">Jogi infó</h4>
+                <ul class="space-y-3 text-sm text-on-primary-container">
+                    <li><a class="hover:text-on-primary transition-colors" href="#" onclick="showToast('Adatkezelési tájékoztató'); return false;">Adatkezelés (GDPR)</a></li>
+                    <li><a class="hover:text-on-primary transition-colors" href="#" onclick="showToast('Impresszum'); return false;">Impresszum</a></li>
+                    <li><a class="hover:text-on-primary transition-colors" href="#" onclick="showToast('ÁSZF'); return false;">ÁSZF</a></li>
+                    <li><a class="hover:text-on-primary transition-colors" href="#" onclick="showToast('Cookie szabályzat'); return false;">Cookie szabályzat</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-xs uppercase tracking-widest mb-6 text-tertiary-fixed">Kövessen minket</h4>
+                <div class="flex gap-4">
+                    <a href="#" onclick="showToast('Facebook oldal megnyitása...'); return false;" class="w-10 h-10 bg-on-primary/10 rounded-full flex items-center justify-center hover:bg-tertiary-container hover:text-on-tertiary-container transition-all" title="Facebook">
+                        <span class="font-bold text-sm">f</span>
+                    </a>
+                    <a href="#" onclick="showToast('Instagram oldal megnyitása...'); return false;" class="w-10 h-10 bg-on-primary/10 rounded-full flex items-center justify-center hover:bg-tertiary-container hover:text-on-tertiary-container transition-all" title="Instagram">
+                        <span class="material-symbols-outlined text-[18px]">photo_camera</span>
+                    </a>
+                    <a href="#" onclick="showToast('TripAdvisor oldal megnyitása...'); return false;" class="w-10 h-10 bg-on-primary/10 rounded-full flex items-center justify-center hover:bg-tertiary-container hover:text-on-tertiary-container transition-all" title="TripAdvisor">
+                        <span class="material-symbols-outlined text-[18px]">travel_explore</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-on-primary/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-on-primary-container">
+            <span>&copy; 2025 Kertem Étterem & Bár. Minden jog fenntartva.</span>
+            <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="flex items-center gap-2 hover:text-on-primary transition-colors">
+                Vissza a tetejére <span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+            </button>
+        </div>
+    </div>
+</footer>
+
+<!-- Cookie banner -->
+<div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-[90] bg-inverse-surface text-inverse-on-surface p-4 md:p-6 shadow-2xl">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-4 justify-between">
+        <p class="text-sm">Ez a weboldal cookie-kat használ a jobb felhasználói élmény érdekében. <a href="#" class="underline" onclick="showToast('Cookie szabályzat'); return false;">Cookie szabályzat</a></p>
+        <div class="flex gap-3">
+            <button onclick="acceptCookies()" class="bg-tertiary-container text-on-tertiary-container px-6 py-2 rounded-lg font-bold text-sm hover:brightness-105 transition-all">Elfogadom</button>
+            <button onclick="declineCookies()" class="border border-inverse-on-surface/30 px-6 py-2 rounded-lg font-bold text-sm hover:bg-inverse-on-surface/10 transition-all">Elutasítom</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ==================== CART SYSTEM ====================
+let cart = [];
+let selectedPayment = 'card';
+let selectedTime = '18:00';
+
+function formatPrice(price) {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' Ft';
+}
+
+function addToCart(name, price, btnEl) {
+    const existing = cart.find(item => item.name === name);
+    if (existing) {
+        existing.qty++;
+    } else {
+        cart.push({ name, price, qty: 1 });
+    }
+    updateCartUI();
+    updateOrderUI();
+    showToast(`${name} hozzáadva a kosárhoz!`);
+
+    // Button animation
+    if (btnEl) {
+        btnEl.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span> Hozzáadva';
+        btnEl.classList.add('text-tertiary');
+        setTimeout(() => {
+            btnEl.innerHTML = '<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span> Kosárba';
+            btnEl.classList.remove('text-tertiary');
+        }, 1500);
+    }
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartUI();
+    updateOrderUI();
+}
+
+function changeQty(index, delta) {
+    cart[index].qty += delta;
+    if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+    }
+    updateCartUI();
+    updateOrderUI();
+}
+
+function getCartTotal() {
+    return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+}
+
+function updateCartUI() {
+    const countEl = document.getElementById('cart-count');
+    const itemsEl = document.getElementById('cart-items');
+    const emptyEl = document.getElementById('cart-empty');
+    const footerEl = document.getElementById('cart-footer');
+    const totalEl = document.getElementById('cart-total');
+
+    const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+
+    if (totalItems > 0) {
+        countEl.textContent = totalItems;
+        countEl.classList.remove('hidden');
+        emptyEl.classList.add('hidden');
+        footerEl.classList.remove('hidden');
+    } else {
+        countEl.classList.add('hidden');
+        emptyEl.classList.remove('hidden');
+        footerEl.classList.add('hidden');
+    }
+
+    // Render cart items
+    const itemsHTML = cart.map((item, i) => `
+        <div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl">
+            <div class="flex-grow">
+                <h4 class="font-bold text-sm text-primary">${item.name}</h4>
+                <span class="text-sm text-on-surface-variant">${formatPrice(item.price)}</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="changeQty(${i}, -1)" class="w-7 h-7 rounded-full bg-surface-container-highest flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all text-sm font-bold">-</button>
+                <span class="font-bold text-sm w-4 text-center">${item.qty}</span>
+                <button onclick="changeQty(${i}, 1)" class="w-7 h-7 rounded-full bg-surface-container-highest flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all text-sm font-bold">+</button>
+                <button onclick="removeFromCart(${i})" class="ml-2 text-error hover:opacity-70 transition-opacity">
+                    <span class="material-symbols-outlined text-[18px]">delete</span>
+                </button>
+            </div>
+        </div>
+    `).join('');
+
+    if (emptyEl) {
+        // Keep the empty message, insert items before it
+        const existingItems = itemsEl.querySelectorAll('.flex.items-center.justify-between');
+        existingItems.forEach(el => el.remove());
+        emptyEl.insertAdjacentHTML('beforebegin', itemsHTML);
+    }
+
+    totalEl.textContent = formatPrice(getCartTotal());
+}
+
+function updateOrderUI() {
+    const orderItems = document.getElementById('order-items');
+    const orderEmpty = document.getElementById('order-empty');
+    const deliveryInfo = document.getElementById('delivery-info');
+    const subtotalEl = document.getElementById('order-subtotal');
+    const discountEl = document.getElementById('order-discount');
+    const totalEl = document.getElementById('order-total');
+
+    const subtotal = getCartTotal();
+    const delivery = 990;
+    const discount = Math.round(subtotal * 0.2);
+    const total = subtotal + delivery - discount;
+
+    subtotalEl.textContent = formatPrice(subtotal);
+    discountEl.textContent = '-' + formatPrice(discount);
+    totalEl.textContent = formatPrice(total);
+
+    if (cart.length > 0) {
+        if (orderEmpty) orderEmpty.classList.add('hidden');
+        deliveryInfo.classList.remove('hidden');
+
+        const itemsHTML = cart.map((item, i) => `
+            <div class="flex items-center gap-6 p-6 bg-surface-container rounded-2xl">
+                <div class="flex-grow">
+                    <h4 class="font-bold text-primary">${item.name}</h4>
+                    <span class="text-sm text-on-surface-variant">${item.qty} adag</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="changeQty(${i}, -1)" class="w-7 h-7 rounded-full bg-surface-container-highest flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all text-sm font-bold">-</button>
+                    <span class="font-bold text-sm">${item.qty}</span>
+                    <button onclick="changeQty(${i}, 1)" class="w-7 h-7 rounded-full bg-surface-container-highest flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all text-sm font-bold">+</button>
+                </div>
+                <span class="font-bold text-primary">${formatPrice(item.price * item.qty)}</span>
+            </div>
+        `).join('');
+
+        // Remove existing dynamic items
+        orderItems.querySelectorAll('.flex.items-center.gap-6').forEach(el => el.remove());
+        orderItems.insertAdjacentHTML('afterbegin', itemsHTML);
+    } else {
+        if (orderEmpty) orderEmpty.classList.remove('hidden');
+        deliveryInfo.classList.add('hidden');
+        orderItems.querySelectorAll('.flex.items-center.gap-6').forEach(el => el.remove());
+    }
+}
+
+function toggleCart() {
+    const sidebar = document.getElementById('cart-sidebar');
+    sidebar.classList.toggle('hidden');
+    document.body.style.overflow = sidebar.classList.contains('hidden') ? '' : 'hidden';
+}
+
+// ==================== MOBILE MENU ====================
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('hidden');
+    document.body.style.overflow = menu.classList.contains('hidden') ? '' : 'hidden';
+}
+
+// ==================== MENU TABS ====================
+document.getElementById('menu-tabs').addEventListener('click', function(e) {
+    const tab = e.target.closest('.menu-tab');
+    if (!tab) return;
+
+    // Update active tab
+    document.querySelectorAll('.menu-tab').forEach(t => {
+        t.className = 'menu-tab bg-surface-container-highest text-on-surface-variant px-8 py-3 rounded-full font-bold whitespace-nowrap hover:bg-surface-variant transition-all';
+    });
+    tab.className = 'menu-tab bg-primary text-on-primary px-8 py-3 rounded-full font-bold whitespace-nowrap';
+
+    const category = tab.dataset.category;
+    document.querySelectorAll('.menu-card').forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+            card.style.display = '';
+            card.style.animation = 'fadeIn 0.3s ease';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+});
+
+// Add fadeIn animation
+const style = document.createElement('style');
+style.textContent = '@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }';
+document.head.appendChild(style);
+
+// ==================== TIME SLOTS ====================
+document.getElementById('time-slots').addEventListener('click', function(e) {
+    const slot = e.target.closest('.time-slot');
+    if (!slot) return;
+
+    document.querySelectorAll('.time-slot').forEach(s => {
+        s.className = 'time-slot bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all';
+    });
+    slot.className = 'time-slot bg-primary text-on-primary py-2 rounded-lg text-sm';
+    selectedTime = slot.dataset.time;
+    document.getElementById('booking-time').value = selectedTime;
+});
+
+// ==================== BOOKING FORM ====================
+function handleBooking(e) {
+    e.preventDefault();
+    const name = document.getElementById('booking-name').value;
+    const phone = document.getElementById('booking-phone').value;
+    const guests = document.getElementById('booking-guests').value;
+    const date = document.getElementById('booking-date').value;
+    const time = document.getElementById('booking-time').value;
+
+    if (!name || !phone || !date) {
+        showToast('Kérjük, töltse ki az összes kötelező mezőt!', 'error');
+        return false;
+    }
+
+    showToast(`Foglalás sikeresen rögzítve! ${name}, ${guests}, ${date} ${time}. Visszaigazolást küldtünk.`, 'success');
+    document.getElementById('booking-form').reset();
+
+    // Reset time slot to default
+    document.querySelectorAll('.time-slot').forEach(s => {
+        s.className = 'time-slot bg-surface-container-lowest py-2 rounded-lg text-sm hover:bg-primary hover:text-on-primary transition-all';
+    });
+    document.querySelector('.time-slot[data-time="18:00"]').className = 'time-slot bg-primary text-on-primary py-2 rounded-lg text-sm';
+
+    return false;
+}
+
+// Set min date to today
+document.getElementById('booking-date').min = new Date().toISOString().split('T')[0];
+
+// ==================== PAYMENT SELECTION ====================
+function selectPayment(method, btnEl) {
+    selectedPayment = method;
+    document.querySelectorAll('.payment-btn').forEach(btn => {
+        btn.className = 'payment-btn w-full flex items-center justify-between p-3 rounded-xl bg-surface-container-lowest/50 text-on-surface-variant';
+        btn.querySelector('.material-symbols-outlined:last-child').textContent = 'radio_button_unchecked';
+        btn.querySelector('.material-symbols-outlined:last-child').classList.remove('filled', 'text-primary');
+    });
+    btnEl.className = 'payment-btn w-full flex items-center justify-between p-3 rounded-xl bg-surface-container-lowest border border-primary/20';
+    btnEl.querySelector('.material-symbols-outlined:last-child').textContent = 'radio_button_checked';
+    btnEl.querySelector('.material-symbols-outlined:last-child').classList.add('filled', 'text-primary');
+}
+
+// ==================== ORDER ====================
+function handleOrder() {
+    if (cart.length === 0) {
+        showToast('A kosár üres! Válasszon ételeket a menüből.', 'error');
+        return;
+    }
+    const total = getCartTotal() + 990 - Math.round(getCartTotal() * 0.2);
+    showToast(`Rendelés sikeresen leadva! Összeg: ${formatPrice(total)}. Fizetés: ${selectedPayment === 'card' ? 'Bankkártya' : 'Utánvét'}`, 'success');
+    cart = [];
+    updateCartUI();
+    updateOrderUI();
+}
+
+// ==================== CATERING ====================
+function handleCatering(plan) {
+    showToast(`${plan} csomag kiválasztva! Ajánlatkérését hamarosan feldolgozzuk. Kérjük, hagyja el elérhetőségét a kapcsolat szekcióban.`, 'success');
+    setTimeout(() => {
+        document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    }, 1500);
+}
+
+// ==================== NEWSLETTER ====================
+function handleNewsletter(e) {
+    e.preventDefault();
+    const email = document.getElementById('newsletter-email').value;
+    if (email) {
+        showToast('Sikeres feliratkozás! Köszönjük!', 'success');
+        document.getElementById('newsletter-form').reset();
+    }
+    return false;
+}
+
+// ==================== CONTACT FORM ====================
+function handleContact(e) {
+    e.preventDefault();
+    showToast('Üzenet sikeresen elküldve! Hamarosan válaszolunk.', 'success');
+    document.getElementById('contact-form').reset();
+    return false;
+}
+
+// ==================== LANGUAGE SWITCHER ====================
+function switchLang(lang) {
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active', 'font-bold');
+        btn.classList.add('font-normal');
+    });
+    document.querySelectorAll(`.lang-btn[data-lang="${lang}"]`).forEach(btn => {
+        btn.classList.add('active', 'font-bold');
+        btn.classList.remove('font-normal');
+    });
+
+    const langNames = { hu: 'Magyar', en: 'English', de: 'Deutsch' };
+    showToast(`Nyelv: ${langNames[lang]} (demo)`);
+}
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchLang(btn.dataset.lang));
+});
+
+// ==================== GALLERY LIGHTBOX ====================
+function openLightbox(imgEl) {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    lightboxImg.src = imgEl.src;
+    lightboxImg.alt = imgEl.alt;
+    lightbox.classList.remove('hidden');
+    lightbox.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    lightbox.classList.add('hidden');
+    lightbox.classList.remove('flex');
+    document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeLightbox();
+        const cartSidebar = document.getElementById('cart-sidebar');
+        if (!cartSidebar.classList.contains('hidden')) toggleCart();
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (!mobileMenu.classList.contains('hidden')) toggleMobileMenu();
+    }
+});
+
+// ==================== TOAST NOTIFICATIONS ====================
+function showToast(message, type = 'info') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+
+    const bgColor = type === 'success' ? 'bg-primary' : type === 'error' ? 'bg-error' : 'bg-inverse-surface';
+    const textColor = type === 'error' ? 'text-on-error' : type === 'success' ? 'text-on-primary' : 'text-inverse-on-surface';
+
+    toast.className = `toast ${bgColor} ${textColor} px-6 py-3 rounded-xl shadow-lg text-sm font-medium max-w-sm`;
+    toast.textContent = message;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
+// ==================== COOKIE BANNER ====================
+function acceptCookies() {
+    document.getElementById('cookie-banner').style.display = 'none';
+    localStorage.setItem('cookies-accepted', 'true');
+    showToast('Cookie beállítások mentve.');
+}
+
+function declineCookies() {
+    document.getElementById('cookie-banner').style.display = 'none';
+    localStorage.setItem('cookies-accepted', 'false');
+    showToast('Cookie-k elutasítva.');
+}
+
+// Check if cookies already accepted
+if (localStorage.getItem('cookies-accepted')) {
+    document.getElementById('cookie-banner').style.display = 'none';
+}
+
+// ==================== ACTIVE NAV HIGHLIGHTING ====================
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (window.scrollY >= sectionTop) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove('text-primary', 'font-bold', 'border-b-2', 'border-tertiary', 'pb-1');
+        link.classList.add('text-on-surface-variant');
+        if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('text-primary', 'font-bold', 'border-b-2', 'border-tertiary', 'pb-1');
+            link.classList.remove('text-on-surface-variant');
+        }
+    });
+});
+
+// Initialize order UI
+updateOrderUI();
+</script>
+
+</body>
+</html>
