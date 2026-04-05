@@ -124,9 +124,9 @@
 </div>
 
 <!-- Navigation -->
-<nav class="sticky top-0 z-50 bg-surface/80 backdrop-blur-md flex justify-between items-center w-full px-6 md:px-12 py-4 max-w-full">
+<nav class="sticky top-0 z-50 bg-surface/80 md:bg-surface/80 backdrop-blur-md flex justify-between items-center w-full px-6 md:px-12 py-4 max-w-full">
     <div class="flex items-center gap-12">
-        <a class="text-2xl font-serif italic text-primary" href="#">Kertem</a>
+        <a class="text-2xl font-serif italic text-primary tracking-widest md:tracking-normal" href="#">KERTEM</a>
         <div class="hidden lg:flex items-center gap-8 text-label-md" id="nav-links">
             <a class="nav-link text-primary font-bold border-b-2 border-tertiary pb-1" href="#menu">Menu</a>
             <a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="#booking">Booking</a>
@@ -199,12 +199,28 @@
     </div>
 </div>
 
-<!-- Hero Section -->
-<header class="relative min-h-[870px] flex items-center overflow-hidden px-6 md:px-12">
+<!-- Hero Section - MOBILE (full height with bg image) -->
+<header class="md:hidden relative h-[100svh] flex flex-col justify-end px-6 pb-20 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+        <img class="w-full h-full object-cover" alt="Restaurant terrace at dusk with warm lights and garden" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIPQlZkYybAxQD3wgFzOVByTppvaazeMUiB-vcmSbKdqL9k-Z9hentQJV-yhq1-NHSxVCqX5xAPBNYoB0dzrgaAQSJY-9DTknp4pCruj_wv1mWcimLx0T_BEsbYhxBuSZRvEctSgjeyRoVn65V_jl4nHYw8SzPQTq5QmnNBTgWYHtVMFH9BUR7on88yeRJyjGCaNKXJJOqRqU-2a_LyjfCK2jcilJoWO5DuwHS184ZzvDZplg2Furgo6nbbGDpdCc7WUhsEY9B7qY"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent"></div>
+    </div>
+    <div class="relative z-10 space-y-6">
+        <h2 class="font-headline text-4xl leading-tight text-white font-bold italic">Autentikus ízek, modern köntösben</h2>
+        <p class="text-white/90 text-lg max-w-sm">Fedezze fel Budapest legrejtettebb gasztronómiai kertjét, ahol a hagyomány és az innováció találkozik.</p>
+        <div class="flex flex-col gap-3 pt-4">
+            <a href="#booking" class="bg-tertiary-container text-on-tertiary-container font-bold py-4 rounded-xl shadow-lg active:scale-95 transition-all text-center">Asztal foglalása</a>
+            <a href="#menu" class="bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold py-4 rounded-xl active:scale-95 transition-all text-center">Étlap megtekintése</a>
+        </div>
+    </div>
+</header>
+
+<!-- Hero Section - DESKTOP -->
+<header class="hidden md:flex relative min-h-[870px] items-center overflow-hidden px-12">
     <div class="grid lg:grid-cols-2 gap-16 items-center w-full max-w-7xl mx-auto py-20">
         <div class="z-10">
             <span class="text-tertiary font-bold tracking-[0.2em] text-sm uppercase mb-6 block">★ Budapest legjobb modern magyar étterme 2025</span>
-            <h1 class="font-headline text-4xl md:text-5xl lg:text-6xl text-primary leading-[1.1] mb-8 lg:pr-12">Autentikus ízek, <br/><span class="italic text-secondary">modern köntösben</span></h1>
+            <h1 class="font-headline text-5xl lg:text-6xl text-primary leading-[1.1] mb-8 lg:pr-12">Autentikus ízek, <br/><span class="italic text-secondary">modern köntösben</span></h1>
             <p class="text-lg text-on-surface-variant mb-10 max-w-md leading-relaxed">
                 Fedezze fel a magyar gasztronómia új korszakát Budapest szívében. Friss alapanyagok a helyi kertekből, újragondolt hagyományok.
             </p>
@@ -227,7 +243,7 @@
                 </div>
             </div>
         </div>
-        <div class="relative hidden md:block">
+        <div class="relative">
             <div class="rounded-2xl overflow-hidden aspect-[4/5] shadow-2xl relative z-20">
                 <img class="w-full h-full object-cover" alt="Modern fine dining plate featuring slow-cooked beef with root vegetables and herb garnish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBB0KQ7H0ljlXFrOZPlx23BAt2Ob7Br59qxwSZTiMKyLjSnsNlJRIQ9iJ_kiNTsvenM_JFgj2CZCtr1M8dgmNmBepjmxadRdkMWQGAMxa0iZVkJ7gY5DLtHhJR9xiLVaH56vZWUFvDt49IhprvC7NpqaG-qS-9N-kHfXmT4LoklCKLEfT1Hi5fNxtInYmFPbXGfHspvZsxgPR7avJn3iuYAHdMNS_3k1pidP7vKf-VcRsDWov-DpNQWs37gAKTrCbL4mwk6b8ye7B8"/>
             </div>
@@ -262,10 +278,10 @@
             <button class="menu-tab bg-surface-container-highest text-on-surface-variant px-8 py-3 rounded-full font-bold whitespace-nowrap hover:bg-surface-variant transition-all" data-category="drink">Italok</button>
         </div>
 
-        <!-- Food Grid -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="menu-grid">
+        <!-- Food Grid - horizontal scroll on mobile, grid on desktop -->
+        <div class="flex md:grid overflow-x-auto md:overflow-visible gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3 no-scrollbar snap-x snap-mandatory -mx-6 px-6 md:mx-0 md:px-0" id="menu-grid">
             <!-- Card 1 -->
-            <div class="menu-card bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="main" data-name="Marhapörkölt 'Kertem' módra" data-price="5400">
+            <div class="menu-card min-w-[280px] md:min-w-0 snap-start bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="main" data-name="Marhapörkölt 'Kertem' módra" data-price="5400">
                 <div class="relative overflow-hidden aspect-[4/3]">
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Hungarian goulash soup in a modern ceramic bowl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDepfOmF_AyBMjzevQ0QM9aH56lmk6crOTd-biCUppTSfxSxFJShPawc7ICksSVQlWxQYfVnCSB3ZUggkK49xtRj6QKTp41jiWaLMgk2jIflfMlrMzLyNxSfjQUpvOlekh2Th-w1dS0iWRNtUne0oIjAF_ZIuw9LEYw4IQROM7he4DsCHbFPJ56plLhRPa7yWm-S6xqR2iPhsILQKa4wWY0qOvrevgE0JIKKqsdZsKrK9lFwfc9S7ZWAAbcmuCYbCdXAROhnb457iQ"/>
                     <span class="absolute top-4 left-4 bg-tertiary text-on-tertiary text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Szezonális</span>
@@ -288,7 +304,7 @@
             </div>
 
             <!-- Card 2 -->
-            <div class="menu-card bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="main" data-name="Sült Pisztráng" data-price="4800">
+            <div class="menu-card min-w-[280px] md:min-w-0 snap-start bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="main" data-name="Sült Pisztráng" data-price="4800">
                 <div class="relative overflow-hidden aspect-[4/3]">
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Pan-seared trout fillet with lemon butter sauce" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZ7FNvcha5pA5hO6EwtsZ-dk1mFuLJYtSnprcbK5EtgCXxCevB7dfUBxHtobGD07dkdFm0jeOynncEyIJKA56Zq38rKRUOjZThwXWAnUIfz5_9-4AGNxjop0bTvtuy4w1nasUsXzkRvg_rxwNcpicAEF5D0Msgan4lmLRfm-TzLfkQCzdL1FAyH7OItk_YB8VPJ7T8FR9fhmOYQuaeVKINLojDHcyFfKXfONUXJrZm5LlZcA9kywGGBIhAv684mkeeUsQjXISzgdk" onerror="this.src='https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&h=600&fit=crop';this.onerror=null"/>
                 </div>
@@ -310,7 +326,7 @@
             </div>
 
             <!-- Card 3 -->
-            <div class="menu-card bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="appetizer" data-name="Tavaszi Kert Saláta" data-price="3200">
+            <div class="menu-card min-w-[280px] md:min-w-0 snap-start bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="appetizer" data-name="Tavaszi Kert Saláta" data-price="3200">
                 <div class="relative overflow-hidden aspect-[4/3]">
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Garden salad with roasted beets, goat cheese, and walnuts" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc4qq31dpRO6N-7fJcy2TXP_jI2hDI3o4_8cE3kcXk8fhccQihtnEBD1WCgeJYRRUz86iD6rReWv0BddsUPaXe6KHQ8rjYOibzUSkpZLWEPVc5uwKHsQwOgs2iM5WqHZW989rLFC-Yf5819ETtNenu0lwPvcCN9AJNr9Bu6FbfGNtJiMm0J7ak3uh0VrahvabSetBtKV0g9g372v9FpmP1f0YPfVRJTZylPrqRr-nkBTdwU3xaeNNhh_AvAedewJyKplSEDoGsMVc"/>
                 </div>
@@ -333,7 +349,7 @@
             </div>
 
             <!-- Card 4 -->
-            <div class="menu-card bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="dessert" data-name="Kürtőskalács Puding" data-price="2600">
+            <div class="menu-card min-w-[280px] md:min-w-0 snap-start bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="dessert" data-name="Kürtőskalács Puding" data-price="2600">
                 <div class="relative overflow-hidden aspect-[4/3]">
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Chimney cake dessert with vanilla cream and forest berries" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ18lu_yOspANmZsRSTAs2kuGoxTugNAFeH_smo7acoUf45vQyUH185_rh8XDTOs5msQIzXOnrikUycSj1FdimxCbJ5pFKS__5J2SV4VLZqiCOay9vlWov30X6oUOyQZ-lHMwbGk-BRuK1c_ZFARzBipROhZ5y-ZJN52Ro0cQP0_jlSufdhg_KjVtzzJxpsOIoXi7XZis5nwjFN3GDCdyRN1eyQVYK0UIyQelHoztMJvRGz6DP2IfB_N8UJlQrVS1KtV11ROCkFOU"/>
                 </div>
@@ -352,7 +368,7 @@
             </div>
 
             <!-- Card 5 -->
-            <div class="menu-card bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="main" data-name="Grillezett Bárányfalatok" data-price="6900">
+            <div class="menu-card min-w-[280px] md:min-w-0 snap-start bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="main" data-name="Grillezett Bárányfalatok" data-price="6900">
                 <div class="relative overflow-hidden aspect-[4/3]">
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Marinated lamb skewers with grilled vegetables" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyIyFHCKHehjQoDVIqsXbQ98HrIF8VTAoTQ-FXUmbgMs1h7f_AwnIUhXu_OzYOBUBxSf2JDG7OtzkM0B8DfQm-p56bLTvBkohovuejCWr9neMj5LmhJzRiVOoRo4A-g9W-8z4F3z9LrYZc3A2ayhN8n3VoSmMPyl4uLcPPMAEeaBYnaESeeLL9sUYW3NwM4gs3VKRxM13AIUMlV71hgzTt0OpaxI4Z1rjf9o_AOcCWjGD6ajKhX-mSYb88X_tIbQJxHtez3kEqdFc"/>
                 </div>
@@ -374,7 +390,7 @@
             </div>
 
             <!-- Card 6 -->
-            <div class="menu-card bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="main" data-name="Sült Karfiol Steak" data-price="3800">
+            <div class="menu-card min-w-[280px] md:min-w-0 snap-start bg-surface-container-lowest rounded-xl overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col" data-category="main" data-name="Sült Karfiol Steak" data-price="3800">
                 <div class="relative overflow-hidden aspect-[4/3]">
                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Roasted cauliflower steaks with almond cream" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCziR2h4Lbpf3rVwnByHiGBsKkIaDSuPDzcFH2YIMU7aXiImV1wZFLMIzI__G3UfktF--8TT3evgGqc9y_g8w7d_NEh4wpqsT0JYJMxTMTblIIrqV2r9vikoRHpJmZYX53xlLXMw8NNpGG5exmyilPRxpfmt_It54nFVNdvE4XmtaWjQxLkUoxLP99lzPIW4frrxaf5E1dTLwa5wf93jLaQt9KhkWR1nfDshPTENd0AYgC0yw5atfc2C1mY9vF2dDtgq18gbCxEnmQ"/>
                 </div>
@@ -835,7 +851,7 @@
 </section>
 
 <!-- Footer -->
-<footer class="bg-primary text-on-primary pt-20 pb-8">
+<footer class="bg-primary text-on-primary pt-20 pb-24 md:pb-8">
     <div class="px-6 md:px-12 max-w-7xl mx-auto">
         <div class="grid md:grid-cols-4 gap-12 mb-16">
             <div>
@@ -884,6 +900,26 @@
         </div>
     </div>
 </footer>
+
+<!-- Mobile Bottom Nav -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center pt-3 pb-6 px-4 bg-surface/90 backdrop-blur-xl z-50 border-t border-outline-variant/10">
+    <a class="mobile-main-nav flex flex-col items-center justify-center text-tertiary font-bold active:scale-90 transition-transform" href="#">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+        <span class="text-[10px] uppercase tracking-tighter mt-1">Kezdőlap</span>
+    </a>
+    <a class="mobile-main-nav flex flex-col items-center justify-center text-primary/50 hover:text-primary active:scale-90 transition-transform" href="#menu">
+        <span class="material-symbols-outlined">menu_book</span>
+        <span class="text-[10px] uppercase tracking-tighter mt-1">Étlap</span>
+    </a>
+    <a class="mobile-main-nav flex flex-col items-center justify-center text-primary/50 hover:text-primary active:scale-90 transition-transform" href="#booking">
+        <span class="material-symbols-outlined">calendar_month</span>
+        <span class="text-[10px] uppercase tracking-tighter mt-1">Foglalás</span>
+    </a>
+    <a class="mobile-main-nav flex flex-col items-center justify-center text-primary/50 hover:text-primary active:scale-90 transition-transform" href="#contact">
+        <span class="material-symbols-outlined">person</span>
+        <span class="text-[10px] uppercase tracking-tighter mt-1">Kapcsolat</span>
+    </a>
+</nav>
 
 <!-- Cookie banner -->
 <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-[90] bg-inverse-surface text-inverse-on-surface p-4 md:p-6 shadow-2xl">
