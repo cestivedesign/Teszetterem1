@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html class="dark" lang="hu">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kertem Admin | Heritage Curator Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "tertiary-fixed-dim": "#e9c349",
+                    "surface-tint": "#4d6453",
+                    "on-tertiary-container": "#4e3d00",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed-dim": "#f4bb92",
+                    "on-secondary-container": "#794e2e",
+                    "on-primary-container": "#819986",
+                    "surface-dim": "#dcdad2",
+                    "inverse-surface": "#31312b",
+                    "primary-fixed": "#d0e9d4",
+                    "surface-bright": "#fcf9f1",
+                    "on-tertiary-fixed-variant": "#574500",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed-variant": "#364c3c",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#0b2013",
+                    "on-surface-variant": "#434843",
+                    "on-surface": "#1c1c17",
+                    "surface-container-low": "#f6f3eb",
+                    "tertiary": "#735c00",
+                    "surface-container-high": "#ebe8e0",
+                    "on-secondary-fixed-variant": "#653d1e",
+                    "on-secondary-fixed": "#301400",
+                    "on-error-container": "#93000a",
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "outline-variant": "#c3c8c1",
+                    "surface": "#fcf9f1",
+                    "primary-fixed-dim": "#b4cdb8",
+                    "surface-container": "#f1eee6",
+                    "primary-container": "#1b3022",
+                    "on-error": "#ffffff",
+                    "background": "#fcf9f1",
+                    "on-background": "#1c1c17",
+                    "tertiary-fixed": "#ffe088",
+                    "primary": "#061b0e",
+                    "secondary": "#805533",
+                    "inverse-on-surface": "#f3f1e9",
+                    "outline": "#737973",
+                    "on-tertiary-fixed": "#241a00",
+                    "surface-variant": "#e5e2db",
+                    "surface-container-highest": "#e5e2db",
+                    "tertiary-container": "#cba72f",
+                    "secondary-container": "#fdc39a",
+                    "inverse-primary": "#b4cdb8",
+                    "secondary-fixed": "#ffdcc5"
+                },
+                "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+                }
+            },
+        },
+    }
+</script>
+<style>
+    body { font-family: 'Manrope', sans-serif; }
+    h1, h2, h3, .font-serif { font-family: 'Noto Serif', serif; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    .sidebar-link.active { background: #061b0e; color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    .toast-anim { animation: slideUp 0.3s ease, fadeOut 0.3s ease 2.7s; }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+</style>
+</head>
+<body class="bg-primary text-on-primary-container selection:bg-tertiary/30 selection:text-white">
+
+<!-- ========== LOGIN SCREEN ========== -->
+<div id="login-screen" class="fixed inset-0 z-[100] bg-primary flex items-center justify-center">
+    <div class="w-full max-w-sm p-8">
+        <div class="text-center mb-10">
+            <div class="w-12 h-12 bg-tertiary rounded-lg flex items-center justify-center mx-auto mb-4">
+                <span class="material-symbols-outlined text-primary text-2xl filled">eco</span>
+            </div>
+            <h1 class="text-3xl font-serif italic text-on-primary-fixed mb-2">Kertem Admin</h1>
+            <p class="text-outline text-sm">Heritage Curator Dashboard</p>
+        </div>
+        <form onsubmit="return handleLogin(event)" class="space-y-5">
+            <div class="space-y-2">
+                <label class="text-[10px] font-bold uppercase tracking-widest text-outline">Felhasználónév</label>
+                <input id="login-user" type="text" value="admin" class="w-full bg-primary-container border border-outline/20 rounded-xl py-3 px-4 text-on-primary-fixed focus:ring-2 focus:ring-tertiary/40 focus:border-tertiary"/>
+            </div>
+            <div class="space-y-2">
+                <label class="text-[10px] font-bold uppercase tracking-widest text-outline">Jelszó</label>
+                <input id="login-pass" type="password" value="" placeholder="••••••••" class="w-full bg-primary-container border border-outline/20 rounded-xl py-3 px-4 text-on-primary-fixed focus:ring-2 focus:ring-tertiary/40 focus:border-tertiary placeholder:text-outline/40"/>
+            </div>
+            <p id="login-error" class="text-error text-sm hidden">Hibas felhasznalonev vagy jelszo!</p>
+            <button type="submit" class="w-full bg-tertiary-container text-on-tertiary-container py-3 rounded-xl font-bold hover:brightness-110 transition-all">Bejelentkezés</button>
+            <p class="text-center text-[11px] text-outline mt-4">Alapértelmezett: admin / kertem2025</p>
+        </form>
+    </div>
+</div>
+
+<!-- ========== MAIN LAYOUT ========== -->
+<div id="admin-layout" class="hidden">
+<div class="flex min-h-screen">
+
+<!-- SideNavBar -->
+<aside id="sidebar" class="hidden md:flex flex-col h-screen py-6 bg-primary-container text-primary-container font-sans text-label-md fixed left-0 w-64 z-20 transition-all duration-300">
+    <div class="px-6 mb-10">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-tertiary rounded flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary text-xl filled">eco</span>
+            </div>
+            <a href="index.html" class="text-xl font-serif text-on-primary-container tracking-tight hover:text-tertiary-fixed-dim transition-colors">Kertem Admin</a>
+        </div>
+        <div class="mt-4 flex items-center gap-3 p-2 rounded-xl bg-primary/40">
+            <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden">
+                <img alt="Admin Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByc4Rc_VrUzFv560pstYUG7VidZCV6IMXElYmpLalrL5kC_oVRzVzxZs6joAiHdv6zYSUmYd_aVEqHSP5GbHegfUjuYz65VhX4N6mzwVbSJMRlV_2bMzWhPvVK-b-fvYxLgT0QsN2gYOMgPvma9MY3CphQoVTuFBcc2EA85LThuc8s9BOZq6NexjUb8BZkmhKvvZlueZX2hY1Hj66JCY_gHoFImaXajPTxHVsKlzZX3XVuO-8rCPdfST5QAkHNTRwl9Q1DZBo_q5A"/>
+            </div>
+            <div>
+                <p class="text-on-primary-fixed text-sm font-bold">Admin Profile</p>
+                <p class="text-outline text-xs">Heritage Curator</p>
+            </div>
+        </div>
+    </div>
+    <nav class="flex-1 space-y-1 overflow-y-auto px-4">
+        <a onclick="showPage('dashboard')" class="sidebar-link active bg-primary text-on-primary rounded-lg px-4 py-3 shadow-sm flex items-center gap-3 transition-transform active:scale-95 cursor-pointer" data-page="dashboard">
+            <span class="material-symbols-outlined filled">dashboard</span>
+            <span>Dashboard</span>
+        </a>
+        <a onclick="showPage('bookings')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="bookings">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <span>Foglalások</span>
+        </a>
+        <a onclick="showPage('menu-mgmt')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="menu-mgmt">
+            <span class="material-symbols-outlined">restaurant_menu</span>
+            <span>Étlap kezelés</span>
+        </a>
+        <a onclick="showPage('orders')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="orders">
+            <span class="material-symbols-outlined">receipt_long</span>
+            <span>Rendelések</span>
+        </a>
+        <a onclick="showPage('guests')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="guests">
+            <span class="material-symbols-outlined">group</span>
+            <span>Vendégek</span>
+        </a>
+        <a onclick="showPage('finance')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="finance">
+            <span class="material-symbols-outlined">payments</span>
+            <span>Pénzügyek</span>
+        </a>
+        <div class="pt-4 pb-2 px-4">
+            <p class="text-[10px] uppercase tracking-widest text-outline">Content</p>
+        </div>
+        <a onclick="showPage('gallery')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="gallery">
+            <span class="material-symbols-outlined">gallery_thumbnail</span>
+            <span>Galéria</span>
+        </a>
+        <a onclick="showPage('blog')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="blog">
+            <span class="material-symbols-outlined">article</span>
+            <span>Blog kezelés</span>
+        </a>
+    </nav>
+    <div class="mt-auto px-4 space-y-1">
+        <button onclick="showPage('bookings'); showToast('Új foglalás form megnyitva')" class="w-full bg-tertiary-container text-on-tertiary-container font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 mb-4 hover:brightness-110 transition-all">
+            <span class="material-symbols-outlined filled">add_circle</span>
+            New Reservation
+        </button>
+        <a onclick="showPage('settings')" class="sidebar-link text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer" data-page="settings">
+            <span class="material-symbols-outlined">settings</span>
+            <span>Settings</span>
+        </a>
+        <a onclick="handleLogout()" class="text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 text-error/80 cursor-pointer">
+            <span class="material-symbols-outlined">logout</span>
+            <span>Logout</span>
+        </a>
+    </div>
+</aside>
+
+<!-- Main Canvas -->
+<main class="flex-1 md:ml-64 bg-primary p-4 md:p-8 min-h-screen pb-24 md:pb-8">
+
+<!-- ========== PAGE: DASHBOARD ========== -->
+<div id="page-dashboard" class="page">
+    <header class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
+        <div>
+            <h1 class="text-3xl md:text-4xl font-serif text-on-primary-fixed tracking-tight leading-tight">Vezérlőpult</h1>
+            <p class="text-on-primary-container/60 text-lg">Köszöntjük újra, Kurátor úr. Íme a mai nap áttekintése.</p>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="bg-primary-container px-6 py-3 rounded-xl border border-outline-variant/10 flex items-center gap-4">
+                <span class="material-symbols-outlined text-tertiary">calendar_month</span>
+                <span class="text-on-primary-container font-medium" id="today-date"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stat Cards -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
+        <div class="bg-primary-container p-6 rounded-xl relative overflow-hidden group cursor-pointer" onclick="showPage('bookings')">
+            <div class="relative z-10">
+                <p class="text-outline text-sm font-medium mb-1">Mai foglalások</p>
+                <div class="flex items-baseline gap-2">
+                    <h3 class="text-4xl font-serif text-on-primary-fixed">24</h3>
+                    <span class="text-tertiary-fixed-dim text-xs font-bold">+12%</span>
+                </div>
+            </div>
+            <span class="material-symbols-outlined absolute -right-4 -bottom-4 text-8xl text-white/5 pointer-events-none transition-transform group-hover:scale-110">event_available</span>
+        </div>
+        <div class="bg-primary-container p-6 rounded-xl relative overflow-hidden group cursor-pointer" onclick="showPage('orders')">
+            <div class="relative z-10">
+                <p class="text-outline text-sm font-medium mb-1">Online rendelések</p>
+                <div class="flex items-baseline gap-2">
+                    <h3 class="text-4xl font-serif text-on-primary-fixed">18</h3>
+                    <span class="text-tertiary-fixed-dim text-xs font-bold">+8%</span>
+                </div>
+            </div>
+            <span class="material-symbols-outlined absolute -right-4 -bottom-4 text-8xl text-white/5 pointer-events-none transition-transform group-hover:scale-110">shopping_bag</span>
+        </div>
+        <div class="bg-primary-container p-6 rounded-xl relative overflow-hidden group cursor-pointer" onclick="showPage('finance')">
+            <div class="relative z-10">
+                <p class="text-outline text-sm font-medium mb-1">Mai bevétel</p>
+                <div class="flex items-baseline gap-2">
+                    <h3 class="text-4xl font-serif text-on-primary-fixed">487k <span class="text-lg">Ft</span></h3>
+                    <span class="text-tertiary-fixed-dim text-xs font-bold">+15%</span>
+                </div>
+            </div>
+            <span class="material-symbols-outlined absolute -right-4 -bottom-4 text-8xl text-white/5 pointer-events-none transition-transform group-hover:scale-110">payments</span>
+        </div>
+        <div class="bg-primary-container p-6 rounded-xl relative overflow-hidden group cursor-pointer" onclick="showPage('guests')">
+            <div class="relative z-10">
+                <p class="text-outline text-sm font-medium mb-1">Új vendégek</p>
+                <div class="flex items-baseline gap-2">
+                    <h3 class="text-4xl font-serif text-on-primary-fixed">7</h3>
+                    <span class="text-tertiary-fixed-dim text-xs font-bold">Új</span>
+                </div>
+            </div>
+            <span class="material-symbols-outlined absolute -right-4 -bottom-4 text-8xl text-white/5 pointer-events-none transition-transform group-hover:scale-110">person_add</span>
+        </div>
+    </div>
+
+    <!-- Bento Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Bookings Table -->
+        <div class="lg:col-span-2 bg-primary-container rounded-2xl overflow-hidden shadow-2xl border border-white/5">
+            <div class="p-6 md:p-8 flex justify-between items-center border-b border-white/5">
+                <h2 class="text-2xl font-serif text-on-primary-fixed">Legutóbbi foglalások</h2>
+                <button onclick="showPage('bookings')" class="text-tertiary-fixed-dim hover:underline text-sm font-medium">Összes megtekintése</button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="text-outline text-xs uppercase tracking-widest font-bold border-b border-white/5">
+                            <th class="px-6 md:px-8 py-5">Vendég</th>
+                            <th class="px-6 md:px-8 py-5">Dátum</th>
+                            <th class="px-6 md:px-8 py-5 hidden md:table-cell">Idő</th>
+                            <th class="px-6 md:px-8 py-5 hidden md:table-cell">Fő</th>
+                            <th class="px-6 md:px-8 py-5">Státusz</th>
+                            <th class="px-6 md:px-8 py-5 text-right">Művelet</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-on-primary-container font-medium divide-y divide-white/5">
+                        <tr class="hover:bg-white/5 transition-colors group">
+                            <td class="px-6 md:px-8 py-5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-secondary text-on-secondary text-[10px] flex items-center justify-center font-bold">KB</div>
+                                    <span>Kovács Béla</span>
+                                </div>
+                            </td>
+                            <td class="px-6 md:px-8 py-5">Ma</td>
+                            <td class="px-6 md:px-8 py-5 font-mono hidden md:table-cell">19:30</td>
+                            <td class="px-6 md:px-8 py-5 text-center hidden md:table-cell">4</td>
+                            <td class="px-6 md:px-8 py-5">
+                                <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary text-tertiary-fixed-dim border border-tertiary/20">Megerősítve</span>
+                            </td>
+                            <td class="px-6 md:px-8 py-5 text-right">
+                                <div class="flex justify-end gap-2">
+                                    <button onclick="showToast('Emlékeztető elküldve Kovács Bélának!')" class="material-symbols-outlined cursor-pointer text-outline hover:text-tertiary-fixed-dim text-[20px]" title="Emlékeztető">notifications</button>
+                                    <button onclick="showToast('Foglalás részletei megnyitva')" class="material-symbols-outlined cursor-pointer text-outline hover:text-on-primary-fixed text-[20px]" title="Részletek">more_vert</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition-colors group">
+                            <td class="px-6 md:px-8 py-5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-surface-tint text-on-primary text-[10px] flex items-center justify-center font-bold">SZA</div>
+                                    <span>Szabó Anna</span>
+                                </div>
+                            </td>
+                            <td class="px-6 md:px-8 py-5">Ma</td>
+                            <td class="px-6 md:px-8 py-5 font-mono hidden md:table-cell">20:00</td>
+                            <td class="px-6 md:px-8 py-5 text-center hidden md:table-cell">2</td>
+                            <td class="px-6 md:px-8 py-5">
+                                <span class="status-badge px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-secondary-container text-on-secondary-container">Függőben</span>
+                            </td>
+                            <td class="px-6 md:px-8 py-5 text-right">
+                                <div class="flex justify-end gap-2">
+                                    <button onclick="confirmBooking(this)" class="material-symbols-outlined cursor-pointer text-outline hover:text-tertiary-fixed-dim text-[20px]" title="Elfogadás">check_circle</button>
+                                    <button onclick="cancelBooking(this)" class="material-symbols-outlined cursor-pointer text-outline hover:text-error text-[20px]" title="Lemondás">cancel</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition-colors group opacity-50">
+                            <td class="px-6 md:px-8 py-5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-primary text-outline text-[10px] flex items-center justify-center font-bold">NH</div>
+                                    <span>Nagy Hunor</span>
+                                </div>
+                            </td>
+                            <td class="px-6 md:px-8 py-5">Holnap</td>
+                            <td class="px-6 md:px-8 py-5 font-mono hidden md:table-cell">18:15</td>
+                            <td class="px-6 md:px-8 py-5 text-center hidden md:table-cell">6</td>
+                            <td class="px-6 md:px-8 py-5">
+                                <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary text-on-primary-container/20 line-through">Lemondva</span>
+                            </td>
+                            <td class="px-6 md:px-8 py-5 text-right">
+                                <button onclick="showToast('Archivált foglalás')" class="material-symbols-outlined cursor-pointer text-outline hover:text-on-primary-fixed text-[20px]">more_vert</button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition-colors group">
+                            <td class="px-6 md:px-8 py-5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-tertiary-fixed text-on-tertiary-fixed text-[10px] flex items-center justify-center font-bold">TM</div>
+                                    <span>Tóth Melinda</span>
+                                </div>
+                            </td>
+                            <td class="px-6 md:px-8 py-5">Holnap</td>
+                            <td class="px-6 md:px-8 py-5 font-mono hidden md:table-cell">19:00</td>
+                            <td class="px-6 md:px-8 py-5 text-center hidden md:table-cell">3</td>
+                            <td class="px-6 md:px-8 py-5">
+                                <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary text-tertiary-fixed-dim border border-tertiary/20">Megerősítve</span>
+                            </td>
+                            <td class="px-6 md:px-8 py-5 text-right">
+                                <div class="flex justify-end gap-2">
+                                    <button onclick="showToast('Emlékeztető elküldve Tóth Melindának!')" class="material-symbols-outlined cursor-pointer text-outline hover:text-tertiary-fixed-dim text-[20px]" title="Emlékeztető">notifications</button>
+                                    <button onclick="showToast('Foglalás részletei megnyitva')" class="material-symbols-outlined cursor-pointer text-outline hover:text-on-primary-fixed text-[20px]" title="Részletek">more_vert</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="space-y-8">
+            <!-- Kitchen Status -->
+            <div class="bg-primary-container p-8 rounded-2xl border border-white/5">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-serif text-on-primary-fixed">Konyha Állapot</h2>
+                    <div class="flex items-center gap-2">
+                        <span id="kitchen-dot" class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        <span id="kitchen-status-text" class="text-[10px] font-bold text-outline uppercase tracking-widest">Active</span>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-on-primary-container">Aktív rendelések</span>
+                            <span class="text-on-primary-fixed font-bold" id="active-orders">8 / 12</span>
+                        </div>
+                        <div class="w-full bg-primary h-2 rounded-full overflow-hidden">
+                            <div id="orders-bar" class="bg-tertiary h-full rounded-full transition-all duration-500" style="width:66%"></div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-primary p-4 rounded-xl">
+                            <p class="text-outline text-[10px] uppercase font-bold">Átlagidő</p>
+                            <p class="text-on-primary-fixed text-lg font-serif">22 perc</p>
+                        </div>
+                        <div class="bg-primary p-4 rounded-xl">
+                            <p class="text-outline text-[10px] uppercase font-bold">Készletek</p>
+                            <p id="stock-status" class="text-on-primary-fixed text-lg font-serif">Optimális</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="toggleKitchen()" class="flex-1 bg-primary text-on-primary-container py-2 rounded-lg text-xs font-bold hover:bg-tertiary/20 transition-all">Konyha szünet</button>
+                        <button onclick="showToast('Készlet frissítve')" class="flex-1 bg-primary text-on-primary-container py-2 rounded-lg text-xs font-bold hover:bg-tertiary/20 transition-all">Készlet frissítés</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Quick Action -->
+            <div onclick="showPage('gallery')" class="relative bg-secondary-container rounded-2xl p-8 overflow-hidden group h-[280px] flex flex-col justify-end cursor-pointer">
+                <img class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Cocktail being poured" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWSIvSV3Gp6HCv97yd0udbw5Et-gUzJKfDtZJgvQsJrhUK1ZToQ8C_v3m1DauRywrLB6tbV22OELwQ9BREJejOPty4nFlxtG3Mj3wGcEmM5QOCEr7zk7QlGWvAM23Vc6PJwLEdmvbxulGRVXUyTdv3q_RxoG5yin0kYrKMrG4EVCDvPnOnb2Sr5mSO8Ryb75Hbn_WeALl44NQOAgprJjlc70ocCZdXFO2I2TehQBesfrvuekRWM3HGJQneG_WrjijgpGNAH3fVZ-E"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-secondary/90 to-transparent"></div>
+                <div class="relative z-10">
+                    <h3 class="text-2xl font-serif text-on-secondary font-bold leading-tight mb-2">Kertem Galéria Frissítés</h3>
+                    <p class="text-on-secondary/80 text-sm mb-4">A tegnapi kóstoló fotói készen állnak a publikálásra.</p>
+                    <button class="bg-white text-secondary font-bold px-6 py-3 rounded-lg text-sm transition-transform hover:scale-105 active:scale-95">Média kezelő</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weekly Chart -->
+    <div class="mt-12 bg-primary-container rounded-2xl p-6 md:p-8 border border-white/5 relative overflow-hidden">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+            <div>
+                <h2 class="text-2xl font-serif text-on-primary-fixed">Heti vendégforgalom</h2>
+                <p class="text-outline text-sm">Az előző héthez képest +14% emelkedés tapasztalható.</p>
+            </div>
+            <div class="flex gap-2" id="chart-period">
+                <button onclick="setChartPeriod(this, 'daily')" class="bg-primary px-4 py-2 rounded-lg text-xs font-bold text-on-primary-container hover:bg-tertiary/20 transition-all">Napi</button>
+                <button onclick="setChartPeriod(this, 'weekly')" class="bg-tertiary px-4 py-2 rounded-lg text-xs font-bold text-primary">Heti</button>
+                <button onclick="setChartPeriod(this, 'monthly')" class="bg-primary px-4 py-2 rounded-lg text-xs font-bold text-on-primary-container hover:bg-tertiary/20 transition-all">Havi</button>
+            </div>
+        </div>
+        <div class="h-64 flex items-end justify-between gap-2 md:gap-4" id="chart-bars">
+            <div class="flex-1 bg-primary/40 rounded-t-lg relative group hover:bg-tertiary/20 transition-colors cursor-pointer" style="height:40%">
+                <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-background text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">124 vendég</div>
+            </div>
+            <div class="flex-1 bg-primary/40 rounded-t-lg relative group hover:bg-tertiary/20 transition-colors cursor-pointer" style="height:60%">
+                <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-background text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">156 vendég</div>
+            </div>
+            <div class="flex-1 bg-primary/40 rounded-t-lg relative group hover:bg-tertiary/20 transition-colors cursor-pointer" style="height:55%">
+                <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-background text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">142 vendég</div>
+            </div>
+            <div class="flex-1 bg-primary/40 rounded-t-lg relative group hover:bg-tertiary/20 transition-colors cursor-pointer" style="height:85%">
+                <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-background text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">210 vendég</div>
+            </div>
+            <div class="flex-1 bg-tertiary/60 rounded-t-lg relative group hover:bg-tertiary/80 transition-colors cursor-pointer" style="height:95%">
+                <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-background text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">245 vendég</div>
+            </div>
+            <div class="flex-1 bg-tertiary rounded-t-lg relative group hover:bg-tertiary/80 transition-colors cursor-pointer border-l border-white/20 shadow-[0_0_20px_rgba(115,92,0,0.3)]" style="height:70%">
+                <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-background text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">188 vendég</div>
+            </div>
+            <div class="flex-1 bg-primary/40 rounded-t-lg relative group hover:bg-tertiary/20 transition-colors cursor-pointer" style="height:30%">
+                <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-background text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">85 vendég</div>
+            </div>
+        </div>
+        <div class="flex justify-between mt-4 text-outline text-[10px] uppercase font-bold tracking-widest px-2">
+            <span>Hét</span><span>Ked</span><span>Sze</span><span>Csüt</span><span>Pén</span><span>Szo</span><span>Vas</span>
+        </div>
+    </div>
+</div>
+
+<!-- ========== PAGE: BOOKINGS ========== -->
+<div id="page-bookings" class="page hidden">
+    <header class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
+        <div>
+            <h1 class="text-3xl font-serif text-on-primary-fixed">Foglalások</h1>
+            <p class="text-outline text-sm">Összes foglalás kezelése és áttekintése</p>
+        </div>
+        <div class="flex gap-3">
+            <input type="date" class="bg-primary-container border border-outline/20 rounded-lg py-2 px-4 text-sm text-on-primary-fixed focus:ring-tertiary"/>
+            <button onclick="document.getElementById('new-booking-modal').classList.remove('hidden')" class="bg-tertiary-container text-on-tertiary-container px-5 py-2 rounded-lg font-bold text-sm flex items-center gap-2 hover:brightness-110 transition-all">
+                <span class="material-symbols-outlined text-[18px]">add</span> Új foglalás
+            </button>
+        </div>
+    </header>
+    <div class="flex gap-2 mb-6 overflow-x-auto">
+        <button class="bg-tertiary px-4 py-2 rounded-lg text-xs font-bold text-primary whitespace-nowrap">Összes (24)</button>
+        <button class="bg-primary-container px-4 py-2 rounded-lg text-xs font-bold text-on-primary-container whitespace-nowrap hover:bg-white/10 transition-all" onclick="showToast('Szűrő: Megerősítve')">Megerősítve (18)</button>
+        <button class="bg-primary-container px-4 py-2 rounded-lg text-xs font-bold text-on-primary-container whitespace-nowrap hover:bg-white/10 transition-all" onclick="showToast('Szűrő: Függőben')">Függőben (4)</button>
+        <button class="bg-primary-container px-4 py-2 rounded-lg text-xs font-bold text-on-primary-container whitespace-nowrap hover:bg-white/10 transition-all" onclick="showToast('Szűrő: Lemondva')">Lemondva (2)</button>
+    </div>
+    <div class="bg-primary-container rounded-2xl overflow-hidden border border-white/5">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="text-outline text-xs uppercase tracking-widest font-bold border-b border-white/5">
+                        <th class="px-6 py-4">Vendég</th>
+                        <th class="px-6 py-4 hidden md:table-cell">Telefon</th>
+                        <th class="px-6 py-4">Dátum & Idő</th>
+                        <th class="px-6 py-4 hidden md:table-cell">Fő</th>
+                        <th class="px-6 py-4">Státusz</th>
+                        <th class="px-6 py-4">Művelet</th>
+                    </tr>
+                </thead>
+                <tbody class="text-on-primary-container font-medium divide-y divide-white/5" id="full-bookings-table">
+                    <tr class="hover:bg-white/5 transition-colors"><td class="px-6 py-4 font-bold">Kovács Béla</td><td class="px-6 py-4 hidden md:table-cell font-mono text-sm">+36 30 123 4567</td><td class="px-6 py-4">Ma 19:30</td><td class="px-6 py-4 hidden md:table-cell">4</td><td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase bg-primary text-tertiary-fixed-dim border border-tertiary/20">Megerősítve</span></td><td class="px-6 py-4"><div class="flex gap-2"><button onclick="showToast('Emlékeztető elküldve!')" class="material-symbols-outlined text-[18px] text-outline hover:text-tertiary-fixed-dim cursor-pointer">notifications</button><button onclick="showToast('Foglalás lemondva')" class="material-symbols-outlined text-[18px] text-outline hover:text-error cursor-pointer">cancel</button></div></td></tr>
+                    <tr class="hover:bg-white/5 transition-colors"><td class="px-6 py-4 font-bold">Szabó Anna</td><td class="px-6 py-4 hidden md:table-cell font-mono text-sm">+36 20 987 6543</td><td class="px-6 py-4">Ma 20:00</td><td class="px-6 py-4 hidden md:table-cell">2</td><td class="px-6 py-4"><span class="status-badge px-3 py-1 rounded-full text-[10px] font-bold uppercase bg-secondary-container text-on-secondary-container">Függőben</span></td><td class="px-6 py-4"><div class="flex gap-2"><button onclick="confirmBooking(this)" class="material-symbols-outlined text-[18px] text-outline hover:text-tertiary-fixed-dim cursor-pointer">check_circle</button><button onclick="cancelBooking(this)" class="material-symbols-outlined text-[18px] text-outline hover:text-error cursor-pointer">cancel</button></div></td></tr>
+                    <tr class="hover:bg-white/5 transition-colors"><td class="px-6 py-4 font-bold">Tóth Melinda</td><td class="px-6 py-4 hidden md:table-cell font-mono text-sm">+36 30 444 7890</td><td class="px-6 py-4">Holnap 19:00</td><td class="px-6 py-4 hidden md:table-cell">3</td><td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase bg-primary text-tertiary-fixed-dim border border-tertiary/20">Megerősítve</span></td><td class="px-6 py-4"><div class="flex gap-2"><button onclick="showToast('Emlékeztető elküldve!')" class="material-symbols-outlined text-[18px] text-outline hover:text-tertiary-fixed-dim cursor-pointer">notifications</button><button onclick="showToast('Foglalás lemondva')" class="material-symbols-outlined text-[18px] text-outline hover:text-error cursor-pointer">cancel</button></div></td></tr>
+                    <tr class="hover:bg-white/5 transition-colors"><td class="px-6 py-4 font-bold">Kiss Péter</td><td class="px-6 py-4 hidden md:table-cell font-mono text-sm">+36 70 555 1234</td><td class="px-6 py-4">Holnap 18:00</td><td class="px-6 py-4 hidden md:table-cell">5+</td><td class="px-6 py-4"><span class="status-badge px-3 py-1 rounded-full text-[10px] font-bold uppercase bg-secondary-container text-on-secondary-container">Függőben</span></td><td class="px-6 py-4"><div class="flex gap-2"><button onclick="confirmBooking(this)" class="material-symbols-outlined text-[18px] text-outline hover:text-tertiary-fixed-dim cursor-pointer">check_circle</button><button onclick="cancelBooking(this)" class="material-symbols-outlined text-[18px] text-outline hover:text-error cursor-pointer">cancel</button></div></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ========== PAGE: ORDERS ========== -->
+<div id="page-orders" class="page hidden">
+    <header class="mb-8">
+        <h1 class="text-3xl font-serif text-on-primary-fixed">Rendelések</h1>
+        <p class="text-outline text-sm">Online rendelések kezelése és státusz frissítése</p>
+    </header>
+    <div class="space-y-4">
+        <div class="bg-primary-container rounded-2xl p-6 border border-white/5 border-l-4 border-l-tertiary">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+                <div>
+                    <h4 class="font-bold text-on-primary-fixed">#1042 - Kiss Péter <span class="text-[10px] uppercase tracking-widest bg-tertiary/20 text-tertiary-fixed-dim px-2 py-0.5 rounded-full ml-2">ÚJ</span></h4>
+                    <p class="text-xs text-outline">Ma 12:34 | Bankkártya | Budapest, Király u. 22.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="font-bold text-on-primary-fixed">13,400 Ft</span>
+                    <select onchange="showToast('Státusz: ' + this.value)" class="bg-primary border border-outline/20 rounded-lg py-1.5 px-3 text-xs font-bold text-on-primary-container">
+                        <option>Készül</option>
+                        <option>Útban</option>
+                        <option>Kézbesítve</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex gap-3 flex-wrap text-sm text-on-primary-container">
+                <span class="bg-primary px-3 py-1 rounded-lg">2x Marhapörkölt 'Kertem'</span>
+                <span class="bg-primary px-3 py-1 rounded-lg">1x Kürtőskalács Puding</span>
+            </div>
+        </div>
+        <div class="bg-primary-container rounded-2xl p-6 border border-white/5">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+                <div>
+                    <h4 class="font-bold text-on-primary-fixed">#1041 - Varga Anna</h4>
+                    <p class="text-xs text-outline">Ma 12:15 | Utánvét | Budapest, Dob u. 8.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="font-bold text-on-primary-fixed">10,100 Ft</span>
+                    <select onchange="showToast('Státusz: ' + this.value)" class="bg-primary border border-outline/20 rounded-lg py-1.5 px-3 text-xs font-bold text-on-primary-container">
+                        <option>Útban</option>
+                        <option>Készül</option>
+                        <option>Kézbesítve</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex gap-3 flex-wrap text-sm text-on-primary-container">
+                <span class="bg-primary px-3 py-1 rounded-lg">1x Grillezett Bárányfalatok</span>
+                <span class="bg-primary px-3 py-1 rounded-lg">1x Tavaszi Kert Saláta</span>
+            </div>
+        </div>
+        <div class="bg-primary-container rounded-2xl p-6 border border-white/5">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+                <div>
+                    <h4 class="font-bold text-on-primary-fixed">#1040 - Horváth Dávid</h4>
+                    <p class="text-xs text-outline">Ma 11:50 | Bankkártya | Budapest, Wesselényi u. 5.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="font-bold text-on-primary-fixed">22,000 Ft</span>
+                    <select onchange="showToast('Státusz: ' + this.value)" class="bg-primary border border-outline/20 rounded-lg py-1.5 px-3 text-xs font-bold text-on-primary-container">
+                        <option selected>Kézbesítve</option>
+                        <option>Készül</option>
+                        <option>Útban</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex gap-3 flex-wrap text-sm text-on-primary-container">
+                <span class="bg-primary px-3 py-1 rounded-lg">3x Sült Pisztráng</span>
+                <span class="bg-primary px-3 py-1 rounded-lg">2x Sült Karfiol Steak</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== PAGE: MENU MGMT ========== -->
+<div id="page-menu-mgmt" class="page hidden">
+    <header class="flex justify-between items-end mb-8">
+        <div>
+            <h1 class="text-3xl font-serif text-on-primary-fixed">Étlap kezelés</h1>
+            <p class="text-outline text-sm">6 aktív étel az étlapon</p>
+        </div>
+        <button onclick="document.getElementById('add-food-modal').classList.remove('hidden')" class="bg-tertiary-container text-on-tertiary-container px-5 py-2 rounded-lg font-bold text-sm flex items-center gap-2 hover:brightness-110 transition-all">
+            <span class="material-symbols-outlined text-[18px]">add</span> Új étel
+        </button>
+    </header>
+    <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-primary-container p-5 rounded-xl flex items-center gap-4 border border-white/5 hover:border-tertiary/20 transition-all">
+            <div class="w-16 h-16 rounded-lg bg-primary overflow-hidden flex-shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDepfOmF_AyBMjzevQ0QM9aH56lmk6crOTd-biCUppTSfxSxFJShPawc7ICksSVQlWxQYfVnCSB3ZUggkK49xtRj6QKTp41jiWaLMgk2jIflfMlrMzLyNxSfjQUpvOlekh2Th-w1dS0iWRNtUne0oIjAF_ZIuw9LEYw4IQROM7he4DsCHbFPJ56plLhRPa7yWm-S6xqR2iPhsILQKa4wWY0qOvrevgE0JIKKqsdZsKrK9lFwfc9S7ZWAAbcmuCYbCdXAROhnb457iQ" alt=""/></div>
+            <div class="flex-grow"><h4 class="font-bold text-on-primary-fixed text-sm">Marhapörkölt 'Kertem'</h4><p class="text-xs text-outline">Főétel | 5,400 Ft</p><div class="flex gap-3 mt-2"><button onclick="showToast('Szerkesztés megnyitva')" class="text-xs text-tertiary-fixed-dim hover:underline font-bold cursor-pointer">Szerkesztés</button><button onclick="if(confirm('Biztosan törli?')) { this.closest('.bg-primary-container').remove(); showToast('Étel törölve') }" class="text-xs text-error/60 hover:text-error font-bold cursor-pointer">Törlés</button></div></div>
+            <label class="relative inline-flex items-center cursor-pointer"><input type="checkbox" checked class="sr-only peer" onchange="showToast(this.checked?'Aktív':'Rejtett')"><div class="w-9 h-5 bg-outline/30 rounded-full peer peer-checked:bg-tertiary after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div></label>
+        </div>
+        <div class="bg-primary-container p-5 rounded-xl flex items-center gap-4 border border-white/5 hover:border-tertiary/20 transition-all">
+            <div class="w-16 h-16 rounded-lg bg-primary overflow-hidden flex-shrink-0"><img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=200&h=200&fit=crop" alt=""/></div>
+            <div class="flex-grow"><h4 class="font-bold text-on-primary-fixed text-sm">Sült Pisztráng</h4><p class="text-xs text-outline">Főétel | 4,800 Ft</p><div class="flex gap-3 mt-2"><button onclick="showToast('Szerkesztés megnyitva')" class="text-xs text-tertiary-fixed-dim hover:underline font-bold cursor-pointer">Szerkesztés</button><button onclick="if(confirm('Biztosan törli?')) { this.closest('.bg-primary-container').remove(); showToast('Étel törölve') }" class="text-xs text-error/60 hover:text-error font-bold cursor-pointer">Törlés</button></div></div>
+            <label class="relative inline-flex items-center cursor-pointer"><input type="checkbox" checked class="sr-only peer" onchange="showToast(this.checked?'Aktív':'Rejtett')"><div class="w-9 h-5 bg-outline/30 rounded-full peer peer-checked:bg-tertiary after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div></label>
+        </div>
+        <div class="bg-primary-container p-5 rounded-xl flex items-center gap-4 border border-white/5 hover:border-tertiary/20 transition-all">
+            <div class="w-16 h-16 rounded-lg bg-primary overflow-hidden flex-shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc4qq31dpRO6N-7fJcy2TXP_jI2hDI3o4_8cE3kcXk8fhccQihtnEBD1WCgeJYRRUz86iD6rReWv0BddsUPaXe6KHQ8rjYOibzUSkpZLWEPVc5uwKHsQwOgs2iM5WqHZW989rLFC-Yf5819ETtNenu0lwPvcCN9AJNr9Bu6FbfGNtJiMm0J7ak3uh0VrahvabSetBtKV0g9g372v9FpmP1f0YPfVRJTZylPrqRr-nkBTdwU3xaeNNhh_AvAedewJyKplSEDoGsMVc" alt=""/></div>
+            <div class="flex-grow"><h4 class="font-bold text-on-primary-fixed text-sm">Tavaszi Kert Saláta</h4><p class="text-xs text-outline">Előétel | 3,200 Ft</p><div class="flex gap-3 mt-2"><button onclick="showToast('Szerkesztés megnyitva')" class="text-xs text-tertiary-fixed-dim hover:underline font-bold cursor-pointer">Szerkesztés</button><button onclick="if(confirm('Biztosan törli?')) { this.closest('.bg-primary-container').remove(); showToast('Étel törölve') }" class="text-xs text-error/60 hover:text-error font-bold cursor-pointer">Törlés</button></div></div>
+            <label class="relative inline-flex items-center cursor-pointer"><input type="checkbox" checked class="sr-only peer" onchange="showToast(this.checked?'Aktív':'Rejtett')"><div class="w-9 h-5 bg-outline/30 rounded-full peer peer-checked:bg-tertiary after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div></label>
+        </div>
+        <div class="bg-primary-container p-5 rounded-xl flex items-center gap-4 border border-white/5 hover:border-tertiary/20 transition-all">
+            <div class="w-16 h-16 rounded-lg bg-primary overflow-hidden flex-shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ18lu_yOspANmZsRSTAs2kuGoxTugNAFeH_smo7acoUf45vQyUH185_rh8XDTOs5msQIzXOnrikUycSj1FdimxCbJ5pFKS__5J2SV4VLZqiCOay9vlWov30X6oUOyQZ-lHMwbGk-BRuK1c_ZFARzBipROhZ5y-ZJN52Ro0cQP0_jlSufdhg_KjVtzzJxpsOIoXi7XZis5nwjFN3GDCdyRN1eyQVYK0UIyQelHoztMJvRGz6DP2IfB_N8UJlQrVS1KtV11ROCkFOU" alt=""/></div>
+            <div class="flex-grow"><h4 class="font-bold text-on-primary-fixed text-sm">Kürtőskalács Puding</h4><p class="text-xs text-outline">Desszert | 2,600 Ft</p><div class="flex gap-3 mt-2"><button onclick="showToast('Szerkesztés megnyitva')" class="text-xs text-tertiary-fixed-dim hover:underline font-bold cursor-pointer">Szerkesztés</button><button onclick="if(confirm('Biztosan törli?')) { this.closest('.bg-primary-container').remove(); showToast('Étel törölve') }" class="text-xs text-error/60 hover:text-error font-bold cursor-pointer">Törlés</button></div></div>
+            <label class="relative inline-flex items-center cursor-pointer"><input type="checkbox" checked class="sr-only peer" onchange="showToast(this.checked?'Aktív':'Rejtett')"><div class="w-9 h-5 bg-outline/30 rounded-full peer peer-checked:bg-tertiary after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div></label>
+        </div>
+        <div class="bg-primary-container p-5 rounded-xl flex items-center gap-4 border border-white/5 hover:border-tertiary/20 transition-all">
+            <div class="w-16 h-16 rounded-lg bg-primary overflow-hidden flex-shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyIyFHCKHehjQoDVIqsXbQ98HrIF8VTAoTQ-FXUmbgMs1h7f_AwnIUhXu_OzYOBUBxSf2JDG7OtzkM0B8DfQm-p56bLTvBkohovuejCWr9neMj5LmhJzRiVOoRo4A-g9W-8z4F3z9LrYZc3A2ayhN8n3VoSmMPyl4uLcPPMAEeaBYnaESeeLL9sUYW3NwM4gs3VKRxM13AIUMlV71hgzTt0OpaxI4Z1rjf9o_AOcCWjGD6ajKhX-mSYb88X_tIbQJxHtez3kEqdFc" alt=""/></div>
+            <div class="flex-grow"><h4 class="font-bold text-on-primary-fixed text-sm">Grillezett Bárányfalatok</h4><p class="text-xs text-outline">Főétel | 6,900 Ft</p><div class="flex gap-3 mt-2"><button onclick="showToast('Szerkesztés megnyitva')" class="text-xs text-tertiary-fixed-dim hover:underline font-bold cursor-pointer">Szerkesztés</button><button onclick="if(confirm('Biztosan törli?')) { this.closest('.bg-primary-container').remove(); showToast('Étel törölve') }" class="text-xs text-error/60 hover:text-error font-bold cursor-pointer">Törlés</button></div></div>
+            <label class="relative inline-flex items-center cursor-pointer"><input type="checkbox" checked class="sr-only peer" onchange="showToast(this.checked?'Aktív':'Rejtett')"><div class="w-9 h-5 bg-outline/30 rounded-full peer peer-checked:bg-tertiary after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div></label>
+        </div>
+        <div class="bg-primary-container p-5 rounded-xl flex items-center gap-4 border border-white/5 hover:border-tertiary/20 transition-all">
+            <div class="w-16 h-16 rounded-lg bg-primary overflow-hidden flex-shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCziR2h4Lbpf3rVwnByHiGBsKkIaDSuPDzcFH2YIMU7aXiImV1wZFLMIzI__G3UfktF--8TT3evgGqc9y_g8w7d_NEh4wpqsT0JYJMxTMTblIIrqV2r9vikoRHpJmZYX53xlLXMw8NNpGG5exmyilPRxpfmt_It54nFVNdvE4XmtaWjQxLkUoxLP99lzPIW4frrxaf5E1dTLwa5wf93jLaQt9KhkWR1nfDshPTENd0AYgC0yw5atfc2C1mY9vF2dDtgq18gbCxEnmQ" alt=""/></div>
+            <div class="flex-grow"><h4 class="font-bold text-on-primary-fixed text-sm">Sült Karfiol Steak</h4><p class="text-xs text-outline">Főétel | 3,800 Ft</p><div class="flex gap-3 mt-2"><button onclick="showToast('Szerkesztés megnyitva')" class="text-xs text-tertiary-fixed-dim hover:underline font-bold cursor-pointer">Szerkesztés</button><button onclick="if(confirm('Biztosan törli?')) { this.closest('.bg-primary-container').remove(); showToast('Étel törölve') }" class="text-xs text-error/60 hover:text-error font-bold cursor-pointer">Törlés</button></div></div>
+            <label class="relative inline-flex items-center cursor-pointer"><input type="checkbox" checked class="sr-only peer" onchange="showToast(this.checked?'Aktív':'Rejtett')"><div class="w-9 h-5 bg-outline/30 rounded-full peer peer-checked:bg-tertiary after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div></label>
+        </div>
+    </div>
+</div>
+
+<!-- ========== PAGE: GUESTS ========== -->
+<div id="page-guests" class="page hidden">
+    <header class="mb-8"><h1 class="text-3xl font-serif text-on-primary-fixed">Vendégek</h1><p class="text-outline text-sm">Visszatérő vendégek és VIP lista</p></header>
+    <div class="bg-primary-container rounded-2xl p-6 border border-white/5 space-y-4">
+        <div class="flex items-center justify-between p-4 bg-primary/40 rounded-xl"><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center font-bold text-xs">KB</div><div><p class="font-bold text-on-primary-fixed">Kovács Béla</p><p class="text-xs text-outline">12 látogatás | Utolsó: Ma</p></div></div><span class="text-[10px] font-bold uppercase tracking-widest bg-tertiary/20 text-tertiary-fixed-dim px-3 py-1 rounded-full">VIP</span></div>
+        <div class="flex items-center justify-between p-4 bg-primary/40 rounded-xl"><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-bold text-xs">TM</div><div><p class="font-bold text-on-primary-fixed">Tóth Melinda</p><p class="text-xs text-outline">8 látogatás | Utolsó: Holnap (foglalás)</p></div></div><span class="text-[10px] font-bold uppercase tracking-widest bg-tertiary/20 text-tertiary-fixed-dim px-3 py-1 rounded-full">VIP</span></div>
+        <div class="flex items-center justify-between p-4 bg-primary/40 rounded-xl"><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-surface-tint text-on-primary flex items-center justify-center font-bold text-xs">SZA</div><div><p class="font-bold text-on-primary-fixed">Szabó Anna</p><p class="text-xs text-outline">3 látogatás | Utolsó: Tegnap</p></div></div><span class="text-[10px] font-bold uppercase tracking-widest bg-primary text-on-primary-container px-3 py-1 rounded-full">Visszatérő</span></div>
+        <div class="flex items-center justify-between p-4 bg-primary/40 rounded-xl"><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-bold text-xs">VA</div><div><p class="font-bold text-on-primary-fixed">Varga Anna</p><p class="text-xs text-outline">1 látogatás | Utolsó: Ma</p></div></div><span class="text-[10px] font-bold uppercase tracking-widest bg-primary text-on-primary-container px-3 py-1 rounded-full">Új</span></div>
+    </div>
+</div>
+
+<!-- ========== PAGE: FINANCE ========== -->
+<div id="page-finance" class="page hidden">
+    <header class="mb-8"><h1 class="text-3xl font-serif text-on-primary-fixed">Pénzügyek</h1><p class="text-outline text-sm">Bevételek és kiadások áttekintése</p></header>
+    <div class="grid md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-primary-container p-6 rounded-xl border border-white/5"><p class="text-outline text-sm mb-1">Havi bevétel</p><p class="text-3xl font-serif text-on-primary-fixed">4.2M Ft</p><span class="text-tertiary-fixed-dim text-xs font-bold">+22% előző hónaphoz képest</span></div>
+        <div class="bg-primary-container p-6 rounded-xl border border-white/5"><p class="text-outline text-sm mb-1">Átlagos rendelés</p><p class="text-3xl font-serif text-on-primary-fixed">12,400 Ft</p><span class="text-tertiary-fixed-dim text-xs font-bold">+5% előző hónaphoz képest</span></div>
+        <div class="bg-primary-container p-6 rounded-xl border border-white/5"><p class="text-outline text-sm mb-1">Catering bevétel</p><p class="text-3xl font-serif text-on-primary-fixed">890k Ft</p><span class="text-tertiary-fixed-dim text-xs font-bold">3 aktív megbízás</span></div>
+    </div>
+    <div class="bg-primary-container rounded-2xl p-6 border border-white/5">
+        <h3 class="text-xl font-serif text-on-primary-fixed mb-4">Utolsó tranzakciók</h3>
+        <div class="space-y-3">
+            <div class="flex justify-between items-center p-3 bg-primary/40 rounded-xl"><div><p class="text-sm font-bold text-on-primary-fixed">#1042 - Kiss Péter</p><p class="text-xs text-outline">Bankkártya | Ma 12:34</p></div><span class="font-bold text-tertiary-fixed-dim">+13,400 Ft</span></div>
+            <div class="flex justify-between items-center p-3 bg-primary/40 rounded-xl"><div><p class="text-sm font-bold text-on-primary-fixed">#1041 - Varga Anna</p><p class="text-xs text-outline">Utánvét | Ma 12:15</p></div><span class="font-bold text-tertiary-fixed-dim">+10,100 Ft</span></div>
+            <div class="flex justify-between items-center p-3 bg-primary/40 rounded-xl"><div><p class="text-sm font-bold text-on-primary-fixed">#1040 - Horváth Dávid</p><p class="text-xs text-outline">Bankkártya | Ma 11:50</p></div><span class="font-bold text-tertiary-fixed-dim">+22,000 Ft</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== PAGE: GALLERY ========== -->
+<div id="page-gallery" class="page hidden">
+    <header class="flex justify-between items-end mb-8"><div><h1 class="text-3xl font-serif text-on-primary-fixed">Galéria</h1><p class="text-outline text-sm">Fotók kezelése és publikálása</p></div><button onclick="showToast('Fájlfeltöltő megnyitva')" class="bg-tertiary-container text-on-tertiary-container px-5 py-2 rounded-lg font-bold text-sm flex items-center gap-2 hover:brightness-110 transition-all"><span class="material-symbols-outlined text-[18px]">upload</span> Feltöltés</button></header>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="aspect-square rounded-xl overflow-hidden relative group cursor-pointer"><img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIPQlZkYybAxQD3wgFzOVByTppvaazeMUiB-vcmSbKdqL9k-Z9hentQJV-yhq1-NHSxVCqX5xAPBNYoB0dzrgaAQSJY-9DTknp4pCruj_wv1mWcimLx0T_BEsbYhxBuSZRvEctSgjeyRoVn65V_jl4nHYw8SzPQTq5QmnNBTgWYHtVMFH9BUR7on88yeRJyjGCaNKXJJOqRqU-2a_LyjfCK2jcilJoWO5DuwHS184ZzvDZplg2Furgo6nbbGDpdCc7WUhsEY9B7qY" alt=""/><div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3"><button onclick="showToast('Kép publikálva!')" class="bg-white text-primary px-3 py-1.5 rounded-lg text-xs font-bold">Publikálás</button><button onclick="if(confirm('Törlés?')) this.closest('.aspect-square').remove()" class="bg-error text-on-error px-3 py-1.5 rounded-lg text-xs font-bold">Törlés</button></div></div>
+        <div class="aspect-square rounded-xl overflow-hidden relative group cursor-pointer"><img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtUPFpHWD3Tji5v2Tw8TJrThhjcLZDAh92DrJFfilOLFHIekdQbbPWxmOMxgnkpT7XTM_N1lRK6MAlHQ2yMraMe2TMOwSdO0rqj59fDzClUPnP3A-kMTFAQ6-V-uxDxyJKSXzeBXVbp3JMD6VeCagP6sd3WG9FjsgDmDtVmJnK4-ael51y0OGNa_o6HaOi_beLIAAf0O0zehYsQ5t1sBdc-z9ukGy4_rrdO9Tb0P0vZ_Ow1_Z_HZwhr_jKiBYCqZEhiQDS38xmzQc" alt=""/><div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3"><button onclick="showToast('Kép publikálva!')" class="bg-white text-primary px-3 py-1.5 rounded-lg text-xs font-bold">Publikálás</button><button onclick="if(confirm('Törlés?')) this.closest('.aspect-square').remove()" class="bg-error text-on-error px-3 py-1.5 rounded-lg text-xs font-bold">Törlés</button></div></div>
+        <div class="aspect-square rounded-xl overflow-hidden relative group cursor-pointer"><img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKjffi92bZWNZoo1jVzhFZ0ZqUTnBFpzptexuAm7s19PGqCUgc0HQrxpWvrrxZEhkFfXktphorsg0ZiqW4Y537n4oMEfIdaFwNoT6FQ7S87l0fOVKz-M4T3bmsfCBUmFSzM5Z1kx0-6vBed_RNKCNQ9r2Pvc0cvXvBj_GKGL9jJGVrGjrzB2p88d_UBtlN-_lLT2KMlR4LZgszXCk6VUT7nFG2efvQ-uKPJOTnrshnfWHSunBGpcsIykfViQWETBohp_dNEBGD9Xk" alt=""/><div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3"><button onclick="showToast('Kép publikálva!')" class="bg-white text-primary px-3 py-1.5 rounded-lg text-xs font-bold">Publikálás</button><button onclick="if(confirm('Törlés?')) this.closest('.aspect-square').remove()" class="bg-error text-on-error px-3 py-1.5 rounded-lg text-xs font-bold">Törlés</button></div></div>
+        <div class="aspect-square rounded-xl overflow-hidden relative group cursor-pointer"><img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAS4-9alpRjotUdsSMWQeqg2snr7f4dYl0OKa7ByKAeMntr-NRw8vI9pCGnOJWo0r_PpAatDK-2CZ3ITs4vc2n1Czwuw5Rj9N4s3CtdCDi71Rvw7hHpgSKvpv-xxTbmzFu9DC8phqcNWC0UC2GTZ3SJgRGvYk8oJ9g26heXv_AjKgbhVRQFFoUIImuV3hVXJZms9395aqvx0vwK3QsBoW1j91RqYmPxDkz9bJR2Y3lpRX83VvzLcwPvo_4EXYSZu1amAundZbu9Bpc" alt=""/><div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3"><button onclick="showToast('Kép publikálva!')" class="bg-white text-primary px-3 py-1.5 rounded-lg text-xs font-bold">Publikálás</button><button onclick="if(confirm('Törlés?')) this.closest('.aspect-square').remove()" class="bg-error text-on-error px-3 py-1.5 rounded-lg text-xs font-bold">Törlés</button></div></div>
+    </div>
+</div>
+
+<!-- ========== PAGE: BLOG ========== -->
+<div id="page-blog" class="page hidden">
+    <header class="flex justify-between items-end mb-8"><div><h1 class="text-3xl font-serif text-on-primary-fixed">Blog kezelés</h1><p class="text-outline text-sm">Cikkek szerkesztése és publikálása</p></div><button onclick="showToast('Új cikk szerkesztő megnyitva')" class="bg-tertiary-container text-on-tertiary-container px-5 py-2 rounded-lg font-bold text-sm flex items-center gap-2 hover:brightness-110 transition-all"><span class="material-symbols-outlined text-[18px]">add</span> Új cikk</button></header>
+    <div class="space-y-4">
+        <div class="bg-primary-container rounded-xl p-6 border border-white/5 flex flex-col md:flex-row gap-6 items-start"><div class="w-full md:w-32 h-24 rounded-lg overflow-hidden flex-shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeUz5OCSUTf1IWHDDPL_DeI3wR6n7uddXR2W2kC5H0lDrEZqu3jheeA_QByLlWFJtOqTjT9h_hoBBO2NZJ0bkxdR47_XMLdlFjlEHISC9SqJvo7k6FIX0YsUSPSdxndGkhfY1_o1IMM6YDuNXkyqM8jdqrLd2K6Ors18dfYqfPAyFKVK59ud5-jBB2zpmX_HUmU2gJhFGgkmAsAn1ToshwR_Uy2NKnZSm9B4RAnmHUpu8R5s84dSn_N6Drp42RpCChV-817Tb2NkY" alt=""/></div><div class="flex-grow"><h4 class="font-bold text-on-primary-fixed">A helyi termelők nyomában</h4><p class="text-xs text-outline mb-3">Alapanyagok | 5 perc olvasás | Publikálva: Apr 1.</p><div class="flex gap-3"><button onclick="showToast('Cikk szerkesztése megnyitva')" class="text-xs text-tertiary-fixed-dim hover:underline font-bold cursor-pointer">Szerkesztés</button><button onclick="showToast('Cikk elrejtve')" class="text-xs text-outline hover:text-error font-bold cursor-pointer">Elrejtés</button></div></div><span class="text-[10px] font-bold uppercase tracking-widest bg-tertiary/20 text-tertiary-fixed-dim px-3 py-1 rounded-full whitespace-nowrap">Publikálva</span></div>
+        <div class="bg-primary-container rounded-xl p-6 border border-white/5 flex flex-col md:flex-row gap-6 items-start"><div class="w-full md:w-32 h-24 rounded-lg overflow-hidden flex-shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlMHEUnQW0o7HFUJHA5zlKtWP1QFlbUVCs643t1WauA5By8ruoaFuFEKkBF0I8BYnM--6o60dinEVsOyoDPG7NcZ2PP640P33NqAStw_MYQB9BJswUPodGvBitfEgLtrjY8WIpEY3KwjLJ9tKD_AcvinVi-EojYHMzYFAd5DFNeo5rOozq4KTMGukj4QSJai1W1sF5BstwMA1RNIdnJJ3_UXh5vjr66vBz3YW6_J1NrD993b8pdLsuWKRfMtckSwNpmee6GrVp36o" alt=""/></div><div class="flex-grow"><h4 class="font-bold text-on-primary-fixed">Melyik bor illik a pörkölthöz?</h4><p class="text-xs text-outline mb-3">Bor & Gasztro | 8 perc olvasás | Publikálva: Már 15.</p><div class="flex gap-3"><button onclick="showToast('Cikk szerkesztése megnyitva')" class="text-xs text-tertiary-fixed-dim hover:underline font-bold cursor-pointer">Szerkesztés</button><button onclick="showToast('Cikk elrejtve')" class="text-xs text-outline hover:text-error font-bold cursor-pointer">Elrejtés</button></div></div><span class="text-[10px] font-bold uppercase tracking-widest bg-tertiary/20 text-tertiary-fixed-dim px-3 py-1 rounded-full whitespace-nowrap">Publikálva</span></div>
+        <div class="bg-primary-container rounded-xl p-6 border border-white/5 flex flex-col md:flex-row gap-6 items-start"><div class="w-full md:w-32 h-24 rounded-lg overflow-hidden flex-shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-8Kxs_EFbFbDjz-T69ADtm1--dxS7jO02iWbizTlQCQpCqj_IR2OXhhu9GOBVYp-26rlTggO3-KWn09ndesh7SXOTNMhPqzzfFwqHuX17pbqR2Jz_5GznX8DvY6u7QGjHkGsTImaO05n6ZSSHj8bdOHb_TN_CrO0GUBLykSGWoA3YFQbMTMU5EDu4ZjWxAPtSqN_9IjXtfn0JkSVRyhR-SR2vfJ0DnthlVjlPLfFKx-vrDKxow0nNYwk3xl1eOlqzkAh8Ig1FPe0" alt=""/></div><div class="flex-grow"><h4 class="font-bold text-on-primary-fixed">Tavaszi megújulás a tányéron</h4><p class="text-xs text-outline mb-3">Életmód | 6 perc olvasás | Piszkozat</p><div class="flex gap-3"><button onclick="showToast('Cikk szerkesztése megnyitva')" class="text-xs text-tertiary-fixed-dim hover:underline font-bold cursor-pointer">Szerkesztés</button><button onclick="showToast('Cikk publikálva!')" class="text-xs text-tertiary-fixed-dim hover:underline font-bold cursor-pointer">Publikálás</button></div></div><span class="text-[10px] font-bold uppercase tracking-widest bg-primary text-on-primary-container px-3 py-1 rounded-full whitespace-nowrap">Piszkozat</span></div>
+    </div>
+</div>
+
+<!-- ========== PAGE: SETTINGS ========== -->
+<div id="page-settings" class="page hidden">
+    <header class="mb-8"><h1 class="text-3xl font-serif text-on-primary-fixed">Settings</h1><p class="text-outline text-sm">Étterem és admin beállítások</p></header>
+    <div class="max-w-2xl space-y-6">
+        <div class="bg-primary-container rounded-2xl p-8 border border-white/5">
+            <h3 class="text-lg font-serif text-on-primary-fixed mb-6">Étterem adatok</h3>
+            <form onsubmit="showToast('Beállítások mentve!'); return false;" class="space-y-4">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Név</label><input value="Kertem Étterem & Bár" class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary"/></div>
+                    <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Telefon</label><input value="+36 1 234 5678" class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary"/></div>
+                </div>
+                <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Cím</label><input value="Budapest, Kazinczy u. 14., 1075" class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary"/></div>
+                <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Email</label><input value="hello@kertem-etterem.hu" class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary"/></div>
+                <button type="submit" class="bg-tertiary-container text-on-tertiary-container px-6 py-2.5 rounded-lg font-bold text-sm hover:brightness-110 transition-all">Mentés</button>
+            </form>
+        </div>
+        <div class="bg-primary-container rounded-2xl p-8 border border-white/5">
+            <h3 class="text-lg font-serif text-on-primary-fixed mb-6">Jelszó módosítása</h3>
+            <form onsubmit="return handlePasswordChange(event)" class="space-y-4">
+                <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Jelenlegi jelszó</label><input required type="password" id="old-pass" class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary" placeholder="••••••••"/></div>
+                <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Új jelszó</label><input required type="password" id="new-pass" class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary" placeholder="••••••••"/></div>
+                <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Megerősítés</label><input required type="password" id="confirm-pass" class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary" placeholder="••••••••"/></div>
+                <button type="submit" class="bg-tertiary-container text-on-tertiary-container px-6 py-2.5 rounded-lg font-bold text-sm hover:brightness-110 transition-all">Jelszó módosítása</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-outline text-sm space-y-4 md:space-y-0">
+    <div class="flex items-center gap-6">
+        <span class="font-serif text-lg text-primary-fixed">Kertem</span>
+        <p>&copy; 2025 Kertem Étterem & Bár. Minden jog fenntartva.</p>
+    </div>
+    <div class="flex gap-8">
+        <a class="hover:text-tertiary transition-all cursor-pointer" onclick="showToast('Adatvédelmi nyilatkozat')">Adatvédelem</a>
+        <a class="hover:text-tertiary transition-all cursor-pointer" onclick="showToast('Felhasználási feltételek')">Feltételek</a>
+        <a href="index.html" class="hover:text-tertiary transition-all">Honlap</a>
+    </div>
+</footer>
+
+</main>
+</div>
+</div>
+
+<!-- Mobile Bottom Navigation -->
+<nav id="mobile-nav" class="md:hidden fixed bottom-0 left-0 w-full bg-primary-container/90 backdrop-blur-md border-t border-white/5 flex justify-around items-center py-3 px-2 z-50 hidden">
+    <a onclick="showPage('dashboard')" class="mobile-nav-link flex flex-col items-center gap-1 text-tertiary cursor-pointer" data-page="dashboard">
+        <span class="material-symbols-outlined filled">dashboard</span>
+        <span class="text-[10px] uppercase font-bold">Dashboard</span>
+    </a>
+    <a onclick="showPage('bookings')" class="mobile-nav-link flex flex-col items-center gap-1 text-outline cursor-pointer" data-page="bookings">
+        <span class="material-symbols-outlined">calendar_today</span>
+        <span class="text-[10px] uppercase font-bold">Foglalás</span>
+    </a>
+    <a onclick="showPage('menu-mgmt')" class="mobile-nav-link flex flex-col items-center gap-1 text-outline cursor-pointer" data-page="menu-mgmt">
+        <span class="material-symbols-outlined">restaurant</span>
+        <span class="text-[10px] uppercase font-bold">Étlap</span>
+    </a>
+    <a onclick="showPage('orders')" class="mobile-nav-link flex flex-col items-center gap-1 text-outline cursor-pointer" data-page="orders">
+        <span class="material-symbols-outlined">receipt_long</span>
+        <span class="text-[10px] uppercase font-bold">Rendelés</span>
+    </a>
+</nav>
+
+<!-- New Booking Modal -->
+<div id="new-booking-modal" class="fixed inset-0 z-[80] bg-black/60 hidden flex items-center justify-center p-4">
+    <div class="bg-primary-container rounded-2xl p-8 w-full max-w-lg border border-white/5" onclick="event.stopPropagation()">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-serif text-on-primary-fixed">Új foglalás</h3>
+            <button onclick="document.getElementById('new-booking-modal').classList.add('hidden')" class="material-symbols-outlined text-outline hover:text-on-primary-fixed cursor-pointer">close</button>
+        </div>
+        <form onsubmit="showToast('Foglalás sikeresen rögzítve!'); document.getElementById('new-booking-modal').classList.add('hidden'); this.reset(); return false;" class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+                <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Vendég neve *</label><input required class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary" placeholder="Név"/></div>
+                <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Telefon *</label><input required class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary" placeholder="+36..." type="tel"/></div>
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+                <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Dátum *</label><input required type="date" class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary"/></div>
+                <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Időpont *</label><input required type="time" class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary"/></div>
+                <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Fő *</label><select class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary"><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+            </div>
+            <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Megjegyzés</label><textarea class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary h-20" placeholder="Allergia, különleges kérés..."></textarea></div>
+            <button type="submit" class="w-full bg-tertiary-container text-on-tertiary-container py-3 rounded-lg font-bold hover:brightness-110 transition-all">Foglalás rögzítése</button>
+        </form>
+    </div>
+</div>
+
+<!-- Add Food Modal -->
+<div id="add-food-modal" class="fixed inset-0 z-[80] bg-black/60 hidden flex items-center justify-center p-4">
+    <div class="bg-primary-container rounded-2xl p-8 w-full max-w-lg border border-white/5" onclick="event.stopPropagation()">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-serif text-on-primary-fixed">Új étel hozzáadása</h3>
+            <button onclick="document.getElementById('add-food-modal').classList.add('hidden')" class="material-symbols-outlined text-outline hover:text-on-primary-fixed cursor-pointer">close</button>
+        </div>
+        <form onsubmit="showToast('Új étel sikeresen hozzáadva!'); document.getElementById('add-food-modal').classList.add('hidden'); this.reset(); return false;" class="space-y-4">
+            <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Étel neve *</label><input required class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary" placeholder="pl. Töltött Káposzta"/></div>
+            <div class="grid grid-cols-2 gap-4">
+                <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Kategória</label><select class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary"><option>Előétel</option><option>Leves</option><option selected>Főétel</option><option>Desszert</option><option>Ital</option></select></div>
+                <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Ár (Ft) *</label><input required type="number" class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary" placeholder="4500"/></div>
+            </div>
+            <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Leírás</label><textarea class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary h-20" placeholder="Rövid leírás..."></textarea></div>
+            <button type="submit" class="w-full bg-tertiary-container text-on-tertiary-container py-3 rounded-lg font-bold hover:brightness-110 transition-all">Hozzáadás</button>
+        </form>
+    </div>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container" class="fixed bottom-20 md:bottom-6 right-6 z-[100] space-y-2"></div>
+
+<script>
+// ==================== LOGIN ====================
+let adminPassword = localStorage.getItem('admin-pass') || 'kertem2025';
+
+function handleLogin(e) {
+    e.preventDefault();
+    const user = document.getElementById('login-user').value;
+    const pass = document.getElementById('login-pass').value;
+    if (user === 'admin' && pass === adminPassword) {
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('admin-layout').classList.remove('hidden');
+        document.getElementById('mobile-nav').classList.remove('hidden');
+        sessionStorage.setItem('admin-logged-in', 'true');
+        document.getElementById('login-error').classList.add('hidden');
+    } else {
+        document.getElementById('login-error').classList.remove('hidden');
+    }
+    return false;
+}
+
+function handleLogout() {
+    sessionStorage.removeItem('admin-logged-in');
+    document.getElementById('login-screen').classList.remove('hidden');
+    document.getElementById('admin-layout').classList.add('hidden');
+    document.getElementById('mobile-nav').classList.add('hidden');
+    document.getElementById('login-pass').value = '';
+}
+
+if (sessionStorage.getItem('admin-logged-in')) {
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('admin-layout').classList.remove('hidden');
+    document.getElementById('mobile-nav').classList.remove('hidden');
+}
+
+// ==================== PASSWORD ====================
+function handlePasswordChange(e) {
+    e.preventDefault();
+    const oldP = document.getElementById('old-pass').value;
+    const newP = document.getElementById('new-pass').value;
+    const confP = document.getElementById('confirm-pass').value;
+    if (oldP !== adminPassword) { showToast('Hibás jelenlegi jelszó!', 'error'); return false; }
+    if (newP !== confP) { showToast('Az új jelszavak nem egyeznek!', 'error'); return false; }
+    if (newP.length < 6) { showToast('Min. 6 karakter!', 'error'); return false; }
+    adminPassword = newP;
+    localStorage.setItem('admin-pass', newP);
+    showToast('Jelszó sikeresen módosítva!');
+    e.target.reset();
+    return false;
+}
+
+// ==================== PAGE NAVIGATION ====================
+function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+    const target = document.getElementById('page-' + page);
+    if (target) target.classList.remove('hidden');
+
+    // Sidebar active state
+    document.querySelectorAll('.sidebar-link').forEach(l => {
+        l.classList.remove('active', 'bg-primary', 'text-on-primary', 'shadow-sm');
+        l.classList.add('text-on-surface-variant');
+    });
+    const activeLink = document.querySelector(`.sidebar-link[data-page="${page}"]`);
+    if (activeLink) {
+        activeLink.classList.add('active', 'bg-primary', 'text-on-primary', 'shadow-sm');
+        activeLink.classList.remove('text-on-surface-variant');
+    }
+
+    // Mobile nav active state
+    document.querySelectorAll('.mobile-nav-link').forEach(l => {
+        l.classList.remove('text-tertiary');
+        l.classList.add('text-outline');
+        l.querySelector('.material-symbols-outlined').classList.remove('filled');
+    });
+    const activeMobile = document.querySelector(`.mobile-nav-link[data-page="${page}"]`);
+    if (activeMobile) {
+        activeMobile.classList.add('text-tertiary');
+        activeMobile.classList.remove('text-outline');
+        activeMobile.querySelector('.material-symbols-outlined').classList.add('filled');
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ==================== BOOKING ACTIONS ====================
+function confirmBooking(btn) {
+    const row = btn.closest('tr') || btn.closest('.hover\\:bg-white\\/5');
+    const badge = row.querySelector('.status-badge');
+    if (badge) {
+        badge.textContent = 'Megerősítve';
+        badge.className = 'px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary text-tertiary-fixed-dim border border-tertiary/20';
+    }
+    showToast('Foglalás megerősítve!');
+}
+
+function cancelBooking(btn) {
+    const row = btn.closest('tr') || btn.closest('.hover\\:bg-white\\/5');
+    const badge = row.querySelector('.status-badge') || row.querySelector('span[class*="tracking-wider"]');
+    if (badge) {
+        badge.textContent = 'Lemondva';
+        badge.className = 'px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary text-on-primary-container/20 line-through';
+    }
+    if (row.tagName === 'TR') row.classList.add('opacity-50');
+    showToast('Foglalás lemondva');
+}
+
+// ==================== KITCHEN TOGGLE ====================
+let kitchenActive = true;
+function toggleKitchen() {
+    kitchenActive = !kitchenActive;
+    document.getElementById('kitchen-dot').className = kitchenActive
+        ? 'w-2 h-2 rounded-full bg-green-500 animate-pulse'
+        : 'w-2 h-2 rounded-full bg-red-500';
+    document.getElementById('kitchen-status-text').textContent = kitchenActive ? 'Active' : 'Szünet';
+    showToast(kitchenActive ? 'Konyha újraindítva' : 'Konyha szüneteltetve');
+}
+
+// ==================== CHART PERIOD ====================
+function setChartPeriod(btn, period) {
+    document.querySelectorAll('#chart-period button').forEach(b => {
+        b.className = 'bg-primary px-4 py-2 rounded-lg text-xs font-bold text-on-primary-container hover:bg-tertiary/20 transition-all';
+    });
+    btn.className = 'bg-tertiary px-4 py-2 rounded-lg text-xs font-bold text-primary';
+    showToast('Nézet: ' + (period === 'daily' ? 'Napi' : period === 'weekly' ? 'Heti' : 'Havi'));
+}
+
+// ==================== TOAST ====================
+function showToast(message, type = 'info') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    const bg = type === 'error' ? 'bg-error text-on-error' : 'bg-tertiary-container text-on-tertiary-container';
+    toast.className = `toast-anim ${bg} px-6 py-3 rounded-xl shadow-lg text-sm font-medium max-w-sm`;
+    toast.textContent = message;
+    container.appendChild(toast);
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity 0.3s'; }, 2700);
+    setTimeout(() => toast.remove(), 3000);
+}
+
+// ==================== DATE ====================
+const today = new Date();
+const months = ['Január','Február','Március','Április','Május','Június','Július','Augusztus','Szeptember','Október','November','December'];
+document.getElementById('today-date').textContent = `${today.getFullYear()}. ${months[today.getMonth()]} ${today.getDate().toString().padStart(2,'0')}.`;
+
+// Close modals with Escape
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        document.getElementById('new-booking-modal').classList.add('hidden');
+        document.getElementById('add-food-modal').classList.add('hidden');
+    }
+});
+
+// Close modals clicking backdrop
+document.getElementById('new-booking-modal').addEventListener('click', function(e) { if (e.target === this) this.classList.add('hidden'); });
+document.getElementById('add-food-modal').addEventListener('click', function(e) { if (e.target === this) this.classList.add('hidden'); });
+</script>
+
+</body>
+</html>
