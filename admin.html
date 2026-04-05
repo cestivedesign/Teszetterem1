@@ -75,32 +75,36 @@
     h1, h2, h3, .font-serif { font-family: 'Noto Serif', serif; }
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
     .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    html, body { overflow-x: hidden; max-width: 100vw; }
+    * { box-sizing: border-box; }
     .sidebar-link.active { background: #061b0e; color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
     .toast-anim { animation: slideUp 0.3s ease, fadeOut 0.3s ease 2.7s; }
     @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
 </head>
-<body class="bg-primary text-on-primary-container selection:bg-tertiary/30 selection:text-white">
+<body class="bg-background md:bg-primary text-on-surface md:text-on-primary-container selection:bg-tertiary/30 selection:text-white">
 
 <!-- ========== LOGIN SCREEN ========== -->
-<div id="login-screen" class="fixed inset-0 z-[100] bg-primary flex items-center justify-center">
+<div id="login-screen" class="fixed inset-0 z-[100] bg-background md:bg-primary flex items-center justify-center px-4">
     <div class="w-full max-w-sm p-8">
         <div class="text-center mb-10">
             <div class="w-12 h-12 bg-tertiary rounded-lg flex items-center justify-center mx-auto mb-4">
                 <span class="material-symbols-outlined text-primary text-2xl filled">eco</span>
             </div>
-            <h1 class="text-3xl font-serif italic text-on-primary-fixed mb-2">Kertem Admin</h1>
-            <p class="text-outline text-sm">Heritage Curator Dashboard</p>
+            <h1 class="text-3xl font-serif italic text-primary md:text-on-primary-fixed mb-2">Kertem Admin</h1>
+            <p class="text-on-surface-variant md:text-outline text-sm">Heritage Curator Dashboard</p>
         </div>
         <form onsubmit="return handleLogin(event)" class="space-y-5">
             <div class="space-y-2">
-                <label class="text-[10px] font-bold uppercase tracking-widest text-outline">Felhasználónév</label>
-                <input id="login-user" type="text" value="admin" class="w-full bg-primary-container border border-outline/20 rounded-xl py-3 px-4 text-on-primary-fixed focus:ring-2 focus:ring-tertiary/40 focus:border-tertiary"/>
+                <label class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant md:text-outline">Felhasználónév</label>
+                <input id="login-user" type="text" value="admin" class="w-full bg-surface-container-high md:bg-primary-container border border-outline-variant/20 md:border-outline/20 rounded-xl py-3 px-4 text-on-surface md:text-on-primary-fixed focus:ring-2 focus:ring-tertiary/40 focus:border-tertiary"/>
             </div>
             <div class="space-y-2">
-                <label class="text-[10px] font-bold uppercase tracking-widest text-outline">Jelszó</label>
-                <input id="login-pass" type="password" value="" placeholder="••••••••" class="w-full bg-primary-container border border-outline/20 rounded-xl py-3 px-4 text-on-primary-fixed focus:ring-2 focus:ring-tertiary/40 focus:border-tertiary placeholder:text-outline/40"/>
+                <label class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant md:text-outline">Jelszó</label>
+                <input id="login-pass" type="password" value="" placeholder="••••••••" class="w-full bg-surface-container-high md:bg-primary-container border border-outline-variant/20 md:border-outline/20 rounded-xl py-3 px-4 text-on-surface md:text-on-primary-fixed focus:ring-2 focus:ring-tertiary/40 focus:border-tertiary placeholder:text-on-surface-variant/40 md:placeholder:text-outline/40"/>
             </div>
             <p id="login-error" class="text-error text-sm hidden">Hibas felhasznalonev vagy jelszo!</p>
             <button type="submit" class="w-full bg-tertiary-container text-on-tertiary-container py-3 rounded-xl font-bold hover:brightness-110 transition-all">Bejelentkezés</button>
@@ -205,11 +209,142 @@
     </div>
 </aside>
 
+<!-- Mobile Sidebar Drawer -->
+<div id="mobile-sidebar" class="md:hidden fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-black/50" onclick="document.getElementById('mobile-sidebar').classList.add('hidden')"></div>
+    <div class="absolute left-0 top-0 h-full w-64 bg-surface shadow-2xl p-6 flex flex-col gap-2 overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+            <span class="font-serif text-xl text-primary italic">Kertem</span>
+            <button onclick="document.getElementById('mobile-sidebar').classList.add('hidden')" class="p-1"><span class="material-symbols-outlined text-on-surface">close</span></button>
+        </div>
+        <p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Áttekintés</p>
+        <a onclick="showPage('dashboard'); document.getElementById('mobile-sidebar').classList.add('hidden')" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-surface-container-high cursor-pointer"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
+        <p class="text-[10px] uppercase tracking-widest text-on-surface-variant mt-3 mb-1">Rendelés kezelés</p>
+        <a onclick="showPage('bookings'); document.getElementById('mobile-sidebar').classList.add('hidden')" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-surface-container-high cursor-pointer"><span class="material-symbols-outlined text-[20px]">calendar_today</span>Foglalások</a>
+        <a onclick="showPage('orders'); document.getElementById('mobile-sidebar').classList.add('hidden')" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-surface-container-high cursor-pointer"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Rendelések</a>
+        <a onclick="showPage('guests'); document.getElementById('mobile-sidebar').classList.add('hidden')" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-surface-container-high cursor-pointer"><span class="material-symbols-outlined text-[20px]">group</span>Vendégek</a>
+        <p class="text-[10px] uppercase tracking-widest text-on-surface-variant mt-3 mb-1">Honlap kezelés</p>
+        <a onclick="showPage('menu-mgmt'); document.getElementById('mobile-sidebar').classList.add('hidden')" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-surface-container-high cursor-pointer"><span class="material-symbols-outlined text-[20px]">restaurant_menu</span>Étlap kezelés</a>
+        <a onclick="showPage('gallery'); document.getElementById('mobile-sidebar').classList.add('hidden')" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-surface-container-high cursor-pointer"><span class="material-symbols-outlined text-[20px]">gallery_thumbnail</span>Galéria</a>
+        <a onclick="showPage('blog'); document.getElementById('mobile-sidebar').classList.add('hidden')" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-surface-container-high cursor-pointer"><span class="material-symbols-outlined text-[20px]">article</span>Blog kezelés</a>
+        <p class="text-[10px] uppercase tracking-widest text-on-surface-variant mt-3 mb-1">Statisztikák</p>
+        <a onclick="showPage('finance'); document.getElementById('mobile-sidebar').classList.add('hidden')" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-surface-container-high cursor-pointer"><span class="material-symbols-outlined text-[20px]">payments</span>Pénzügyek</a>
+        <a onclick="showPage('analytics'); document.getElementById('mobile-sidebar').classList.add('hidden')" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-surface-container-high cursor-pointer"><span class="material-symbols-outlined text-[20px]">trending_up</span>Analitika</a>
+        <div class="mt-auto pt-4 border-t border-outline-variant/20 space-y-2">
+            <a onclick="showPage('settings'); document.getElementById('mobile-sidebar').classList.add('hidden')" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-surface-container-high cursor-pointer"><span class="material-symbols-outlined text-[20px]">settings</span>Beállítások</a>
+            <a href="index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-surface-container-high"><span class="material-symbols-outlined text-[20px]">open_in_new</span>Honlap</a>
+            <a onclick="handleLogout()" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-error hover:bg-error-container cursor-pointer"><span class="material-symbols-outlined text-[20px]">logout</span>Kijelentkezés</a>
+        </div>
+    </div>
+</div>
+
 <!-- Main Canvas -->
-<main class="flex-1 md:ml-64 bg-primary p-4 md:p-8 min-h-screen pb-24 md:pb-8">
+<main class="flex-1 md:ml-64 bg-background md:bg-primary p-4 md:p-8 min-h-screen pb-28 md:pb-8">
 
 <!-- ========== PAGE: DASHBOARD ========== -->
 <div id="page-dashboard" class="page">
+
+    <!-- ===== MOBILE DASHBOARD (md:hidden) ===== -->
+    <div class="md:hidden space-y-6 pb-8">
+        <!-- Mobile top bar -->
+        <header class="flex justify-between items-center -mx-4 -mt-4 md:-mx-8 md:-mt-8 px-4 py-3 bg-primary/90 backdrop-blur-md rounded-b-xl mb-4 sticky top-0 z-30">
+            <div class="flex items-center gap-3">
+                <button onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden')" class="text-on-primary"><span class="material-symbols-outlined">menu</span></button>
+                <h1 class="font-serif text-lg text-on-primary tracking-tight">Kertem Admin</h1>
+            </div>
+            <div class="w-9 h-9 rounded-full overflow-hidden bg-surface-container-high">
+                <img alt="Admin" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByc4Rc_VrUzFv560pstYUG7VidZCV6IMXElYmpLalrL5kC_oVRzVzxZs6joAiHdv6zYSUmYd_aVEqHSP5GbHegfUjuYz65VhX4N6mzwVbSJMRlV_2bMzWhPvVK-b-fvYxLgT0QsN2gYOMgPvma9MY3CphQoVTuFBcc2EA85LThuc8s9BOZq6NexjUb8BZkmhKvvZlueZX2hY1Hj66JCY_gHoFImaXajPTxHVsKlzZX3XVuO-8rCPdfST5QAkHNTRwl9Q1DZBo_q5A"/>
+            </div>
+        </header>
+
+        <!-- Welcome -->
+        <section>
+            <p class="text-xs uppercase tracking-widest text-on-surface-variant mb-1">Üdvözöljük újra,</p>
+            <h2 class="font-serif text-3xl text-primary">Admin</h2>
+        </section>
+
+        <!-- Stats horizontal scroll -->
+        <section>
+            <div class="flex overflow-x-auto gap-3 hide-scrollbar -mx-4 px-4">
+                <div class="min-w-[150px] bg-surface-container-lowest p-4 rounded-xl shadow-sm border-l-4 border-tertiary" onclick="showPage('bookings')">
+                    <span class="material-symbols-outlined text-tertiary mb-2">calendar_today</span>
+                    <p class="text-[10px] uppercase tracking-tighter text-on-surface-variant font-bold">Mai foglalások</p>
+                    <p class="font-serif text-2xl text-primary">24</p>
+                </div>
+                <div class="min-w-[150px] bg-surface-container-lowest p-4 rounded-xl shadow-sm" onclick="showPage('orders')">
+                    <span class="material-symbols-outlined text-secondary mb-2">restaurant</span>
+                    <p class="text-[10px] uppercase tracking-tighter text-on-surface-variant font-bold">Rendelések</p>
+                    <p class="font-serif text-2xl text-primary">18</p>
+                </div>
+                <div class="min-w-[150px] bg-primary-container p-4 rounded-xl shadow-sm" onclick="showPage('finance')">
+                    <span class="material-symbols-outlined text-primary-fixed mb-2">payments</span>
+                    <p class="text-[10px] uppercase tracking-tighter text-primary-fixed-dim font-bold">Bevétel</p>
+                    <p class="font-serif text-2xl text-on-primary">487k Ft</p>
+                </div>
+                <div class="min-w-[150px] bg-surface-container-lowest p-4 rounded-xl shadow-sm" onclick="showPage('guests')">
+                    <span class="material-symbols-outlined text-outline mb-2">group_add</span>
+                    <p class="text-[10px] uppercase tracking-tighter text-on-surface-variant font-bold">Új vendégek</p>
+                    <p class="font-serif text-2xl text-primary">7</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent bookings cards -->
+        <section class="space-y-3">
+            <div class="flex justify-between items-end">
+                <h3 class="font-serif text-xl text-primary">Legutóbbi foglalások</h3>
+                <span class="text-xs text-tertiary font-bold uppercase tracking-widest cursor-pointer" onclick="showPage('bookings')">Összes</span>
+            </div>
+            <div class="bg-surface-container-low p-4 rounded-xl flex justify-between items-center active:scale-[0.98] transition-transform" onclick="showPage('bookings')">
+                <div class="flex gap-3 items-center">
+                    <div class="w-11 h-11 rounded-lg bg-surface-variant flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+                    <div>
+                        <p class="font-bold text-on-surface text-sm">Kovács Béla</p>
+                        <div class="flex items-center gap-1.5 text-xs text-on-surface-variant"><span class="material-symbols-outlined text-[13px]">schedule</span>19:30<span class="mx-0.5">·</span><span class="material-symbols-outlined text-[13px]">group</span>4 fő</div>
+                    </div>
+                </div>
+                <span class="px-2.5 py-1 bg-primary-fixed text-on-primary-fixed text-[9px] font-bold uppercase tracking-wider rounded-full">Megerősítve</span>
+            </div>
+            <div class="bg-surface-container-low p-4 rounded-xl flex justify-between items-center active:scale-[0.98] transition-transform" onclick="showPage('bookings')">
+                <div class="flex gap-3 items-center">
+                    <div class="w-11 h-11 rounded-lg bg-surface-variant flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+                    <div>
+                        <p class="font-bold text-on-surface text-sm">Szabó Anna</p>
+                        <div class="flex items-center gap-1.5 text-xs text-on-surface-variant"><span class="material-symbols-outlined text-[13px]">schedule</span>20:00<span class="mx-0.5">·</span><span class="material-symbols-outlined text-[13px]">group</span>2 fő</div>
+                    </div>
+                </div>
+                <span class="px-2.5 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant text-[9px] font-bold uppercase tracking-wider rounded-full">Függőben</span>
+            </div>
+            <div class="bg-surface-container-low p-4 rounded-xl flex justify-between items-center active:scale-[0.98] transition-transform" onclick="showPage('bookings')">
+                <div class="flex gap-3 items-center">
+                    <div class="w-11 h-11 rounded-lg bg-surface-variant flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+                    <div>
+                        <p class="font-bold text-on-surface text-sm">Tóth Melinda</p>
+                        <div class="flex items-center gap-1.5 text-xs text-on-surface-variant"><span class="material-symbols-outlined text-[13px]">schedule</span>19:00<span class="mx-0.5">·</span><span class="material-symbols-outlined text-[13px]">group</span>3 fő</div>
+                    </div>
+                </div>
+                <span class="px-2.5 py-1 bg-primary-fixed text-on-primary-fixed text-[9px] font-bold uppercase tracking-wider rounded-full">Megerősítve</span>
+            </div>
+        </section>
+
+        <!-- Quick actions -->
+        <section class="space-y-3">
+            <h3 class="font-serif text-xl text-primary">Gyors műveletek</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-surface-container-high p-5 rounded-xl flex flex-col items-center justify-center gap-2 text-center active:scale-95 transition-transform cursor-pointer" onclick="showPage('menu-mgmt')">
+                    <span class="material-symbols-outlined text-secondary">restaurant_menu</span>
+                    <span class="text-xs font-bold uppercase text-on-surface">Étlap</span>
+                </div>
+                <div class="bg-surface-container-high p-5 rounded-xl flex flex-col items-center justify-center gap-2 text-center active:scale-95 transition-transform cursor-pointer" onclick="showPage('analytics')">
+                    <span class="material-symbols-outlined text-secondary">bar_chart</span>
+                    <span class="text-xs font-bold uppercase text-on-surface">Analitika</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===== DESKTOP DASHBOARD (hidden md:block) ===== -->
+    <div class="hidden md:block">
     <header class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
         <div>
             <h1 class="text-3xl md:text-4xl font-serif text-on-primary-fixed tracking-tight leading-tight">Vezérlőpult</h1>
@@ -426,7 +561,7 @@
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
             <div>
                 <h2 class="text-2xl font-serif text-on-primary-fixed">Heti vendégforgalom</h2>
-                <p class="text-outline text-sm">Az előző héthez képest +14% emelkedés tapasztalható.</p>
+                <p class="text-on-surface-variant md:text-outline text-sm">Az előző héthez képest +14% emelkedés tapasztalható.</p>
             </div>
             <div class="flex gap-2" id="chart-period">
                 <button onclick="setChartPeriod(this, 'daily')" class="bg-primary px-4 py-2 rounded-lg text-xs font-bold text-on-primary-container hover:bg-tertiary/20 transition-all">Napi</button>
@@ -461,14 +596,15 @@
             <span>Hét</span><span>Ked</span><span>Sze</span><span>Csüt</span><span>Pén</span><span>Szo</span><span>Vas</span>
         </div>
     </div>
+    </div><!-- /desktop dashboard wrapper -->
 </div>
 
 <!-- ========== PAGE: BOOKINGS ========== -->
 <div id="page-bookings" class="page hidden">
     <header class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
         <div>
-            <h1 class="text-3xl font-serif text-on-primary-fixed">Foglalások</h1>
-            <p class="text-outline text-sm">Összes foglalás kezelése és áttekintése</p>
+            <h1 class="text-2xl md:text-3xl font-serif text-primary md:text-on-primary-fixed">Foglalások</h1>
+            <p class="text-on-surface-variant md:text-outline text-sm">Összes foglalás kezelése és áttekintése</p>
         </div>
         <div class="flex gap-3">
             <input type="date" class="bg-primary-container border border-outline/20 rounded-lg py-2 px-4 text-sm text-on-primary-fixed focus:ring-tertiary"/>
@@ -510,8 +646,8 @@
 <!-- ========== PAGE: ORDERS ========== -->
 <div id="page-orders" class="page hidden">
     <header class="mb-8">
-        <h1 class="text-3xl font-serif text-on-primary-fixed">Rendelések</h1>
-        <p class="text-outline text-sm">Online rendelések kezelése és státusz frissítése</p>
+        <h1 class="text-2xl md:text-3xl font-serif text-primary md:text-on-primary-fixed">Rendelések</h1>
+        <p class="text-on-surface-variant md:text-outline text-sm">Online rendelések kezelése és státusz frissítése</p>
     </header>
     <div class="space-y-4">
         <div class="bg-primary-container rounded-2xl p-6 border border-white/5 border-l-4 border-l-tertiary">
@@ -581,8 +717,8 @@
 <div id="page-menu-mgmt" class="page hidden">
     <header class="flex justify-between items-end mb-8">
         <div>
-            <h1 class="text-3xl font-serif text-on-primary-fixed">Étlap kezelés</h1>
-            <p class="text-outline text-sm">6 aktív étel az étlapon</p>
+            <h1 class="text-2xl md:text-3xl font-serif text-primary md:text-on-primary-fixed">Étlap kezelés</h1>
+            <p class="text-on-surface-variant md:text-outline text-sm">6 aktív étel az étlapon</p>
         </div>
         <button onclick="document.getElementById('add-food-modal').classList.remove('hidden')" class="bg-tertiary-container text-on-tertiary-container px-5 py-2 rounded-lg font-bold text-sm flex items-center gap-2 hover:brightness-110 transition-all">
             <span class="material-symbols-outlined text-[18px]">add</span> Új étel
@@ -624,7 +760,7 @@
 
 <!-- ========== PAGE: GUESTS ========== -->
 <div id="page-guests" class="page hidden">
-    <header class="mb-8"><h1 class="text-3xl font-serif text-on-primary-fixed">Vendégek</h1><p class="text-outline text-sm">Visszatérő vendégek és VIP lista</p></header>
+    <header class="mb-8"><h1 class="text-2xl md:text-3xl font-serif text-primary md:text-on-primary-fixed">Vendégek</h1><p class="text-on-surface-variant md:text-outline text-sm">Visszatérő vendégek és VIP lista</p></header>
     <div class="bg-primary-container rounded-2xl p-6 border border-white/5 space-y-4">
         <div class="flex items-center justify-between p-4 bg-primary/40 rounded-xl"><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center font-bold text-xs">KB</div><div><p class="font-bold text-on-primary-fixed">Kovács Béla</p><p class="text-xs text-outline">12 látogatás | Utolsó: Ma</p></div></div><span class="text-[10px] font-bold uppercase tracking-widest bg-tertiary/20 text-tertiary-fixed-dim px-3 py-1 rounded-full">VIP</span></div>
         <div class="flex items-center justify-between p-4 bg-primary/40 rounded-xl"><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-bold text-xs">TM</div><div><p class="font-bold text-on-primary-fixed">Tóth Melinda</p><p class="text-xs text-outline">8 látogatás | Utolsó: Holnap (foglalás)</p></div></div><span class="text-[10px] font-bold uppercase tracking-widest bg-tertiary/20 text-tertiary-fixed-dim px-3 py-1 rounded-full">VIP</span></div>
@@ -635,11 +771,11 @@
 
 <!-- ========== PAGE: FINANCE ========== -->
 <div id="page-finance" class="page hidden">
-    <header class="mb-8"><h1 class="text-3xl font-serif text-on-primary-fixed">Pénzügyek</h1><p class="text-outline text-sm">Bevételek és kiadások áttekintése</p></header>
+    <header class="mb-8"><h1 class="text-2xl md:text-3xl font-serif text-primary md:text-on-primary-fixed">Pénzügyek</h1><p class="text-on-surface-variant md:text-outline text-sm">Bevételek és kiadások áttekintése</p></header>
     <div class="grid md:grid-cols-3 gap-6 mb-8">
-        <div class="bg-primary-container p-6 rounded-xl border border-white/5"><p class="text-outline text-sm mb-1">Havi bevétel</p><p class="text-3xl font-serif text-on-primary-fixed">4.2M Ft</p><span class="text-tertiary-fixed-dim text-xs font-bold">+22% előző hónaphoz képest</span></div>
-        <div class="bg-primary-container p-6 rounded-xl border border-white/5"><p class="text-outline text-sm mb-1">Átlagos rendelés</p><p class="text-3xl font-serif text-on-primary-fixed">12,400 Ft</p><span class="text-tertiary-fixed-dim text-xs font-bold">+5% előző hónaphoz képest</span></div>
-        <div class="bg-primary-container p-6 rounded-xl border border-white/5"><p class="text-outline text-sm mb-1">Catering bevétel</p><p class="text-3xl font-serif text-on-primary-fixed">890k Ft</p><span class="text-tertiary-fixed-dim text-xs font-bold">3 aktív megbízás</span></div>
+        <div class="bg-primary-container p-6 rounded-xl border border-white/5"><p class="text-outline text-sm mb-1">Havi bevétel</p><p class="text-2xl md:text-3xl font-serif text-primary md:text-on-primary-fixed">4.2M Ft</p><span class="text-tertiary-fixed-dim text-xs font-bold">+22% előző hónaphoz képest</span></div>
+        <div class="bg-primary-container p-6 rounded-xl border border-white/5"><p class="text-outline text-sm mb-1">Átlagos rendelés</p><p class="text-2xl md:text-3xl font-serif text-primary md:text-on-primary-fixed">12,400 Ft</p><span class="text-tertiary-fixed-dim text-xs font-bold">+5% előző hónaphoz képest</span></div>
+        <div class="bg-primary-container p-6 rounded-xl border border-white/5"><p class="text-outline text-sm mb-1">Catering bevétel</p><p class="text-2xl md:text-3xl font-serif text-primary md:text-on-primary-fixed">890k Ft</p><span class="text-tertiary-fixed-dim text-xs font-bold">3 aktív megbízás</span></div>
     </div>
     <div class="bg-primary-container rounded-2xl p-6 border border-white/5">
         <h3 class="text-xl font-serif text-on-primary-fixed mb-4">Utolsó tranzakciók</h3>
@@ -653,7 +789,7 @@
 
 <!-- ========== PAGE: GALLERY ========== -->
 <div id="page-gallery" class="page hidden">
-    <header class="flex justify-between items-end mb-8"><div><h1 class="text-3xl font-serif text-on-primary-fixed">Galéria</h1><p class="text-outline text-sm">Fotók kezelése és publikálása</p></div><button onclick="showToast('Fájlfeltöltő megnyitva')" class="bg-tertiary-container text-on-tertiary-container px-5 py-2 rounded-lg font-bold text-sm flex items-center gap-2 hover:brightness-110 transition-all"><span class="material-symbols-outlined text-[18px]">upload</span> Feltöltés</button></header>
+    <header class="flex justify-between items-end mb-8"><div><h1 class="text-2xl md:text-3xl font-serif text-primary md:text-on-primary-fixed">Galéria</h1><p class="text-on-surface-variant md:text-outline text-sm">Fotók kezelése és publikálása</p></div><button onclick="showToast('Fájlfeltöltő megnyitva')" class="bg-tertiary-container text-on-tertiary-container px-5 py-2 rounded-lg font-bold text-sm flex items-center gap-2 hover:brightness-110 transition-all"><span class="material-symbols-outlined text-[18px]">upload</span> Feltöltés</button></header>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
         <div class="aspect-square rounded-xl overflow-hidden relative group cursor-pointer"><img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIPQlZkYybAxQD3wgFzOVByTppvaazeMUiB-vcmSbKdqL9k-Z9hentQJV-yhq1-NHSxVCqX5xAPBNYoB0dzrgaAQSJY-9DTknp4pCruj_wv1mWcimLx0T_BEsbYhxBuSZRvEctSgjeyRoVn65V_jl4nHYw8SzPQTq5QmnNBTgWYHtVMFH9BUR7on88yeRJyjGCaNKXJJOqRqU-2a_LyjfCK2jcilJoWO5DuwHS184ZzvDZplg2Furgo6nbbGDpdCc7WUhsEY9B7qY" alt=""/><div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3"><button onclick="showToast('Kép publikálva!')" class="bg-white text-primary px-3 py-1.5 rounded-lg text-xs font-bold">Publikálás</button><button onclick="if(confirm('Törlés?')) this.closest('.aspect-square').remove()" class="bg-error text-on-error px-3 py-1.5 rounded-lg text-xs font-bold">Törlés</button></div></div>
         <div class="aspect-square rounded-xl overflow-hidden relative group cursor-pointer"><img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtUPFpHWD3Tji5v2Tw8TJrThhjcLZDAh92DrJFfilOLFHIekdQbbPWxmOMxgnkpT7XTM_N1lRK6MAlHQ2yMraMe2TMOwSdO0rqj59fDzClUPnP3A-kMTFAQ6-V-uxDxyJKSXzeBXVbp3JMD6VeCagP6sd3WG9FjsgDmDtVmJnK4-ael51y0OGNa_o6HaOi_beLIAAf0O0zehYsQ5t1sBdc-z9ukGy4_rrdO9Tb0P0vZ_Ow1_Z_HZwhr_jKiBYCqZEhiQDS38xmzQc" alt=""/><div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3"><button onclick="showToast('Kép publikálva!')" class="bg-white text-primary px-3 py-1.5 rounded-lg text-xs font-bold">Publikálás</button><button onclick="if(confirm('Törlés?')) this.closest('.aspect-square').remove()" class="bg-error text-on-error px-3 py-1.5 rounded-lg text-xs font-bold">Törlés</button></div></div>
@@ -664,7 +800,7 @@
 
 <!-- ========== PAGE: BLOG ========== -->
 <div id="page-blog" class="page hidden">
-    <header class="flex justify-between items-end mb-8"><div><h1 class="text-3xl font-serif text-on-primary-fixed">Blog kezelés</h1><p class="text-outline text-sm">Cikkek szerkesztése és publikálása</p></div><button onclick="showToast('Új cikk szerkesztő megnyitva')" class="bg-tertiary-container text-on-tertiary-container px-5 py-2 rounded-lg font-bold text-sm flex items-center gap-2 hover:brightness-110 transition-all"><span class="material-symbols-outlined text-[18px]">add</span> Új cikk</button></header>
+    <header class="flex justify-between items-end mb-8"><div><h1 class="text-2xl md:text-3xl font-serif text-primary md:text-on-primary-fixed">Blog kezelés</h1><p class="text-on-surface-variant md:text-outline text-sm">Cikkek szerkesztése és publikálása</p></div><button onclick="showToast('Új cikk szerkesztő megnyitva')" class="bg-tertiary-container text-on-tertiary-container px-5 py-2 rounded-lg font-bold text-sm flex items-center gap-2 hover:brightness-110 transition-all"><span class="material-symbols-outlined text-[18px]">add</span> Új cikk</button></header>
     <div class="space-y-4">
         <div class="bg-primary-container rounded-xl p-6 border border-white/5 flex flex-col md:flex-row gap-6 items-start"><div class="w-full md:w-32 h-24 rounded-lg overflow-hidden flex-shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeUz5OCSUTf1IWHDDPL_DeI3wR6n7uddXR2W2kC5H0lDrEZqu3jheeA_QByLlWFJtOqTjT9h_hoBBO2NZJ0bkxdR47_XMLdlFjlEHISC9SqJvo7k6FIX0YsUSPSdxndGkhfY1_o1IMM6YDuNXkyqM8jdqrLd2K6Ors18dfYqfPAyFKVK59ud5-jBB2zpmX_HUmU2gJhFGgkmAsAn1ToshwR_Uy2NKnZSm9B4RAnmHUpu8R5s84dSn_N6Drp42RpCChV-817Tb2NkY" alt=""/></div><div class="flex-grow"><h4 class="font-bold text-on-primary-fixed">A helyi termelők nyomában</h4><p class="text-xs text-outline mb-3">Alapanyagok | 5 perc olvasás | Publikálva: Apr 1.</p><div class="flex gap-3"><button onclick="showToast('Cikk szerkesztése megnyitva')" class="text-xs text-tertiary-fixed-dim hover:underline font-bold cursor-pointer">Szerkesztés</button><button onclick="showToast('Cikk elrejtve')" class="text-xs text-outline hover:text-error font-bold cursor-pointer">Elrejtés</button></div></div><span class="text-[10px] font-bold uppercase tracking-widest bg-tertiary/20 text-tertiary-fixed-dim px-3 py-1 rounded-full whitespace-nowrap">Publikálva</span></div>
         <div class="bg-primary-container rounded-xl p-6 border border-white/5 flex flex-col md:flex-row gap-6 items-start"><div class="w-full md:w-32 h-24 rounded-lg overflow-hidden flex-shrink-0"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlMHEUnQW0o7HFUJHA5zlKtWP1QFlbUVCs643t1WauA5By8ruoaFuFEKkBF0I8BYnM--6o60dinEVsOyoDPG7NcZ2PP640P33NqAStw_MYQB9BJswUPodGvBitfEgLtrjY8WIpEY3KwjLJ9tKD_AcvinVi-EojYHMzYFAd5DFNeo5rOozq4KTMGukj4QSJai1W1sF5BstwMA1RNIdnJJ3_UXh5vjr66vBz3YW6_J1NrD993b8pdLsuWKRfMtckSwNpmee6GrVp36o" alt=""/></div><div class="flex-grow"><h4 class="font-bold text-on-primary-fixed">Melyik bor illik a pörkölthöz?</h4><p class="text-xs text-outline mb-3">Bor & Gasztro | 8 perc olvasás | Publikálva: Már 15.</p><div class="flex gap-3"><button onclick="showToast('Cikk szerkesztése megnyitva')" class="text-xs text-tertiary-fixed-dim hover:underline font-bold cursor-pointer">Szerkesztés</button><button onclick="showToast('Cikk elrejtve')" class="text-xs text-outline hover:text-error font-bold cursor-pointer">Elrejtés</button></div></div><span class="text-[10px] font-bold uppercase tracking-widest bg-tertiary/20 text-tertiary-fixed-dim px-3 py-1 rounded-full whitespace-nowrap">Publikálva</span></div>
@@ -674,7 +810,7 @@
 
 <!-- ========== PAGE: ANALYTICS ========== -->
 <div id="page-analytics" class="page hidden">
-    <header class="mb-8"><h1 class="text-3xl font-serif text-on-primary-fixed">Analitika</h1><p class="text-outline text-sm">Vendégforgalom, népszerű ételek és trendek</p></header>
+    <header class="mb-8"><h1 class="text-2xl md:text-3xl font-serif text-primary md:text-on-primary-fixed">Analitika</h1><p class="text-on-surface-variant md:text-outline text-sm">Vendégforgalom, népszerű ételek és trendek</p></header>
 
     <!-- Top metrics -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -850,7 +986,7 @@
 
 <!-- ========== PAGE: SETTINGS ========== -->
 <div id="page-settings" class="page hidden">
-    <header class="mb-8"><h1 class="text-3xl font-serif text-on-primary-fixed">Settings</h1><p class="text-outline text-sm">Étterem és admin beállítások</p></header>
+    <header class="mb-8"><h1 class="text-2xl md:text-3xl font-serif text-primary md:text-on-primary-fixed">Settings</h1><p class="text-on-surface-variant md:text-outline text-sm">Étterem és admin beállítások</p></header>
     <div class="max-w-2xl space-y-6">
         <div class="bg-primary-container rounded-2xl p-8 border border-white/5">
             <h3 class="text-lg font-serif text-on-primary-fixed mb-6">Étterem adatok</h3>
@@ -893,23 +1029,28 @@
 </div>
 </div>
 
+<!-- FAB Button (mobile only) -->
+<button id="fab-btn" onclick="document.getElementById('new-booking-modal').classList.remove('hidden')" class="md:hidden fixed bottom-24 right-5 w-14 h-14 bg-tertiary text-on-tertiary rounded-xl shadow-lg flex items-center justify-center hover:bg-tertiary-container active:scale-90 transition-all z-40 hidden">
+    <span class="material-symbols-outlined text-[28px]">add</span>
+</button>
+
 <!-- Mobile Bottom Navigation -->
-<nav id="mobile-nav" class="md:hidden fixed bottom-0 left-0 w-full bg-primary-container/90 backdrop-blur-md border-t border-white/5 flex justify-around items-center py-3 px-2 z-50 hidden">
-    <a onclick="showPage('dashboard')" class="mobile-nav-link flex flex-col items-center gap-1 text-tertiary cursor-pointer" data-page="dashboard">
-        <span class="material-symbols-outlined filled">dashboard</span>
-        <span class="text-[10px] uppercase font-bold">Dashboard</span>
+<nav id="mobile-nav" class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-3 pb-6 bg-[#1b3022]/90 backdrop-blur-xl shadow-[0_-8px_24px_rgba(0,0,0,0.15)] hidden">
+    <a onclick="showPage('dashboard')" class="mobile-nav-link flex flex-col items-center justify-center text-[#735c00] bg-[#061b0e]/40 rounded-xl px-3 py-1 active:scale-90 transition-all cursor-pointer" data-page="dashboard">
+        <span class="material-symbols-outlined filled">home</span>
+        <span class="text-[10px] font-bold uppercase mt-0.5">Home</span>
     </a>
-    <a onclick="showPage('bookings')" class="mobile-nav-link flex flex-col items-center gap-1 text-outline cursor-pointer" data-page="bookings">
-        <span class="material-symbols-outlined">calendar_today</span>
-        <span class="text-[10px] uppercase font-bold">Foglalás</span>
+    <a onclick="showPage('bookings')" class="mobile-nav-link flex flex-col items-center justify-center text-[#fcf9f1]/50 hover:text-[#fcf9f1] active:scale-90 transition-all cursor-pointer" data-page="bookings">
+        <span class="material-symbols-outlined">event_note</span>
+        <span class="text-[10px] font-bold uppercase mt-0.5">Foglalás</span>
     </a>
-    <a onclick="showPage('menu-mgmt')" class="mobile-nav-link flex flex-col items-center gap-1 text-outline cursor-pointer" data-page="menu-mgmt">
-        <span class="material-symbols-outlined">restaurant</span>
-        <span class="text-[10px] uppercase font-bold">Étlap</span>
+    <a onclick="showPage('analytics')" class="mobile-nav-link flex flex-col items-center justify-center text-[#fcf9f1]/50 hover:text-[#fcf9f1] active:scale-90 transition-all cursor-pointer" data-page="analytics">
+        <span class="material-symbols-outlined">bar_chart</span>
+        <span class="text-[10px] font-bold uppercase mt-0.5">Analitika</span>
     </a>
-    <a onclick="showPage('orders')" class="mobile-nav-link flex flex-col items-center gap-1 text-outline cursor-pointer" data-page="orders">
-        <span class="material-symbols-outlined">receipt_long</span>
-        <span class="text-[10px] uppercase font-bold">Rendelés</span>
+    <a onclick="showPage('settings')" class="mobile-nav-link flex flex-col items-center justify-center text-[#fcf9f1]/50 hover:text-[#fcf9f1] active:scale-90 transition-all cursor-pointer" data-page="settings">
+        <span class="material-symbols-outlined">person</span>
+        <span class="text-[10px] font-bold uppercase mt-0.5">Fiók</span>
     </a>
 </nav>
 
@@ -970,6 +1111,7 @@ function handleLogin(e) {
         document.getElementById('login-screen').classList.add('hidden');
         document.getElementById('admin-layout').classList.remove('hidden');
         document.getElementById('mobile-nav').classList.remove('hidden');
+        document.getElementById('fab-btn').classList.remove('hidden');
         sessionStorage.setItem('admin-logged-in', 'true');
         document.getElementById('login-error').classList.add('hidden');
     } else {
@@ -983,6 +1125,7 @@ function handleLogout() {
     document.getElementById('login-screen').classList.remove('hidden');
     document.getElementById('admin-layout').classList.add('hidden');
     document.getElementById('mobile-nav').classList.add('hidden');
+    document.getElementById('fab-btn').classList.add('hidden');
     document.getElementById('login-pass').value = '';
 }
 
@@ -990,6 +1133,7 @@ if (sessionStorage.getItem('admin-logged-in')) {
     document.getElementById('login-screen').classList.add('hidden');
     document.getElementById('admin-layout').classList.remove('hidden');
     document.getElementById('mobile-nav').classList.remove('hidden');
+    document.getElementById('fab-btn').classList.remove('hidden');
 }
 
 // ==================== PASSWORD ====================
@@ -1027,14 +1171,12 @@ function showPage(page) {
 
     // Mobile nav active state
     document.querySelectorAll('.mobile-nav-link').forEach(l => {
-        l.classList.remove('text-tertiary');
-        l.classList.add('text-outline');
+        l.className = 'mobile-nav-link flex flex-col items-center justify-center text-[#fcf9f1]/50 hover:text-[#fcf9f1] active:scale-90 transition-all cursor-pointer';
         l.querySelector('.material-symbols-outlined').classList.remove('filled');
     });
     const activeMobile = document.querySelector(`.mobile-nav-link[data-page="${page}"]`);
     if (activeMobile) {
-        activeMobile.classList.add('text-tertiary');
-        activeMobile.classList.remove('text-outline');
+        activeMobile.className = 'mobile-nav-link flex flex-col items-center justify-center text-[#735c00] bg-[#061b0e]/40 rounded-xl px-3 py-1 active:scale-90 transition-all cursor-pointer';
         activeMobile.querySelector('.material-symbols-outlined').classList.add('filled');
     }
 
