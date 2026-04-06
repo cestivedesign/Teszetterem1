@@ -87,34 +87,8 @@
 </head>
 <body class="bg-background md:bg-primary text-on-surface md:text-on-primary-container selection:bg-tertiary/30 selection:text-white">
 
-<!-- ========== LOGIN SCREEN ========== -->
-<div id="login-screen" class="fixed inset-0 z-[100] bg-background md:bg-primary flex items-center justify-center px-4">
-    <div class="w-full max-w-sm p-8">
-        <div class="text-center mb-10">
-            <div class="w-12 h-12 bg-tertiary rounded-lg flex items-center justify-center mx-auto mb-4">
-                <span class="material-symbols-outlined text-primary text-2xl filled">eco</span>
-            </div>
-            <h1 class="text-3xl font-serif italic text-primary md:text-on-primary-fixed mb-2">Kertem Admin</h1>
-            <p class="text-on-surface-variant md:text-outline text-sm">Heritage Curator Dashboard</p>
-        </div>
-        <form onsubmit="return handleLogin(event)" class="space-y-5">
-            <div class="space-y-2">
-                <label class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant md:text-outline">Felhasználónév</label>
-                <input id="login-user" type="text" value="admin" class="w-full bg-surface-container-high md:bg-primary-container border border-outline-variant/20 md:border-outline/20 rounded-xl py-3 px-4 text-on-surface md:text-on-primary-fixed focus:ring-2 focus:ring-tertiary/40 focus:border-tertiary"/>
-            </div>
-            <div class="space-y-2">
-                <label class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant md:text-outline">Jelszó</label>
-                <input id="login-pass" type="password" value="" placeholder="••••••••" class="w-full bg-surface-container-high md:bg-primary-container border border-outline-variant/20 md:border-outline/20 rounded-xl py-3 px-4 text-on-surface md:text-on-primary-fixed focus:ring-2 focus:ring-tertiary/40 focus:border-tertiary placeholder:text-on-surface-variant/40 md:placeholder:text-outline/40"/>
-            </div>
-            <p id="login-error" class="text-error text-sm hidden">Hibas felhasznalonev vagy jelszo!</p>
-            <button type="submit" class="w-full bg-tertiary-container text-on-tertiary-container py-3 rounded-xl font-bold hover:brightness-110 transition-all">Bejelentkezés</button>
-            <p class="text-center text-[11px] text-outline mt-4">Alapértelmezett: admin / kertem2025</p>
-        </form>
-    </div>
-</div>
-
 <!-- ========== MAIN LAYOUT ========== -->
-<div id="admin-layout" class="hidden">
+<div id="admin-layout" class="">
 <div class="flex min-h-screen">
 
 <!-- SideNavBar -->
@@ -202,9 +176,9 @@
             <span class="material-symbols-outlined">settings</span>
             <span>Settings</span>
         </a>
-        <a onclick="handleLogout()" class="text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 text-error/80 cursor-pointer">
-            <span class="material-symbols-outlined">logout</span>
-            <span>Logout</span>
+        <a href="index.html" class="text-on-surface-variant hover:bg-surface-variant/50 px-4 py-3 rounded-lg flex items-center gap-3 transition-all duration-200 cursor-pointer">
+            <span class="material-symbols-outlined">home</span>
+            <span>Honlap</span>
         </a>
     </div>
 </aside>
@@ -233,7 +207,7 @@
         <div class="mt-auto pt-4 border-t border-outline-variant/20 space-y-2">
             <a onclick="showPage('settings'); document.getElementById('mobile-sidebar').classList.add('hidden')" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-surface-container-high cursor-pointer"><span class="material-symbols-outlined text-[20px]">settings</span>Beállítások</a>
             <a href="index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-surface-container-high"><span class="material-symbols-outlined text-[20px]">open_in_new</span>Honlap</a>
-            <a onclick="handleLogout()" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-error hover:bg-error-container cursor-pointer"><span class="material-symbols-outlined text-[20px]">logout</span>Kijelentkezés</a>
+            <a href="index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-surface-container-high"><span class="material-symbols-outlined text-[20px]">home</span>Vissza a honlapra</a>
         </div>
     </div>
 </div>
@@ -1000,15 +974,6 @@
                 <button type="submit" class="bg-tertiary-container text-on-tertiary-container px-6 py-2.5 rounded-lg font-bold text-sm hover:brightness-110 transition-all">Mentés</button>
             </form>
         </div>
-        <div class="bg-primary-container rounded-2xl p-8 border border-white/5">
-            <h3 class="text-lg font-serif text-on-primary-fixed mb-6">Jelszó módosítása</h3>
-            <form onsubmit="return handlePasswordChange(event)" class="space-y-4">
-                <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Jelenlegi jelszó</label><input required type="password" id="old-pass" class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary" placeholder="••••••••"/></div>
-                <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Új jelszó</label><input required type="password" id="new-pass" class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary" placeholder="••••••••"/></div>
-                <div><label class="text-[10px] font-bold uppercase tracking-widest text-outline block mb-1">Megerősítés</label><input required type="password" id="confirm-pass" class="w-full bg-primary border border-outline/20 rounded-lg py-2.5 px-4 text-on-primary-fixed text-sm focus:ring-tertiary" placeholder="••••••••"/></div>
-                <button type="submit" class="bg-tertiary-container text-on-tertiary-container px-6 py-2.5 rounded-lg font-bold text-sm hover:brightness-110 transition-all">Jelszó módosítása</button>
-            </form>
-        </div>
     </div>
 </div>
 
@@ -1030,12 +995,12 @@
 </div>
 
 <!-- FAB Button (mobile only) -->
-<button id="fab-btn" onclick="document.getElementById('new-booking-modal').classList.remove('hidden')" class="md:hidden fixed bottom-24 right-5 w-14 h-14 bg-tertiary text-on-tertiary rounded-xl shadow-lg flex items-center justify-center hover:bg-tertiary-container active:scale-90 transition-all z-40 hidden">
+<button id="fab-btn" onclick="document.getElementById('new-booking-modal').classList.remove('hidden')" class="md:hidden fixed bottom-24 right-5 w-14 h-14 bg-tertiary text-on-tertiary rounded-xl shadow-lg flex items-center justify-center hover:bg-tertiary-container active:scale-90 transition-all z-40">
     <span class="material-symbols-outlined text-[28px]">add</span>
 </button>
 
 <!-- Mobile Bottom Navigation -->
-<nav id="mobile-nav" class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-3 pb-6 bg-[#1b3022]/90 backdrop-blur-xl shadow-[0_-8px_24px_rgba(0,0,0,0.15)] hidden">
+<nav id="mobile-nav" class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-3 pb-6 bg-[#1b3022]/90 backdrop-blur-xl shadow-[0_-8px_24px_rgba(0,0,0,0.15)]">
     <a onclick="showPage('dashboard')" class="mobile-nav-link flex flex-col items-center justify-center text-[#735c00] bg-[#061b0e]/40 rounded-xl px-3 py-1 active:scale-90 transition-all cursor-pointer" data-page="dashboard">
         <span class="material-symbols-outlined filled">home</span>
         <span class="text-[10px] font-bold uppercase mt-0.5">Home</span>
@@ -1100,57 +1065,8 @@
 <div id="toast-container" class="fixed bottom-20 md:bottom-6 right-6 z-[100] space-y-2"></div>
 
 <script>
-// ==================== LOGIN ====================
-let adminPassword = localStorage.getItem('admin-pass') || 'kertem2025';
+// No login required - demo mode
 
-function handleLogin(e) {
-    e.preventDefault();
-    const user = document.getElementById('login-user').value;
-    const pass = document.getElementById('login-pass').value;
-    if (user === 'admin' && pass === adminPassword) {
-        document.getElementById('login-screen').classList.add('hidden');
-        document.getElementById('admin-layout').classList.remove('hidden');
-        document.getElementById('mobile-nav').classList.remove('hidden');
-        document.getElementById('fab-btn').classList.remove('hidden');
-        sessionStorage.setItem('admin-logged-in', 'true');
-        document.getElementById('login-error').classList.add('hidden');
-    } else {
-        document.getElementById('login-error').classList.remove('hidden');
-    }
-    return false;
-}
-
-function handleLogout() {
-    sessionStorage.removeItem('admin-logged-in');
-    document.getElementById('login-screen').classList.remove('hidden');
-    document.getElementById('admin-layout').classList.add('hidden');
-    document.getElementById('mobile-nav').classList.add('hidden');
-    document.getElementById('fab-btn').classList.add('hidden');
-    document.getElementById('login-pass').value = '';
-}
-
-if (sessionStorage.getItem('admin-logged-in')) {
-    document.getElementById('login-screen').classList.add('hidden');
-    document.getElementById('admin-layout').classList.remove('hidden');
-    document.getElementById('mobile-nav').classList.remove('hidden');
-    document.getElementById('fab-btn').classList.remove('hidden');
-}
-
-// ==================== PASSWORD ====================
-function handlePasswordChange(e) {
-    e.preventDefault();
-    const oldP = document.getElementById('old-pass').value;
-    const newP = document.getElementById('new-pass').value;
-    const confP = document.getElementById('confirm-pass').value;
-    if (oldP !== adminPassword) { showToast('Hibás jelenlegi jelszó!', 'error'); return false; }
-    if (newP !== confP) { showToast('Az új jelszavak nem egyeznek!', 'error'); return false; }
-    if (newP.length < 6) { showToast('Min. 6 karakter!', 'error'); return false; }
-    adminPassword = newP;
-    localStorage.setItem('admin-pass', newP);
-    showToast('Jelszó sikeresen módosítva!');
-    e.target.reset();
-    return false;
-}
 
 // ==================== PAGE NAVIGATION ====================
 function showPage(page) {
